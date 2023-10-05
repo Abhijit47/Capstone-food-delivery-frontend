@@ -8,6 +8,7 @@ import Dribble from "../assets/icons/Dribble";
 import FoodIcon from "../assets/icons/FoodIcon";
 
 const Footer = () => {
+  // eslint-disable-next-line
   const footerMenu = [
     {
       id: 1,

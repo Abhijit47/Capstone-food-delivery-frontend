@@ -1,8 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
 
 // create a user action
 const signIn = createAsyncThunk(
@@ -28,7 +26,6 @@ const signIn = createAsyncThunk(
         pauseOnHover: true,
         draggable: true
       });
-      // Navigate({ to: "/login", replace: "/" });
       // return this response payload
       return res.data.data;
 
@@ -43,8 +40,6 @@ const signIn = createAsyncThunk(
       });
       // console.log(error.message);
       // console.log(error.response.data.message);
-      // Navigate({ to: "/login" });
-
     }
   }
 );

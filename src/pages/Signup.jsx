@@ -1,6 +1,6 @@
 import React from "react";
-import GenericButton from "../components/GenericButton";
-import FormFooter from "../components/FormFooter";
+// import GenericButton from "../components/GenericButton";
+// import FormFooter from "../components/FormFooter";
 
 const Signup = () => {
   return (
