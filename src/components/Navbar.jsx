@@ -2,28 +2,27 @@ import React from "react";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import _ from "lodash";
 
 const navigation = [
-  { name: "Dashboard", to: "#", current: true },
-  { name: "Team", to: "/team", current: false },
-  { name: "Projects", to: "#", current: false },
-  { name: "goto cart", to: "/your cart", current: false },
+  { name: "dashboard", to: "/", current: true },
+  { name: "explore meals", to: "/all-meals", current: true },
+  { name: "goto cart", to: "/checkout", current: true },
 ];
 
 const profileLinks = [
   { name: "sign in", to: "/login" },
   { name: "sign up", to: "/signup" },
-  { name: "restaurant sign up", to: "/restaurant-signup" },
-  { name: "restaurant sign in", to: "/restaurant-signin" },
 ];
 
 const authLinks = [
   { name: "your profile", to: "/profile" },
-  { name: "restaurant profile", to: "/restaurant-profile" },
   { name: "settings", to: "/settings" },
+  { name: "see food items", to: "/food-items" },
+  { name: "create food item", to: "/food-item-create" },
+  { name: "update food item", to: "/update-food-item" },
 ];
 
 function classNames(...classes) {
@@ -32,18 +31,24 @@ function classNames(...classes) {
 
 const Navbar = () => {
   const navigate = useNavigate();
-  // eslint-disable-next-line
-  const user = useSelector((state) => state.users.initialState);
-  // console.log(user);
+  let location = useLocation();
+  let { pathname } = location;
 
   // eslint-disable-next-line
-  const restaurant = useSelector((state) => state.restaurants.initialState);
-  console.log("restaurant", restaurant);
+  const user = useSelector((state) => state.users.initialState);
+  console.log("user", user);
 
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
   };
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     navigate("/");
+  //   }
+  // }, [navigate]);
 
   return (
     <header className="sticky top-0 z-50">
@@ -64,7 +69,7 @@ const Navbar = () => {
                     )}
                   </Disclosure.Button>
                 </div>
-                {/* xs to sm list item */}
+                {/* md to lg list item */}
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
                     <Link to="/">
@@ -77,13 +82,13 @@ const Navbar = () => {
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
-                      {navigation.map((item) => (
+                      {navigation.map((item, index) => (
                         <Link
-                          key={item.name}
+                          key={index + 1}
                           to={item.to}
                           className={classNames(
-                            item.current
-                              ? "bg-gray-900 text-white"
+                            item.to === pathname
+                              ? "bg-gray-900 capitalize text-white"
                               : "capitalize text-gray-300 hover:bg-gray-700 hover:text-white",
                             "rounded-md px-3 py-2 text-sm font-medium",
                           )}
@@ -98,17 +103,8 @@ const Navbar = () => {
 
                 {/* Right side nav */}
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <button
-                    type="button"
-                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <span className="-inset-1.5 absolute" />
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-
                   {/* Profile dropdown */}
-                  {_.isEmpty(user) && _.isEmpty(restaurant) ? (
+                  {_.isEmpty(user) ? (
                     <Menu as="div" className="relative ml-3">
                       <div>
                         <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -187,9 +183,10 @@ const Navbar = () => {
                               )}
                             </Menu.Item>
                           ))}
+                          {/* Log out button */}
                           <div className="flex justify-center">
                             <button
-                              className="rounded-md bg-red-500 px-3 py-2 text-white"
+                              className="rounded-md bg-red-500 px-3 py-1 text-white"
                               onClick={handleLogout}
                             >
                               Sign out
@@ -207,20 +204,19 @@ const Navbar = () => {
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 px-2 pb-3 pt-2">
                 {navigation.map((item) => (
-                  <Disclosure.Button
+                  <Link
                     key={item.name}
-                    as="a"
-                    href={item.to}
+                    to={item.to}
                     className={classNames(
-                      item.current
-                        ? "bg-gray-900 text-white"
+                      item.to === pathname
+                        ? "bg-gray-900 capitalize text-white"
                         : "capitalize text-gray-300 hover:bg-gray-700 hover:text-white",
                       "block rounded-md px-3 py-2 text-base font-medium",
                     )}
                     aria-current={item.current ? "page" : undefined}
                   >
                     {item.name}
-                  </Disclosure.Button>
+                  </Link>
                 ))}
               </div>
             </Disclosure.Panel>
