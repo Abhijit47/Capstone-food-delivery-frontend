@@ -48,7 +48,7 @@ const ReataurantSignup = () => {
     if (!_.isEqual(password, confirmPassword)) {
       return alert("Passwords are not matched!");
     }
-    console.log(restaurantFormData);
+    // console.log(restaurantFormData);
 
     // dispatch signup request with form data
     await restaurentSignUp(restaurantFormData);

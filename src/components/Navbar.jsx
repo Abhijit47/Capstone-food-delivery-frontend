@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-// eslint-disable-next-line
 import _ from "lodash";
 
 const navigation = [
@@ -11,11 +10,10 @@ const navigation = [
   { name: "explore meals", to: "/all-meals", current: true },
   { name: "goto cart", to: "/checkout", current: true },
   { name: "restaurant login", to: "/restaurant-login", current: true },
+  { name: "restaurant sign up", to: "/restaurant-signup", current: true },
   { name: "your profile", to: "/profile" },
   { name: "settings", to: "/settings" },
-  { name: "see food items", to: "/food-items" },
   { name: "create food item", to: "/food-item-create" },
-  { name: "update food item", to: "/update-food-item" },
 ];
 
 const Navbar = () => {
@@ -24,6 +22,7 @@ const Navbar = () => {
   const [userState, setUserState] = useState({});
   // eslint-disable-next-line
   const [restaurantState, setRestaurantState] = useState({});
+  // eslint-disable-next-line
   const navigate = useNavigate();
 
   // eslint-disable-next-line
@@ -35,21 +34,25 @@ const Navbar = () => {
   // eslint-disable-next-line
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/");
+    window.location.reload();
   };
-
-  // eslint-disable-next-line
   const userToken = localStorage.getItem("user-token");
   const restaurantToken = localStorage.getItem("restaurant-token");
 
   useEffect(() => {
+    // if (!userToken) {
+    //   navigate("/login");
+    // } else if (!restaurantToken) {
+    //   navigate("/restaurant-login");
+    // } else {
+    //   navigate("/");
+    // }
     setUserState(user);
     setRestaurantState(restaurant);
-    if (!userToken || !restaurantToken) return;
   }, [user, restaurant, userToken, restaurantToken]);
 
   return (
-    <header className="sticky inset-x-0 top-0 z-50 border-b-[1px] border-b-gray-600 bg-gray-100 shadow-lg">
+    <header className="sticky inset-x-0 top-0 z-[100] border-b-[1px] border-b-gray-600 bg-gray-100 shadow-lg">
       <nav
         className="flex items-center justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -90,7 +93,32 @@ const Navbar = () => {
         </div>
         {/* Right part */}
         <div className="hidden gap-4 lg:flex lg:flex-1 lg:justify-end">
-          {!_.isNull(userToken) && !_.isNull(restaurantToken) ? (
+          {!_.isNull(userToken) || !_.isNull(restaurantToken) ? (
+            <button
+              onClick={handleLogout}
+              to="/signup"
+              className="rounded-md bg-red-500 px-3 py-1 text-sm font-semibold leading-6 text-gray-100"
+            >
+              sign out <span aria-hidden="true">&rarr;</span>
+            </button>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="rounded-md bg-indigo-500 px-3 py-1 text-sm font-semibold leading-6 text-gray-100"
+              >
+                Log in <span aria-hidden="true">&rarr;</span>
+              </Link>
+              <Link
+                to="/signup"
+                className="rounded-md bg-indigo-500 px-3 py-1 text-sm font-semibold leading-6 text-gray-100"
+              >
+                Sign up <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </>
+          )}
+
+          {/* {_.isNull(userToken) || _.isNull(restaurantToken) ? (
             <>
               <Link
                 to="/login"
@@ -113,7 +141,7 @@ const Navbar = () => {
             >
               sign out <span aria-hidden="true">&rarr;</span>
             </button>
-          )}
+          )} */}
 
           {/* sidebar */}
           <div>

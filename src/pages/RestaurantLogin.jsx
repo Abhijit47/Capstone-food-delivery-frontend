@@ -4,7 +4,7 @@ import _ from "lodash";
 import GenericButton from "../components/GenericButton";
 import FormFooter from "../components/FormFooter";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import restaurantSignIn from "../redux/actions/restaurantAction";
 
 const RestaurantLogin = () => {
@@ -27,13 +27,12 @@ const RestaurantLogin = () => {
   };
 
   const restaurantToken = localStorage.getItem("restaurant-token");
-  console.log(!restaurantToken);
 
-  useEffect(() => {
-    if (!restaurantToken) {
-      navigate("/restaurant-login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (_.isNull(restaurantToken)) {
+  //     navigate("/restaurant-login");
+  //   }
+  // }, [navigate, restaurantToken]);
 
   // define a function for handle form request
   const handleSubmit = (e) => {
@@ -49,7 +48,7 @@ const RestaurantLogin = () => {
 
     // dispatch signin request
     dispatch(restaurantSignIn(restaurantFormData));
-    navigate("/food-item-create");
+    navigate("/");
   };
 
   // console.log(restaurant);

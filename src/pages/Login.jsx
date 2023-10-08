@@ -33,7 +33,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     // prevent the from default behaviour
     e.preventDefault();
-    console.log(userDetails);
+    // console.log(userDetails);
 
     // dispatch signin action creator for login
     dispatch(signIn(userDetails));
@@ -41,16 +41,17 @@ const Login = () => {
   };
 
   // A hook to access the redux store's state.
-  const user = useSelector((state) => state.users.userDetails);
-  console.log(user);
+  const user = useSelector((state) => state.users.isLoading);
+  // console.log(user);
+  const userToken = localStorage.getItem("user-token");
 
   // check user is already in store or not
-  useEffect(() => {
-    if (user.token) {
-      console.log(user.token);
-      navigate("/posts");
-    }
-  }, [user.token, navigate]);
+  // useEffect(() => {
+  //   if (userToken) {
+  //     console.log(userToken);
+  //     navigate("/");
+  //   }
+  // }, [userToken, navigate]);
 
   return (
     <>

@@ -28,12 +28,9 @@ const Meals = () => {
     <section className="p-10">
       <h3 className="pb-6 text-center text-lg font-semibold">Meals</h3>
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {meals
-          ?.reverse()
-          .slice(0, 8)
-          .map((meal, index) => (
-            <MealCard meal={meal} key={index} />
-          ))}
+        {meals?.slice(0, 8).map((meal, index) => (
+          <MealCard meal={meal} key={index} setAllMeals={setAllMeals} />
+        ))}
       </div>
       <div className="mt-12 flex justify-center">
         {pathname === "/all-meals" ? (

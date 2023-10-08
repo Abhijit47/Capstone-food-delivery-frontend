@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import _ from "lodash";
+import { useNavigate } from "react-router-dom";
 import GenericButton from "../components/GenericButton";
 import FormFooter from "../components/FormFooter";
 import FoodItemInputs from "../components/FoodItemInputs";
-import { createFoodItem } from "../features/handlerFormSubmit";
-import { useNavigate } from "react-router-dom";
+import { createFoodItem } from "../features/handleMeals";
 
 const UpdateFoodItem = () => {
   const [foodItem, setFoodItem] = useState({
@@ -29,9 +29,9 @@ const UpdateFoodItem = () => {
         autoClose: 1500,
       });
     }
-    console.log(foodItem);
+    // console.log(foodItem);
     const token = localStorage.getItem("token");
-    console.log(token);
+    // console.log(token);
 
     // dispatch signin request
     await createFoodItem(foodItem, token);

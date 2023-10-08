@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import _ from "lodash";
+import { useNavigate } from "react-router-dom";
 import GenericButton from "../components/GenericButton";
 import FormFooter from "../components/FormFooter";
 import FoodItemInputs from "../components/FoodItemInputs";
-import { createFoodItem } from "../features/handlerFormSubmit";
-import { useNavigate } from "react-router-dom";
+import { createFoodItem } from "../features/handleMeals";
 
 const FoodItemCreate = () => {
   const [foodItem, setFoodItem] = useState({
-    itemName: "Fruit Salad",
-    quantity: 30,
-    price: 550,
-    description: "A refreshing mix of seasonal fruits.",
-    picture: "https://placehold.co/600x400",
+    itemName: "",
+    quantity: "",
+    price: "",
+    description: "",
+    picture: "",
   });
 
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("restaurant-token");
-  // console.log(token);
+  const restaurantToken = localStorage.getItem("restaurant-token");
+  // // // console.log(token);
   useEffect(() => {
-    if (!token) {
+    if (!restaurantToken) {
       navigate("/restaurant-login");
     }
-  }, [navigate, token]);
+  }, [navigate, restaurantToken]);
 
   // define a function for handle form request
   const handleSubmit = async (e) => {
@@ -38,7 +38,7 @@ const FoodItemCreate = () => {
       });
     }
     // dispatch signin request
-    await createFoodItem(foodItem, token);
+    await createFoodItem(foodItem, restaurantToken);
     navigate("/");
   };
 
@@ -59,7 +59,7 @@ const FoodItemCreate = () => {
         <form className="space-y-6" onSubmit={handleSubmit} method="POST">
           <FoodItemInputs foodItem={foodItem} setFoodItem={setFoodItem} />
 
-          <GenericButton buttonName={"Sign in"} />
+          <GenericButton buttonName={"Create food item"} />
         </form>
 
         <FormFooter to={"/signup"} />

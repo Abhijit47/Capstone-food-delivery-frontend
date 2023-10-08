@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-const FoodItemInputs = ({ foodItem, setFoodItem }) => {
+const UpdateFoodItemInputs = ({ mealData, foodItem, setFoodItem }) => {
   // destructuring form data
   const { itemName, quantity, price, description, picture } = foodItem;
 
@@ -17,7 +17,7 @@ const FoodItemInputs = ({ foodItem, setFoodItem }) => {
       id: "itemName",
       name: "itemName",
       type: "text",
-      placeholder: "Enter item name",
+      placeholder: mealData.itemName ? mealData.itemName : "",
       value: itemName,
     },
     {
@@ -26,7 +26,7 @@ const FoodItemInputs = ({ foodItem, setFoodItem }) => {
       id: "quantity",
       name: "quantity",
       type: "text",
-      placeholder: "Enter quantity",
+      placeholder: mealData.quantity ? mealData.quantity : "",
       value: quantity,
     },
     {
@@ -35,7 +35,7 @@ const FoodItemInputs = ({ foodItem, setFoodItem }) => {
       id: "price",
       name: "price",
       type: "text",
-      placeholder: " Enter price",
+      placeholder: mealData.price ? mealData.price : "",
       value: price,
     },
     {
@@ -43,7 +43,7 @@ const FoodItemInputs = ({ foodItem, setFoodItem }) => {
       labelFor: "description",
       id: "description",
       name: "description",
-      placeholder: "Enter item description",
+      placeholder: mealData.description ? mealData.description : "",
       value: description,
     },
     {
@@ -52,7 +52,7 @@ const FoodItemInputs = ({ foodItem, setFoodItem }) => {
       id: "picture",
       name: "picture",
       type: "url",
-      placeholder: "Enter item image url",
+      placeholder: mealData.picture ? mealData.picture : "",
       value: picture,
       pattern: "https://.*",
       size: "30",
@@ -134,4 +134,4 @@ const FoodItemInputs = ({ foodItem, setFoodItem }) => {
   );
 };
 
-export default FoodItemInputs;
+export default UpdateFoodItemInputs;
