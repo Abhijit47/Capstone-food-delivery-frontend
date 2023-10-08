@@ -1,23 +1,16 @@
-import React from "react";
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import React, { useEffect, useState } from "react";
+import { Dialog } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+// eslint-disable-next-line
 import _ from "lodash";
 
 const navigation = [
   { name: "dashboard", to: "/", current: true },
   { name: "explore meals", to: "/all-meals", current: true },
   { name: "goto cart", to: "/checkout", current: true },
-];
-
-const profileLinks = [
-  { name: "sign in", to: "/login" },
-  { name: "sign up", to: "/signup" },
-];
-
-const authLinks = [
+  { name: "restaurant login", to: "/restaurant-login", current: true },
   { name: "your profile", to: "/profile" },
   { name: "settings", to: "/settings" },
   { name: "see food items", to: "/food-items" },
@@ -25,204 +18,169 @@ const authLinks = [
   { name: "update food item", to: "/update-food-item" },
 ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
 const Navbar = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // eslint-disable-next-line
+  const [userState, setUserState] = useState({});
+  // eslint-disable-next-line
+  const [restaurantState, setRestaurantState] = useState({});
   const navigate = useNavigate();
-  let location = useLocation();
-  let { pathname } = location;
 
   // eslint-disable-next-line
-  const user = useSelector((state) => state.users.initialState);
-  console.log("user", user);
+  const user = useSelector((state) => state.users.userDetails);
+  const restaurant = useSelector(
+    (state) => state.restaurants.restaurantDetails,
+  );
 
+  // eslint-disable-next-line
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
   };
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (!token) {
-  //     navigate("/");
-  //   }
-  // }, [navigate]);
+  // eslint-disable-next-line
+  const userToken = localStorage.getItem("user-token");
+  const restaurantToken = localStorage.getItem("restaurant-token");
+
+  useEffect(() => {
+    setUserState(user);
+    setRestaurantState(restaurant);
+    if (!userToken || !restaurantToken) return;
+  }, [user, restaurant, userToken, restaurantToken]);
 
   return (
-    <header className="sticky top-0 z-50">
-      <Disclosure as="nav" className="bg-gray-800">
-        {({ open }) => (
-          <>
-            <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-              <div className="relative flex h-16 items-center justify-between">
-                <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                  {/* Mobile menu button*/}
-                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                    <span className="-inset-0.5 absolute" />
-                    <span className="sr-only">Open main menu</span>
-                    {open ? (
-                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                    ) : (
-                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                    )}
-                  </Disclosure.Button>
-                </div>
-                {/* md to lg list item */}
-                <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                  <div className="flex flex-shrink-0 items-center">
-                    <Link to="/">
-                      <img
-                        className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                        alt="Your Company"
-                      />
-                    </Link>
-                  </div>
-                  <div className="hidden sm:ml-6 sm:block">
-                    <div className="flex space-x-4">
-                      {navigation.map((item, index) => (
-                        <Link
-                          key={index + 1}
-                          to={item.to}
-                          className={classNames(
-                            item.to === pathname
-                              ? "bg-gray-900 capitalize text-white"
-                              : "capitalize text-gray-300 hover:bg-gray-700 hover:text-white",
-                            "rounded-md px-3 py-2 text-sm font-medium",
-                          )}
-                          aria-current={item.current ? "page" : undefined}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+    <header className="sticky inset-x-0 top-0 z-50 border-b-[1px] border-b-gray-600 bg-gray-100 shadow-lg">
+      <nav
+        className="flex items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
+        <div className="flex lg:flex-1">
+          <Link to="/" className="flex items-center gap-4">
+            <span className="font-sans text-2xl font-bold text-gray-800">
+              OMNIFOOD
+            </span>
+            <img
+              className="h-8 w-auto"
+              src={require("../assets/icons/food.png")}
+              alt=""
+            />
+          </Link>
+        </div>
+        <div className="flex lg:hidden">
+          <button
+            type="button"
+            className="-m-2.5 p-2.5 inline-flex items-center justify-center rounded-md text-gray-700"
+            onClick={() => setMobileMenuOpen(true)}
+          >
+            <span className="sr-only">Open main menu</span>
+            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+          </button>
+        </div>
+        {/* Middle part*/}
+        <div className="hidden lg:flex lg:gap-x-12">
+          {navigation.slice(0, 4).map((item) => (
+            <Link
+              key={item.name}
+              to={item.to}
+              className="text-sm font-semibold capitalize leading-6 text-gray-900"
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
+        {/* Right part */}
+        <div className="hidden gap-4 lg:flex lg:flex-1 lg:justify-end">
+          {!_.isNull(userToken) && !_.isNull(restaurantToken) ? (
+            <>
+              <Link
+                to="/login"
+                className="rounded-md bg-indigo-500 px-3 py-1 text-sm font-semibold leading-6 text-gray-100"
+              >
+                Log in <span aria-hidden="true">&rarr;</span>
+              </Link>
+              <Link
+                to="/signup"
+                className="rounded-md bg-indigo-500 px-3 py-1 text-sm font-semibold leading-6 text-gray-100"
+              >
+                Sign up <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </>
+          ) : (
+            <button
+              onClick={handleLogout}
+              to="/signup"
+              className="rounded-md bg-red-500 px-3 py-1 text-sm font-semibold leading-6 text-gray-100"
+            >
+              sign out <span aria-hidden="true">&rarr;</span>
+            </button>
+          )}
 
-                {/* Right side nav */}
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  {/* Profile dropdown */}
-                  {_.isEmpty(user) ? (
-                    <Menu as="div" className="relative ml-3">
-                      <div>
-                        <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                          <span className="-inset-1.5 absolute" />
-                          <span className="sr-only">Open user menu</span>
-                          <img
-                            className="h-8 w-8 rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt=""
-                          />
-                        </Menu.Button>
-                      </div>
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
-                      >
-                        <Menu.Items className="ring-opacity-5 absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black focus:outline-none">
-                          {profileLinks.map((link, index) => (
-                            <Menu.Item key={index}>
-                              {({ active }) => (
-                                <Link
-                                  to={link.to}
-                                  className={classNames(
-                                    active ? "bg-gray-100" : "",
-                                    "block px-4 py-2 text-sm capitalize text-gray-700",
-                                  )}
-                                >
-                                  {link.name}
-                                </Link>
-                              )}
-                            </Menu.Item>
-                          ))}
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
-                  ) : (
-                    <Menu as="div" className="relative ml-3">
-                      <div>
-                        <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                          <span className="-inset-1.5 absolute" />
-                          <span className="sr-only">Open user menu</span>
-                          <img
-                            className="h-8 w-8 rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt=""
-                          />
-                        </Menu.Button>
-                      </div>
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
-                      >
-                        <Menu.Items className="ring-opacity-5 absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black focus:outline-none">
-                          {authLinks.map((link, index) => (
-                            <Menu.Item key={index}>
-                              {({ active }) => (
-                                <Link
-                                  to={link.to}
-                                  className={classNames(
-                                    active ? "bg-gray-100" : "",
-                                    "block px-4 py-2 text-sm capitalize text-gray-700",
-                                  )}
-                                >
-                                  {link.name}
-                                </Link>
-                              )}
-                            </Menu.Item>
-                          ))}
-                          {/* Log out button */}
-                          <div className="flex justify-center">
-                            <button
-                              className="rounded-md bg-red-500 px-3 py-1 text-white"
-                              onClick={handleLogout}
-                            >
-                              Sign out
-                            </button>
-                          </div>
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* xs to sm list item */}
-            <Disclosure.Panel className="sm:hidden">
-              <div className="space-y-1 px-2 pb-3 pt-2">
+          {/* sidebar */}
+          <div>
+            <button
+              type="button"
+              className="-m-2.5 p-2.5 inline-flex items-center justify-center rounded-md text-gray-700"
+              onClick={() => setMobileMenuOpen(true)}
+            >
+              <span className="sr-only">Open main menu</span>
+              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+      </nav>
+      <Dialog
+        as="div"
+        className=""
+        open={mobileMenuOpen}
+        onClose={setMobileMenuOpen}
+      >
+        <div className="fixed inset-0 z-50" />
+        <Dialog.Panel className="sm:ring-gray-900/10 fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1">
+          <div className="flex items-center justify-between">
+            <Link to="/" className="flex items-center justify-center gap-4">
+              <span className="font-sans text-2xl font-bold text-gray-800">
+                OMNIFOOD
+              </span>
+              <img
+                className="h-8 w-auto"
+                src={require("../assets/icons/food.png")}
+                alt=""
+              />
+            </Link>
+            <button
+              type="button"
+              className="-m-2.5 p-2.5 rounded-md text-gray-700"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span className="sr-only">Close menu</span>
+              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+            </button>
+          </div>
+          <div className="mt-6 flow-root">
+            <div className="divide-y divide-gray-500/10 -my-6">
+              <div className="space-y-2 py-6">
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
                     to={item.to}
-                    className={classNames(
-                      item.to === pathname
-                        ? "bg-gray-900 capitalize text-white"
-                        : "capitalize text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "block rounded-md px-3 py-2 text-base font-medium",
-                    )}
-                    aria-current={item.current ? "page" : undefined}
+                    className="hover:bg-gray-50 -mx-3 block rounded-lg px-3 py-2 text-base font-semibold capitalize leading-7 text-gray-900"
                   >
                     {item.name}
                   </Link>
                 ))}
               </div>
-            </Disclosure.Panel>
-          </>
-        )}
-      </Disclosure>
+              <div className="py-6">
+                <Link
+                  to="/login"
+                  className="py-2.5 hover:bg-gray-50 -mx-3 block rounded-lg px-3 text-base font-semibold leading-7 text-gray-900"
+                >
+                  Log in
+                </Link>
+              </div>
+            </div>
+          </div>
+        </Dialog.Panel>
+      </Dialog>
     </header>
   );
 };

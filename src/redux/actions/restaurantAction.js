@@ -17,7 +17,7 @@ const restaurantSignIn = createAsyncThunk(
 
       // after successful login user token will be saved to local-storage
       if (res.status === 200) {
-        localStorage.setItem("token", res.data.data.token);
+        localStorage.setItem("restaurant-token", res.data.data.token);
       }
 
       toast.success(res.data.message, {

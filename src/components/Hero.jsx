@@ -1,13 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Hero = () => {
   const notify = () => toast("Wow so easy !");
   return (
-    <section className="body-font bg-gray-900 text-gray-400">
-      <div className="container mx-auto flex flex-col items-center px-5 py-24 md:flex-row">
-        <div className="lg:flex-grow mb-16 flex flex-col items-center text-center md:mb-0 md:w-1/2 md:items-start md:pr-16 md:text-left lg:pr-24">
-          <h1 className="title-font mb-4 font-medium text-white sm:text-4xl lg:text-5xl">
+    <section className="body-font bg-slate-100 text-gray-800">
+      <div className="container mx-auto flex flex-col items-center gap-x-48 px-5 py-24 md:flex-row">
+        <div className="lg:flex-grow mb-16 flex flex-col items-center text-center">
+          <h1 className="title-font text-slate-800 xs:text-2xl xs:font-medium mb-4 font-sans sm:text-4xl lg:text-5xl lg:font-bold">
             A healthy meal delivered to your door, every single day
           </h1>
           <p className="mb-8 leading-relaxed">
@@ -15,34 +16,36 @@ const Hero = () => {
             healthy again. Tailored to your personal tastes and nutritional
             needs.
           </p>
-          <div className="flex w-full items-end justify-center md:justify-start">
-            <div className="relative mr-4 w-2/4 md:w-full lg:w-full xl:w-1/2">
+          <div className="flex w-full items-end justify-center">
+            <div className="relative mr-4 w-2/4 text-left md:w-full lg:w-full xl:w-1/2">
               <label
-                htmlFor="email"
-                className="text-sm leading-7 text-gray-400"
+                htmlFor="hero-field"
+                className="sr-only text-sm leading-7 text-gray-600"
               >
                 Email address
               </label>
               <input
                 type="email"
-                id="email"
-                name="email"
+                id="hero-field"
+                name="hero-field"
+                className="form-input"
                 autoComplete="email"
-                className="bg-opacity-40 border w-full rounded-md border-gray-700 bg-gray-800 px-3 py-1 text-base leading-8 text-gray-100 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-900"
+                placeholder="Your Email Address"
               />
             </div>
-            <button className="inline-flex rounded-md border-0 bg-indigo-500 px-6 py-2 text-lg text-white hover:bg-indigo-600 focus:outline-none">
-              Button
-            </button>
-          </div>
-          <p className="mb-8 mt-2 w-full text-sm text-gray-500">
-            Neutra shabby chic ramps, viral fixie.
-          </p>
-          <div className="flex text-gray-300 md:flex-col lg:flex-row">
-            <button
-              onClick={notify}
-              className="inline-flex items-center rounded-lg bg-gray-800 px-5 py-3 hover:bg-gray-700 hover:text-white focus:outline-none"
+            <Link
+              to={"/login"}
+              className="inline-flex rounded-md border-0 bg-indigo-500 px-6 py-2 text-lg capitalize text-white hover:bg-indigo-600 focus:outline-none"
             >
+              sign in
+            </Link>
+          </div>
+
+          <p className="mb-8 mt-2 w-full text-sm text-gray-800">
+            We never share your email.
+          </p>
+          <div className="flex gap-4 text-gray-300 md:flex-col lg:flex-row">
+            <button onClick={notify} className="hero_btn">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -56,10 +59,7 @@ const Hero = () => {
                 <span className="title-font font-medium">Google Play</span>
               </span>
             </button>
-            <button
-              onClick={notify}
-              className="ml-4 mt-0 inline-flex items-center rounded-lg bg-gray-800 px-5 py-3 hover:bg-gray-700 hover:text-white focus:outline-none md:ml-0 md:mt-4 lg:ml-4 lg:mt-0"
-            >
+            <button onClick={notify} className="hero_btn">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"

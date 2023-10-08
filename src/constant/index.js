@@ -89,3 +89,38 @@ export const featureImages = [
     imageUrl: require("./../assets/images/features/usa-today.png")
   },
 ];
+
+export const priceCards = [
+  {
+    cardHeadingSecondary: "START",
+    cardHeadingPrimary: "Free",
+    cardFeatures: ["Vexillologist pitchfork", "Tumeric plaid portland", "Mixtape chillwave tumeric"],
+    cardButton: "buy now",
+    cardFooter: "Literally you probably haven't heard of them jean shorts."
+  },
+  {
+    cardTag: "POPULAR",
+    cardHeadingSecondary: "PRO",
+    cardHeadingPrimarySpan1: "$38",
+    cardHeadingPrimarySpan2: "/mo",
+    cardFeatures: ["Vexillologist pitchfork", "Tumeric plaid portland", "Hexagon neutra unicorn", "Mixtape chillwave tumeric"],
+    cardButton: "buy now",
+    cardFooter: "Literally you probably haven't heard of them jean shorts."
+  },
+  {
+    cardHeadingSecondary: "BUSINESS",
+    cardHeadingPrimarySpan1: "$56",
+    cardHeadingPrimarySpan2: "/mo",
+    cardFeatures: ["Vexillologist pitchfork", "Tumeric plaid portland", "Hexagon neutra unicorn", "Vexillologist pitchfork", "Mixtape chillwave tumeric"],
+    cardButton: "buy now",
+    cardFooter: "Literally you probably haven't heard of them jean shorts."
+  },
+  {
+    cardHeadingSecondary: "SPECIAL",
+    cardHeadingPrimarySpan1: "$72",
+    cardHeadingPrimarySpan2: "/mo",
+    cardFeatures: ["Vexillologist pitchfork", "Tumeric plaid portland", "Hexagon neutra unicorn", "Vexillologist pitchfork", "Mixtape chillwave tumeric"],
+    cardButton: "buy now",
+    cardFooter: "Literally you probably haven't heard of them jean shorts."
+  },
+];

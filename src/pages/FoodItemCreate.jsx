@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import _ from "lodash";
 import GenericButton from "../components/GenericButton";
@@ -18,6 +18,14 @@ const FoodItemCreate = () => {
 
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("restaurant-token");
+  // console.log(token);
+  useEffect(() => {
+    if (!token) {
+      navigate("/restaurant-login");
+    }
+  }, [navigate, token]);
+
   // define a function for handle form request
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,13 +37,8 @@ const FoodItemCreate = () => {
         autoClose: 1500,
       });
     }
-    console.log(foodItem);
-    const token = localStorage.getItem("token");
-    console.log(token);
-
     // dispatch signin request
     await createFoodItem(foodItem, token);
-
     navigate("/");
   };
 

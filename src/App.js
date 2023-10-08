@@ -10,7 +10,6 @@ import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 // eslint-disable-next-line
 import RestaurantSignup from './pages/ReataurantSignup';
-// eslint-disable-next-line
 import RestaurantLogin from './pages/RestaurantLogin';
 import NotFound from './pages/NotFound';
 import FoodItemCreate from './pages/FoodItemCreate';
@@ -20,6 +19,7 @@ import UserProfile from './pages/UserProfile';
 import RestaurantProfile from './pages/RestaurantProfile';
 import GetOneMeal from './pages/GetOneMeal';
 import Checkout from "./pages/Checkout";
+import Meals from './components/Meals';
 
 const App = () => {
 
@@ -30,6 +30,8 @@ const App = () => {
         <Route path='/' element={<Homepage />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/restaurant-login' element={<RestaurantLogin />} />
+        <Route path='/all-meals' element={<Meals />} />
         <Route path='/food-item-create' element={<FoodItemCreate />} />
         <Route path='/update-food-item' element={<UpdateFoodItem />} />
         <Route path='/meal/:mealId' element={<GetOneMeal />} />

@@ -20,8 +20,8 @@ const Testimonials = () => {
       <div ref={sliderRef} className="keen-slider">
         <section className="bg-gray-50">
           <div className="mx-auto max-w-[1340px] px-4 py-12 sm:px-6 lg:me-0 lg:py-16 lg:pe-0 lg:ps-8 xl:py-24">
-            <div className="max-w-7xl items-end justify-between sm:flex sm:pe-6 lg:pe-8">
-              <h2 className="max-w-xl text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+            <div className="xs:flex-wrap flex justify-between sm:flex sm:pe-6 lg:pe-8">
+              <h2 className="xs:text-xl flex font-bold tracking-tight text-gray-900 sm:text-2xl md:text-3xl lg:text-4xl">
                 Read trusted reviews from our customers
               </h2>
               {loaded && instanceRef.current && (
@@ -136,7 +136,7 @@ const Testimonials = () => {
                       </div>
 
                       <div className="mt-4">
-                        <p className="text-rose-600 text-2xl font-bold sm:text-3xl">
+                        <p className="xs:text-lg text-rose-600 text-2xl font-bold sm:text-xl">
                           Stayin' Alive
                         </p>
 

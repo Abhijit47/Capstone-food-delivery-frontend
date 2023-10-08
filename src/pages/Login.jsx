@@ -7,7 +7,7 @@ import signIn from "../redux/actions/userActions";
 
 const Login = () => {
   const [userDetails, setUserDetails] = useState({
-    email: "abhijit@gmail.com",
+    email: "jhondoe@gmail.com",
     password: "admin123",
   });
 

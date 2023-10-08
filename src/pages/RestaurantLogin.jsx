@@ -26,6 +26,15 @@ const RestaurantLogin = () => {
     setRestaurantFormData({ ...restaurantFormData, [name]: value });
   };
 
+  const restaurantToken = localStorage.getItem("restaurant-token");
+  console.log(!restaurantToken);
+
+  useEffect(() => {
+    if (!restaurantToken) {
+      navigate("/restaurant-login");
+    }
+  }, []);
+
   // define a function for handle form request
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,23 +46,13 @@ const RestaurantLogin = () => {
         autoClose: 1500,
       });
     }
-    console.log(restaurantFormData);
 
     // dispatch signin request
     dispatch(restaurantSignIn(restaurantFormData));
     navigate("/food-item-create");
   };
 
-  const restaurant = useSelector((state) => state.restaurants.initialState);
-  console.log(restaurant);
-
-  useEffect(() => {
-    if (!restaurant || !restaurant.token) {
-      navigate("/restaurant-signin");
-    } else {
-      navigate("/food-item-create");
-    }
-  }, [navigate, restaurant]);
+  // console.log(restaurant);
 
   return (
     <section className="flex min-h-full flex-1 flex-col justify-center bg-gradient-to-tr from-pink-400 to-indigo-400 px-6 py-12 lg:px-8">

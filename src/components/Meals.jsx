@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { getAllMeals } from "../features/handleMeals";
 import MealCard from "./MealCard";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Meals = () => {
   const [meals, setAllMeals] = useState([]);
+
+  let location = useLocation();
+  let { pathname } = location;
 
   // eslint-disable-next-line
   const handleAddToCart = () => {
@@ -29,15 +32,20 @@ const Meals = () => {
           ?.reverse()
           .slice(0, 8)
           .map((meal, index) => (
-            <Link to={`meal/${meal._id}`} key={index}>
-              <MealCard meal={meal} />
-            </Link>
+            <MealCard meal={meal} key={index} />
           ))}
       </div>
       <div className="mt-12 flex justify-center">
-        <button className="rounded-md bg-indigo-500 px-4 py-2 capitalize text-white">
-          view more
-        </button>
+        {pathname === "/all-meals" ? (
+          ""
+        ) : (
+          <Link
+            to={"/all-meals"}
+            className="rounded-md bg-indigo-500 px-4 py-2 capitalize text-white"
+          >
+            view more
+          </Link>
+        )}
       </div>
     </section>
   );

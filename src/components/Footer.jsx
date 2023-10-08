@@ -60,7 +60,7 @@ const Footer = () => {
     <footer className="bg-white">
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="lg:flex lg:items-start lg:gap-8">
-          <div className="text-teal-600">
+          <div className="text-indigo-600">
             <FoodIcon />
           </div>
 
@@ -85,7 +85,7 @@ const Footer = () => {
                   Email{" "}
                 </label>
 
-                <div className="border border-gray-100 p-2 focus-within:ring sm:flex sm:items-center sm:gap-4">
+                <div className="border border-gray-100 p-2 ring-indigo-500 focus-within:ring sm:flex sm:items-center sm:gap-4">
                   <input
                     type="email"
                     id="UserEmail"
@@ -93,9 +93,12 @@ const Footer = () => {
                     className="w-full border-none focus:border-transparent focus:ring-transparent sm:text-sm"
                   />
 
-                  <button className="mt-1 w-full bg-teal-500 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-none hover:bg-teal-600 sm:mt-0 sm:w-auto sm:shrink-0">
+                  <Link
+                    to={"/login"}
+                    className="mt-1 w-full rounded-md bg-indigo-500 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-none hover:bg-indigo-600 sm:mt-0 sm:w-auto sm:shrink-0"
+                  >
                     Sign Up
-                  </button>
+                  </Link>
                 </div>
               </form>
             </div>
