@@ -24,7 +24,7 @@ const userSlices = createSlice({
 
     // 3. if state is resolved
     builder.addCase(signIn.fulfilled, (state, action) => {
-      state.initialState = Object.assign({}, action.payload);
+      state.userDetails = Object.assign({}, action.payload);
     });
   }
 });

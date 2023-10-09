@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import _ from "lodash";
 import { getOneMeal } from "../features/handleMeals";
+import { orderMeal } from "../features/stripe";
 
 const GetOneMeal = () => {
   const [mealData, setMealData] = useState({});
   const navigate = useNavigate();
-
   let { mealId } = useParams();
 
+  const userToken = localStorage.getItem("user-token");
+  const restaurantToken = localStorage.getItem("restaurant-token");
+
   useEffect(() => {
-    const userToken = localStorage.getItem("user-token");
-    const restaurantToken = localStorage.getItem("restaurant-token");
     if (_.isNull(userToken) && _.isNull(restaurantToken)) {
       navigate("/login");
     } else {
@@ -23,10 +24,12 @@ const GetOneMeal = () => {
           console.log(err.message);
         });
     }
-  }, [mealId, navigate]);
+  }, [mealId, userToken, restaurantToken, navigate]);
 
-  const goToCheckOut = () => {
-    navigate("/checkout");
+  const goToCheckOut = async (e) => {
+    e.target.textContent = "Processing";
+    await orderMeal(mealId, userToken, restaurantToken);
+    navigate("/");
   };
 
   return (
@@ -51,8 +54,8 @@ const GetOneMeal = () => {
             Quantity&nbsp;{mealData.quantity}
           </p>
           <button
-            onClick={goToCheckOut}
-            className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-sm capitalize text-blue-100 shadow-sm"
+            onClick={(e) => goToCheckOut(e)}
+            className="mt-4 rounded-md bg-indigo-500 px-4 py-2 text-sm capitalize text-blue-100 shadow-sm"
           >
             buy now
           </button>
