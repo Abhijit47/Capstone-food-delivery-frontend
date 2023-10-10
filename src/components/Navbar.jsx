@@ -4,6 +4,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import _ from "lodash";
+import { isExpired } from "react-jwt";
 
 const navigation = [
   { name: "dashboard", to: "/", current: true },
@@ -18,6 +19,9 @@ const navigation = [
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isExpiredUserToken, setIsExpiredUserToken] = useState(false);
+  const [isExpiredRestaurantToken, setIsExpiredRestaurantToken] =
+    useState(false);
   // eslint-disable-next-line
   const [userState, setUserState] = useState({});
   // eslint-disable-next-line
@@ -31,7 +35,6 @@ const Navbar = () => {
     (state) => state.restaurants.restaurantDetails,
   );
 
-  // eslint-disable-next-line
   const handleLogout = () => {
     localStorage.clear();
     window.location.reload();
@@ -40,16 +43,21 @@ const Navbar = () => {
   const restaurantToken = localStorage.getItem("restaurant-token");
 
   useEffect(() => {
-    // if (!userToken) {
-    //   navigate("/login");
-    // } else if (!restaurantToken) {
-    //   navigate("/restaurant-login");
-    // } else {
-    //   navigate("/");
-    // }
     setUserState(user);
     setRestaurantState(restaurant);
   }, [user, restaurant, userToken, restaurantToken]);
+
+  useEffect(() => {
+    if (!_.isNull(userToken)) {
+      setIsExpiredUserToken(isExpired(userToken));
+    } else if (!_.isNull(restaurantToken)) {
+      setIsExpiredRestaurantToken(isExpired(restaurantToken));
+    }
+  }, [userToken, restaurantToken]);
+
+  // console.log("ut", isExpiredUserToken || "rt", isExpiredRestaurantToken);
+  // console.log("ut", isExpiredUserToken);
+  // console.log("rt", !isExpiredRestaurantToken);
 
   return (
     <header className="sticky inset-x-0 top-0 z-[100] border-b-[1px] border-b-gray-600 bg-gray-100 shadow-lg">
@@ -93,10 +101,7 @@ const Navbar = () => {
         </div>
         {/* Right part */}
         <div className="hidden gap-4 lg:flex lg:flex-1 lg:justify-end">
-          {_.isNull(userToken) &&
-          _.isEmpty(userState) &&
-          _.isNull(restaurantToken) &&
-          _.isEmpty(restaurantState) ? (
+          {isExpiredUserToken || isExpiredRestaurantToken ? (
             <>
               <Link
                 to="/login"
@@ -119,56 +124,6 @@ const Navbar = () => {
               sign out <span aria-hidden="true">&rarr;</span>
             </button>
           )}
-
-          {/* {_.isNull(restaurantToken) || !_.isNull(userToken) ? (
-            <>
-              <button
-                onClick={handleLogout}
-                className="rounded-md bg-red-500 px-3 py-1 text-sm font-semibold leading-6 text-gray-100"
-              >
-                sign out <span aria-hidden="true">&rarr;</span>
-              </button>
-            </>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className="rounded-md bg-indigo-500 px-3 py-1 text-sm font-semibold leading-6 text-gray-100"
-              >
-                Log in <span aria-hidden="true">&rarr;</span>
-              </Link>
-              <Link
-                to="/signup"
-                className="rounded-md bg-indigo-500 px-3 py-1 text-sm font-semibold leading-6 text-gray-100"
-              >
-                Sign up <span aria-hidden="true">&rarr;</span>
-              </Link>
-            </>
-          )} */}
-
-          {/* {!_.isNull(userToken) && _.isNull(restaurantToken) ? (
-            <button
-              onClick={handleLogout}
-              className="rounded-md bg-red-500 px-3 py-1 text-sm font-semibold leading-6 text-gray-100"
-            >
-              sign out <span aria-hidden="true">&rarr;</span>
-            </button>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className="rounded-md bg-indigo-500 px-3 py-1 text-sm font-semibold leading-6 text-gray-100"
-              >
-                Log in <span aria-hidden="true">&rarr;</span>
-              </Link>
-              <Link
-                to="/signup"
-                className="rounded-md bg-indigo-500 px-3 py-1 text-sm font-semibold leading-6 text-gray-100"
-              >
-                Sign up <span aria-hidden="true">&rarr;</span>
-              </Link>
-            </>
-          )} */}
 
           {/* sidebar */}
           <div>

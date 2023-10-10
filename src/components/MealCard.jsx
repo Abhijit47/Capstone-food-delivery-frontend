@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import _ from "lodash";
+import { isExpired } from "react-jwt";
 import { getAllMeals, deleteOneMeal } from "../features/handleMeals";
 import UpdateModal from "./UpdateModal";
 
 const MealCard = ({ meal, setAllMeals }) => {
-  const [restaurantState, setRestaurantState] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  // eslint-disable-next-line
-  const location = useLocation();
+  const [isExpiredUserToken, setIsExpiredUserToken] = useState(false);
+  const [isExpiredRestaurantToken, setIsExpiredRestaurantToken] =
+    useState(false);
 
-  const restaurant = useSelector((state) => state.restaurants.initialState);
+  // eslint-disable-next-line
+  const navigate = useNavigate();
+
+  // const restaurant = useSelector((state) => state.restaurants.initialState);
   const restaurantToken = localStorage.getItem("restaurant-token");
   // const user = useSelector((state) => state.users.userDetails);
   const userToken = localStorage.getItem("user-token");
-
-  useEffect(() => {
-    setRestaurantState({ restaurant, restaurantToken });
-  }, [restaurant, restaurantToken]);
 
   const handleModal = () => {
     setShowModal(true);
@@ -33,6 +33,25 @@ const MealCard = ({ meal, setAllMeals }) => {
         console.log(err);
       });
   };
+
+  // useEffect(() => {
+  //   setRestaurantState({ restaurant, restaurantToken });
+  // }, [restaurant, restaurantToken]);
+
+  useEffect(() => {
+    if (!_.isNull(userToken)) {
+      setIsExpiredUserToken(isExpired(userToken));
+    } else if (!_.isNull(restaurantToken)) {
+      setIsExpiredRestaurantToken(isExpired(restaurantToken));
+    }
+  }, [userToken, restaurantToken]);
+
+  // console.log("ut", isExpiredUserToken || "rt", isExpiredRestaurantToken);
+  // console.log("ut", isExpiredUserToken);
+  // console.log("rt", isExpiredRestaurantToken);
+  // console.log(_.isNull(restaurantToken) || isExpiredRestaurantToken);
+  // console.log(_.isNull(restaurantToken));
+  // console.log(isExpiredRestaurantToken);
 
   return (
     <div className="hover:scale-400 col-span-1 h-[28rem] rounded-md bg-gray-200 shadow-lg">
@@ -52,9 +71,7 @@ const MealCard = ({ meal, setAllMeals }) => {
           <span className="inline-block rounded-full bg-orange-200 px-2 py-1 text-xs font-semibold uppercase leading-none tracking-wide text-orange-800">
             Highlight
           </span>
-          {_.isEmpty(restaurantState) || _.isNull(restaurantToken) ? (
-            ""
-          ) : (
+          {_.isNull(restaurantToken) || isExpiredRestaurantToken ? null : (
             <div className="flex gap-2">
               <span className="cursor-pointer hover:text-yellow-700">
                 <svg
@@ -107,7 +124,8 @@ const MealCard = ({ meal, setAllMeals }) => {
         </div>
       </div>
       <div className="flex items-center justify-between p-4 text-sm text-gray-600">
-        {!_.isNull(userToken) || !_.isNull(restaurantToken) ? (
+        {(!_.isNull(userToken) && !isExpiredUserToken) ||
+        (!_.isNull(restaurantToken) && !isExpiredRestaurantToken) ? (
           <Link
             to={`/meal/${meal._id}`}
             className="rounded-md bg-indigo-500 px-3 py-2 capitalize text-gray-100"
@@ -122,29 +140,6 @@ const MealCard = ({ meal, setAllMeals }) => {
             order now
           </Link>
         )}
-        {/* {!_.isEmpty(restaurantState) && restaurantToken ? (
-          <>
-            <Link
-              to={`/meal/${meal._id}`}
-              className="rounded-md bg-indigo-500 px-3 py-2 capitalize text-gray-100"
-            >
-              order now
-            </Link>
-            <button
-              onClick={() => handleDelete(meal._id)}
-              className="rounded-md bg-indigo-500 px-3 py-2 capitalize text-gray-100"
-            >
-              delete
-            </button>
-          </>
-        ) : (
-          <Link
-            to={`/meal/${meal._id}`}
-            className="rounded-md bg-indigo-500 px-3 py-2 capitalize text-gray-100"
-          >
-            order now
-          </Link>
-        )} */}
       </div>
     </div>
   );

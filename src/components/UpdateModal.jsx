@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { isExpired } from "react-jwt";
 import {
   getAllMeals,
   getOneMeal,
@@ -11,6 +12,8 @@ import GenericButton from "./GenericButton";
 
 const UpdateModal = ({ mealId, setAllMeals, showModal, setShowModal }) => {
   const [mealData, setMealData] = useState({});
+  const [isExpiredRestaurantToken, setIsExpiredRestaurantToken] =
+    useState(false);
   const navigate = useNavigate();
   const [foodItem, setFoodItem] = useState({
     itemName: "",
@@ -22,6 +25,18 @@ const UpdateModal = ({ mealId, setAllMeals, showModal, setShowModal }) => {
 
   // 1. get food details and pre-filled the form
   const restaurantToken = localStorage.getItem("restaurant-token");
+  useEffect(() => {
+    if (!_.isNull(restaurantToken)) {
+      setIsExpiredRestaurantToken(isExpired(restaurantToken));
+    }
+  }, [restaurantToken]);
+
+  useEffect(() => {
+    if (isExpiredRestaurantToken) {
+      navigate("/restaurant-login");
+    }
+  }, [isExpiredRestaurantToken, navigate]);
+
   useEffect(() => {
     if (_.isNull(restaurantToken)) {
       return;
