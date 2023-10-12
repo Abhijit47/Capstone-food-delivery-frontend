@@ -18,8 +18,9 @@ const GetOneMeal = () => {
 
   const goToCheckOut = async (e) => {
     e.target.textContent = "Processing";
-    await orderMeal(mealId, userToken, restaurantToken);
-    navigate("/");
+    let { price } = mealData;
+    await orderMeal(mealId, userToken, restaurantToken, price);
+    // navigate("/");
   };
 
   useEffect(() => {

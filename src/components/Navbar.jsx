@@ -57,7 +57,7 @@ const Navbar = () => {
 
   // console.log("ut", isExpiredUserToken || "rt", isExpiredRestaurantToken);
   // console.log("ut", isExpiredUserToken);
-  // console.log("rt", !isExpiredRestaurantToken);
+  // console.log("rt", isExpiredRestaurantToken);
 
   return (
     <header className="sticky inset-x-0 top-0 z-[100] border-b-[1px] border-b-gray-600 bg-gray-100 shadow-lg">
