@@ -82,7 +82,7 @@ const Hero = () => {
           <img
             className="rounded object-cover object-center"
             alt="hero"
-            src={require("./../assets/images/hero.webp")}
+            src={"https://omnifood.dev/img/hero.webp"}
             loading="lazy"
           />
         </div>

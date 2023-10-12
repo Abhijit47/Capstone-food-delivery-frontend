@@ -20,6 +20,7 @@ import RestaurantProfile from './pages/RestaurantProfile';
 import GetOneMeal from './pages/GetOneMeal';
 import Checkout from "./pages/Checkout";
 import Meals from './components/Meals';
+import Cart from './pages/Cart';
 
 const App = () => {
 
@@ -37,6 +38,7 @@ const App = () => {
         {/* <Route path='/update-food-item' element={<UpdateFoodItem />} /> */}
         <Route path='/meal/:mealId' element={<GetOneMeal />} />
         <Route path='/checkout' element={<Checkout />} />
+        <Route path='/your-cart' element={<Cart />} />
         <Route path='/profile' element={<UserProfile />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='*' element={<NotFound />} />

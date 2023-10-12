@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import _ from "lodash";
 import GenericButton from "../components/GenericButton";
-import FormFooter from "../components/FormFooter";
 import { restaurentSignUp } from "../features/handlerFormSubmit";
 
 const ReataurantSignup = () => {
@@ -279,8 +278,6 @@ const ReataurantSignup = () => {
 
           <GenericButton buttonName={"Sign up"} />
         </form>
-
-        <FormFooter to={"/restaurant-signin"} />
       </div>
     </section>
   );

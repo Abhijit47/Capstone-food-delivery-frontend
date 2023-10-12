@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GenericButton from "../components/GenericButton";
 import FormFooter from "../components/FormFooter";
@@ -43,6 +43,7 @@ const Login = () => {
   // A hook to access the redux store's state.
   const user = useSelector((state) => state.users.isLoading);
   // console.log(user);
+  // eslint-disable-next-line
   const userToken = localStorage.getItem("user-token");
 
   // check user is already in store or not
@@ -61,9 +62,9 @@ const Login = () => {
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
-              className="mx-auto h-10 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="Your Company"
+              className="mx-auto h-6 w-40"
+              src="https://omnifood.dev/img/omnifood-logo.png"
+              alt="hero-logo"
             />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
               Sign in to your account
@@ -98,7 +99,7 @@ const Login = () => {
                   <div className="text-sm">
                     <Link
                       to="/forgot-password"
-                      className="font-semibold text-indigo-600 hover:text-indigo-500"
+                      className="font-semibold text-indigo-700 hover:text-indigo-600"
                     >
                       Forgot password?
                     </Link>

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import _ from "lodash";
 import GenericButton from "../components/GenericButton";
-import FormFooter from "../components/FormFooter";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import restaurantSignIn from "../redux/actions/restaurantAction";
@@ -26,6 +25,7 @@ const RestaurantLogin = () => {
     setRestaurantFormData({ ...restaurantFormData, [name]: value });
   };
 
+  // eslint-disable-next-line
   const restaurantToken = localStorage.getItem("restaurant-token");
 
   // useEffect(() => {
@@ -54,7 +54,7 @@ const RestaurantLogin = () => {
   // console.log(restaurant);
 
   return (
-    <section className="flex min-h-full flex-1 flex-col justify-center bg-gradient-to-tr from-pink-400 to-indigo-400 px-6 py-12 lg:px-8">
+    <section className="flex min-h-[90dvh] flex-1 flex-col justify-center bg-gradient-to-tr from-pink-400 to-indigo-400 px-6 py-2 lg:px-8">
       <div className="px-6 py-12 sm:mx-auto sm:w-full sm:max-w-sm lg:px-8">
         <img
           className="mx-auto h-10 w-auto"
@@ -66,7 +66,7 @@ const RestaurantLogin = () => {
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
+      <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
         <form className="space-y-6" onSubmit={handleSubmit} method="POST">
           <div>
             <label htmlFor="email" className="form-label">
@@ -94,7 +94,7 @@ const RestaurantLogin = () => {
               <div className="text-sm">
                 <Link
                   to="/forgot-password"
-                  className="font-semibold text-indigo-600 hover:text-indigo-500"
+                  className="font-semibold text-gray-900 hover:text-gray-700"
                 >
                   Forgot password?
                 </Link>
@@ -134,8 +134,6 @@ const RestaurantLogin = () => {
 
           <GenericButton buttonName={"Sign in"} />
         </form>
-
-        <FormFooter to={"/restaurant-signup"} />
       </div>
     </section>
   );

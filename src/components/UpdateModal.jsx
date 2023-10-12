@@ -96,7 +96,7 @@ const UpdateModal = ({ mealId, setAllMeals, showModal, setShowModal }) => {
                 <div className="flex flex-1 flex-col justify-center px-6 py-12 xs:w-[450px] sm:w-[600px] md:w-[600px] lg:w-[600px] lg:px-8">
                   <div className="sm:mx-auto sm:w-full sm:max-w-md">
                     <img
-                      className="mx-auto h-[8rem] w-auto rounded-lg shadow-md"
+                      className="mx-auto h-[8rem] w-auto rounded-lg shadow-lg transition-all delay-200 duration-200 hover:scale-110"
                       src={
                         mealData
                           ? mealData.picture

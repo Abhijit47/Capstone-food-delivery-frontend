@@ -4,10 +4,10 @@ import PriceTestimonial from "./PriceTestimonial";
 
 const PriceSection = () => {
   return (
-    <div>
+    <section id="price-section">
       <PriceCard />
       <PriceTestimonial />
-    </div>
+    </section>
   );
 };
 

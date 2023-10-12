@@ -1,105 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 // import GenericButton from "../components/GenericButton";
 // import FormFooter from "../components/FormFooter";
 
 const Signup = () => {
+  const [userData, setUserData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const { first_name, last_name, email, phone, password, confirmPassword } =
+    userData;
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      return alert("Passwords aren't matched");
+    }
+
+    const formdata = {
+      name: `${first_name} ${last_name}`,
+      email,
+      phone,
+      password,
+    };
+
+    console.log(formdata);
+    // dispatch an action to sign up
+  };
   return (
-    // <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-    //   <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-    //     <img
-    //       className="mx-auto h-10 w-auto"
-    //       src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-    //       alt="Your Company"
-    //     />
-    //     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-    //       Sign up to your account
-    //     </h2>
-    //   </div>
-
-    //   <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    //     <form className="space-y-6" action="#" method="POST">
-
-    //       <div>
-    //         <label htmlFor="name" className="form-label">
-    //           fullname
-    //         </label>
-    //         <div className="mt-2">
-    //           <input
-    //             id="name"
-    //             name="name"
-    //             type="text"
-    //             autoComplete="off"
-    //             required
-    //             className="form-input"
-    //           />
-    //         </div>
-    //       </div>
-
-    //       <div>
-    //         <label htmlFor="email" className="form-label">
-    //           email address
-    //         </label>
-    //         <div className="mt-2">
-    //           <input
-    //             id="email"
-    //             name="email"
-    //             type="email"
-    //             autoComplete="email"
-    //             required
-    //             className="form-input"
-    //           />
-    //         </div>
-    //       </div>
-
-    //       <div>
-    //         <div className="flex items-center justify-between">
-    //           <label htmlFor="password" className="form-label">
-    //             password
-    //           </label>
-    //         </div>
-    //         <div className="mt-2">
-    //           <input
-    //             id="password"
-    //             name="password"
-    //             type="password"
-    //             autoComplete="off"
-    //             required
-    //             className="form-input"
-    //           />
-    //         </div>
-    //       </div>
-
-    //       <div>
-    //         <div className="flex items-center justify-between">
-    //           <label htmlFor="confirm_password" className="form-label">
-    //             confirm password
-    //           </label>
-    //         </div>
-    //         <div className="mt-2">
-    //           <input
-    //             id="confirm_password"
-    //             name="confirm_password"
-    //             type="password"
-    //             autoComplete="off"
-    //             required
-    //             className="form-input"
-    //           />
-    //         </div>
-    //       </div>
-
-    //       <GenericButton buttonName={"Sign up"} />
-    //     </form>
-
-    //     <FormFooter to={"/login"} />
-    //   </div>
-    // </div>
     <section className="bg-white">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
+        <div className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
           <img
             alt="Night"
-            src="https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-            className="opacity-80 absolute inset-0 h-full w-full object-cover"
+            src="https://images.unsplash.com/photo-1535850452425-140ee4a8dbae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1412&q=80"
+            className="absolute inset-0 h-full w-full object-cover opacity-50"
           />
 
           <div className="hidden lg:relative lg:block lg:p-12">
@@ -119,22 +65,22 @@ const Signup = () => {
             </a>
 
             <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
-              Welcome to Squid 🦑
+              Welcome to Omnifood 🥘
             </h2>
 
-            <p className="text-white/90 mt-4 leading-relaxed">
+            <p className="mt-4 leading-relaxed text-gray-100">
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi
               nam dolorum aliquam, quibusdam aperiam voluptatum.
             </p>
           </div>
-        </section>
+        </div>
 
-        <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
+        <div className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
           <div className="max-w-xl lg:max-w-3xl">
             <div className="relative -mt-16 block lg:hidden">
-              <a
+              <Link
                 className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-blue-600 sm:h-20 sm:w-20"
-                href="/"
+                to="/"
               >
                 <span className="sr-only">Home</span>
                 <svg
@@ -148,23 +94,27 @@ const Signup = () => {
                     fill="currentColor"
                   />
                 </svg>
-              </a>
+              </Link>
 
               <h1 className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
-                Welcome to Squid 🦑
+                Welcome to Omnifood 🥘
               </h1>
 
-              <p className="mt-4 leading-relaxed text-gray-500">
+              <p className="mt-4 leading-relaxed text-gray-700">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 Eligendi nam dolorum aliquam, quibusdam aperiam voluptatum.
               </p>
             </div>
 
-            <form action="#" className="mt-8 grid grid-cols-6 gap-6">
+            <form
+              onSubmit={handleSubmit}
+              className="grid grid-cols-6 gap-6 xs:mt-8"
+            >
               <div className="col-span-6 sm:col-span-3">
                 <label
                   htmlFor="FirstName"
                   className="block text-sm font-medium text-gray-700"
+                  required
                 >
                   First Name
                 </label>
@@ -173,7 +123,12 @@ const Signup = () => {
                   type="text"
                   id="FirstName"
                   name="first_name"
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  className="reg-form-input"
+                  required
+                  placeholder="Enter your first name"
+                  autoComplete="given-name"
+                  value={first_name}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -189,7 +144,12 @@ const Signup = () => {
                   type="text"
                   id="LastName"
                   name="last_name"
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  className="reg-form-input"
+                  required
+                  placeholder="Enter your last name"
+                  autoComplete="family-name"
+                  value={last_name}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -205,7 +165,33 @@ const Signup = () => {
                   type="email"
                   id="Email"
                   name="email"
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  className="reg-form-input"
+                  required
+                  placeholder="Enter your email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="col-span-6">
+                <label
+                  htmlFor="phone"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Phone number
+                </label>
+
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  className="reg-form-input"
+                  required
+                  placeholder="Enter your mobile number"
+                  autoComplete="tel"
+                  value={phone}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -221,7 +207,12 @@ const Signup = () => {
                   type="password"
                   id="Password"
                   name="password"
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  className="reg-form-input"
+                  required
+                  placeholder="Enter your password"
+                  autoComplete="new-password"
+                  value={password}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -236,8 +227,13 @@ const Signup = () => {
                 <input
                   type="password"
                   id="PasswordConfirmation"
-                  name="password_confirmation"
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  name="confirmPassword"
+                  className="reg-form-input"
+                  required
+                  placeholder="Enter your confirm password"
+                  autoComplete="current-password"
+                  value={confirmPassword}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -259,34 +255,34 @@ const Signup = () => {
 
               <div className="col-span-6">
                 <p className="text-sm text-gray-500">
-                  By creating an account, you agree to our
-                  <a href="#!" className="text-gray-700 underline">
+                  By creating an account, you agree to our&nbsp;
+                  <Link to="#!" className="text-gray-700 underline">
                     terms and conditions
-                  </a>
-                  and
-                  <a href="#!" className="text-gray-700 underline">
+                  </Link>
+                  &nbsp;and&nbsp;
+                  <Link to="#!" className="text-gray-700 underline">
                     privacy policy
-                  </a>
+                  </Link>
                   .
                 </p>
               </div>
 
               <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                <button className="border transition inline-block shrink-0 rounded-md border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                <button type="submit" className="reg-form-button">
                   Create an account
                 </button>
 
                 <p className="mt-4 text-sm text-gray-500 sm:mt-0">
-                  Already have an account?
-                  <a href="#!" className="text-gray-700 underline">
+                  Already have an account?&nbsp;
+                  <Link to="/login" className="text-gray-700 underline">
                     Log in
-                  </a>
+                  </Link>
                   .
                 </p>
               </div>
             </form>
           </div>
-        </main>
+        </div>
       </div>
     </section>
   );
