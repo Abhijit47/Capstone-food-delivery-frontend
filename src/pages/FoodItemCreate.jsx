@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
@@ -20,11 +20,11 @@ const FoodItemCreate = () => {
 
   const restaurantToken = localStorage.getItem("restaurant-token");
   // // // console.log(token);
-  useEffect(() => {
-    if (!restaurantToken) {
-      navigate("/restaurant-login");
-    }
-  }, [navigate, restaurantToken]);
+  // useEffect(() => {
+  //   if (!restaurantToken) {
+  //     navigate("/restaurant-login");
+  //   }
+  // }, [navigate, restaurantToken]);
 
   // define a function for handle form request
   const handleSubmit = async (e) => {

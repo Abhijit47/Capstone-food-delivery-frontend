@@ -110,6 +110,13 @@ const Signup = () => {
               onSubmit={handleSubmit}
               className="grid grid-cols-6 gap-6 xs:mt-8"
             >
+              <div className="col-span-6">
+                <img
+                  className="mx-auto h-6 w-40"
+                  src="https://omnifood.dev/img/omnifood-logo.png"
+                  alt="hero-logo"
+                />
+              </div>
               <div className="col-span-6 sm:col-span-3">
                 <label
                   htmlFor="FirstName"

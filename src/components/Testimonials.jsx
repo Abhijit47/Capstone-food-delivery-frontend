@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import "keen-slider/keen-slider.min.css";
 import { useKeenSlider } from "keen-slider/react";
+import { testimonialData } from "../constant";
 // import from 'keen-slider/react.es' for to get an ES module
 
 const Testimonials = () => {
@@ -8,6 +9,7 @@ const Testimonials = () => {
   const [loaded, setLoaded] = useState(false);
   const [sliderRef, instanceRef] = useKeenSlider({
     initial: 0,
+    loop: true,
     slideChanged(slider) {
       setCurrentSlide(slider.track.details.rel);
     },
@@ -18,19 +20,19 @@ const Testimonials = () => {
   return (
     <div className="navigation-wrapper">
       <div ref={sliderRef} className="keen-slider">
-        <section className="bg-gray-50">
+        <section className="bg-gray-100">
           <div className="mx-auto max-w-[1340px] px-4 py-12 sm:px-6 lg:me-0 lg:py-16 lg:pe-0 lg:ps-8 xl:py-24">
-            <div className="xs:flex-wrap flex justify-between sm:flex sm:pe-6 lg:pe-8">
-              <h2 className="xs:text-xl flex font-bold tracking-tight text-gray-900 sm:text-2xl md:text-3xl lg:text-4xl">
+            <div className="flex justify-between xs:flex-wrap sm:flex sm:pe-6 lg:pe-8">
+              <h2 className="flex font-bold tracking-tight text-gray-900 xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl">
                 Read trusted reviews from our customers
               </h2>
               {loaded && instanceRef.current && (
                 <div className="mt-8 flex gap-4 lg:mt-0">
                   <button
                     aria-label="Previous slide"
-                    id=""
-                    className="border transition rounded-full border-red-600 p-3 text-red-600 hover:bg-red-600 hover:text-white"
-                    left="true"
+                    id="keen-slider-prev"
+                    className="border transition rounded-full border-red-600 px-4 py-2 text-red-600 outline-none hover:bg-red-600 hover:text-white focus:outline-none"
+                    left={"true"}
                     onClick={(e) =>
                       e.stopPropagation() || instanceRef.current?.prev()
                     }
@@ -55,7 +57,7 @@ const Testimonials = () => {
                   <button
                     aria-label="Next slide"
                     id="keen-slider-next"
-                    className="border transition rounded-full border-red-600 p-3 text-red-600 hover:bg-red-600 hover:text-white"
+                    className="border transition rounded-full border-red-600 px-4 py-2 text-red-600 outline-none hover:bg-red-600 hover:text-white focus:outline-none"
                     onClick={(e) =>
                       e.stopPropagation() || instanceRef.current?.next()
                     }
@@ -85,7 +87,77 @@ const Testimonials = () => {
 
             <div className="-mx-6 mt-8 lg:col-span-2 lg:mx-0">
               <div id="keen-slider" className="keen-slider">
-                <div className="keen-slider__slide">
+                {testimonialData.map((testimonial, index) => (
+                  <Fragment key={index}>
+                    <div className="keen-slider__slide">
+                      <blockquote className="flex h-full flex-col justify-between rounded-md bg-white p-8 shadow-sm sm:p-8 lg:p-12">
+                        <div>
+                          <div className="flex gap-1 text-green-500">
+                            <svg
+                              className="h-5 w-5"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+
+                            <svg
+                              className="h-5 w-5"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+
+                            <svg
+                              className="h-5 w-5"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+
+                            <svg
+                              className="h-5 w-5"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+
+                            <svg
+                              className="h-5 w-5"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                          </div>
+
+                          <div className="mt-4">
+                            <p className="text-2xl font-bold text-red-600 xs:text-lg sm:text-xl">
+                              {testimonial.testimonialHeading} {index + 1}
+                            </p>
+
+                            <p className="mt-4 leading-relaxed text-gray-700">
+                              {testimonial.testimonialBody}
+                            </p>
+                          </div>
+                        </div>
+
+                        <footer className="mt-4 text-sm font-medium text-gray-700 sm:mt-6">
+                          &mdash; {testimonial.testimonialAuthor}
+                        </footer>
+                      </blockquote>
+                    </div>
+                  </Fragment>
+                ))}
+                {/* <div className="keen-slider__slide">
                   <blockquote className="flex h-full flex-col justify-between bg-white p-6 shadow-sm sm:p-8 lg:p-12">
                     <div>
                       <div className="gap-0.5 flex text-green-500">
@@ -136,7 +208,7 @@ const Testimonials = () => {
                       </div>
 
                       <div className="mt-4">
-                        <p className="xs:text-lg text-rose-600 text-2xl font-bold sm:text-xl">
+                        <p className="text-rose-600 text-2xl font-bold xs:text-lg sm:text-xl">
                           Stayin' Alive
                         </p>
 
@@ -296,7 +368,7 @@ const Testimonials = () => {
                       &mdash; Michael Scott
                     </footer>
                   </blockquote>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

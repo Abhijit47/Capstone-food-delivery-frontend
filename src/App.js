@@ -17,10 +17,13 @@ import UpdateFoodItem from './pages/UpdateFoodItem';
 import UserProfile from './pages/UserProfile';
 // eslint-disable-next-line
 import RestaurantProfile from './pages/RestaurantProfile';
+// eslint-disable-next-line
 import GetOneMeal from './pages/GetOneMeal';
+// eslint-disable-next-line
 import Checkout from "./pages/Checkout";
 import Meals from './components/Meals';
 import Cart from './pages/Cart';
+import ContactUs from './pages/ContactUs';
 
 const App = () => {
 
@@ -33,13 +36,15 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/restaurant-login' element={<RestaurantLogin />} />
         <Route path='/restaurant-signup' element={<RestaurantSignup />} />
+        <Route path='/restaurant-profile' element={<RestaurantProfile />} />
+        <Route path='/contact-us' element={<ContactUs />} />
         <Route path='/all-meals' element={<Meals />} />
         <Route path='/food-item-create' element={<FoodItemCreate />} />
         {/* <Route path='/update-food-item' element={<UpdateFoodItem />} /> */}
-        <Route path='/meal/:mealId' element={<GetOneMeal />} />
-        <Route path='/checkout' element={<Checkout />} />
+        {/* <Route path='/meal/:mealId' element={<GetOneMeal />} /> */}
+        {/* <Route path='/checkout' element={<Checkout />} /> */}
         <Route path='/your-cart' element={<Cart />} />
-        <Route path='/profile' element={<UserProfile />} />
+        <Route path='/user-profile' element={<UserProfile />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='*' element={<NotFound />} />
       </Routes>

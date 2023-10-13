@@ -124,3 +124,52 @@ export const priceCards = [
     cardFooter: "Literally you probably haven't heard of them jean shorts."
   },
 ];
+
+export const priceTestimonialCards = [
+  {
+    cardHeader: "Starter",
+    cardPrice: "FREE",
+    cardDescription: "Full access to all features and no credit card required.",
+  },
+  {
+    cardHeader: "Personal",
+    cardPrice: "₹ 1,800",
+    cardPriceSpan: "/mo",
+    cardDescription: "Unlimited products features and dedicated support channels.",
+  },
+  {
+    cardHeader: "Team",
+    cardPrice: "₹ 1,500",
+    cardPriceSpan: "/mo",
+    cardDescription: "Unlimited products features and dedicated support channels.",
+  }
+];
+
+export const testimonialData = [
+  {
+    testimonialHeading: "Stayin' Alive",
+    testimonialBody: "No, Rose, they are not breathing. And they have no arms or legs … Where are they? You know what? If we come across somebody with no arms or legs, do we bother resuscitating them? I mean, what quality of life do we have there?",
+    testimonialAuthor: "Michael Scott",
+  },
+  {
+    testimonialHeading: "Stayin' Alive",
+    testimonialBody: "No, Rose, they are not breathing. And they have no arms or legs … Where are they? You know what? If we come across somebody with no arms or legs, do we bother resuscitating them? I mean, what quality of life do we have there?",
+    testimonialAuthor: "Michael Scott",
+  },
+  {
+    testimonialHeading: "Stayin' Alive",
+    testimonialBody: "No, Rose, they are not breathing. And they have no arms or legs … Where are they? You know what? If we come across somebody with no arms or legs, do we bother resuscitating them? I mean, what quality of life do we have there?",
+    testimonialAuthor: "Michael Scott",
+  },
+  {
+    testimonialHeading: "Stayin' Alive",
+    testimonialBody: "No, Rose, they are not breathing. And they have no arms or legs … Where are they? You know what? If we come across somebody with no arms or legs, do we bother resuscitating them? I mean, what quality of life do we have there?",
+    testimonialAuthor: "Michael Scott",
+  },
+  {
+    testimonialHeading: "Stayin' Alive",
+    testimonialBody: "No, Rose, they are not breathing. And they have no arms or legs … Where are they? You know what? If we come across somebody with no arms or legs, do we bother resuscitating them? I mean, what quality of life do we have there?",
+    testimonialAuthor: "Michael Scott",
+  },
+
+];

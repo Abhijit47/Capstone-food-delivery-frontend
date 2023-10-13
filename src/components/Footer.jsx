@@ -5,7 +5,6 @@ import Facebook from "../assets/icons/Facebook";
 import Twitter from "../assets/icons/Twitter";
 import Github from "../assets/icons/Github";
 import Dribble from "../assets/icons/Dribble";
-import FoodIcon from "../assets/icons/FoodIcon";
 
 const Footer = () => {
   // eslint-disable-next-line
@@ -60,12 +59,12 @@ const Footer = () => {
     <footer className="bg-white">
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="lg:flex lg:items-start lg:gap-8">
-          <div className="text-indigo-600">
+          {/* <div className="text-indigo-600">
             <FoodIcon />
-          </div>
+          </div> */}
 
-          <div className="mt-8 grid grid-cols-2 gap-8 lg:mt-0 lg:grid-cols-5 lg:gap-y-16">
-            <div className="col-span-2">
+          <div className="mt-8 grid grid-cols-2 gap-8 lg:mt-0 lg:grid-cols-5 justify-center lg:gap-y-16">
+            {/* <div className="col-span-2">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900">
                   Get the latest news!
@@ -101,9 +100,9 @@ const Footer = () => {
                   </Link>
                 </div>
               </form>
-            </div>
+            </div> */}
 
-            <div className="col-span-2 sm:col-span-1">
+            <div className="col-span-2 sm:col-span-1 p-10">
               <p className="font-medium text-gray-900">Services</p>
 
               <ul className="mt-6 space-y-4 text-sm">
@@ -154,7 +153,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="col-span-2 sm:col-span-1">
+            <div className="col-span-2 sm:col-span-1 p-10">
               <p className="font-medium text-gray-900">Company</p>
 
               <ul className="mt-6 space-y-4 text-sm">
@@ -187,7 +186,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="col-span-2 sm:col-span-1">
+            <div className="col-span-2 sm:col-span-1 p-10">
               <p className="font-medium text-gray-900">Helpful Links</p>
 
               <ul className="mt-6 space-y-4 text-sm">
@@ -220,7 +219,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="col-span-2 sm:col-span-1">
+            <div className="col-span-2 sm:col-span-1 p-10">
               <p className="font-medium text-gray-900">Legal</p>
 
               <ul className="mt-6 space-y-4 text-sm">
@@ -262,7 +261,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="col-span-2 sm:col-span-1">
+            <div className="col-span-2 sm:col-span-1 p-10">
               <p className="font-medium text-gray-900">Downloads</p>
 
               <ul className="mt-6 space-y-4 text-sm">
@@ -286,7 +285,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <ul className="col-span-2 flex justify-start gap-6 lg:col-span-5 lg:justify-end">
+            <ul className="col-span-2 flex justify-start gap-6 lg:col-span-5 lg:justify-end p-4">
               <li>
                 <Link
                   href="/"

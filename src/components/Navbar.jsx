@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import {
   ArrowRightOnRectangleIcon,
@@ -17,8 +17,10 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import CartIcon from "../assets/icons/CartIcon";
+import _ from "lodash";
+import { isExpired } from "react-jwt";
 
-const products = [
+const menus = [
   {
     name: "Analytics",
     description: "Get a better understanding of your traffic",
@@ -32,9 +34,9 @@ const products = [
     icon: CursorArrowRaysIcon,
   },
   {
-    name: "Security",
+    name: "User profile",
     description: "Your customers’ data will be safe and secure",
-    to: "#",
+    to: "/user-profile",
     icon: FingerPrintIcon,
   },
   {
@@ -62,7 +64,33 @@ function classNames(...classes) {
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isExpiredUserToken, setIsExpiredUserToken] = useState(false);
+  const [isExpiredRestaurantToken, setIsExpiredRestaurantToken] =
+    useState(null);
+
   const { carts } = useSelector((state) => state.carts);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+
+  const userToken = localStorage.getItem("user-token");
+  const restaurantToken = localStorage.getItem("restaurant-token");
+
+  useEffect(() => {
+    if (!_.isNull(userToken)) {
+      setIsExpiredUserToken(isExpired(userToken));
+    }
+    if (!_.isNull(restaurantToken)) {
+      setIsExpiredRestaurantToken(isExpired(restaurantToken));
+    }
+  }, [userToken, restaurantToken]);
+
+  // console.log("ut", !isExpiredUserToken && "rt", !isExpiredRestaurantToken);
+  // console.log(_.isNull(restaurantToken));
+  // console.log("ut", isExpiredUserToken);
+  // console.log("rt", isExpiredRestaurantToken);
 
   return (
     <header className="sticky top-0 z-[1000] bg-white shadow-md">
@@ -99,8 +127,20 @@ const Navbar = () => {
           </button>
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
+          <a
+            href="#price-section"
+            className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
+          >
+            Features
+          </a>
+          <Link
+            to="/all-meals"
+            className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
+          >
+            Explore food items
+          </Link>
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 outline-none">
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 outline-none focus:outline-none">
               Menu
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400"
@@ -117,14 +157,14 @@ const Navbar = () => {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="-left-8 top-full ring-gray-900/5 absolute z-10 mt-3 w-screen max-w-md overflow-hidden rounded-lg bg-white shadow-lg ring-1">
+              <Popover.Panel className="top-full absolute inset-x-[-20rem] z-10 mt-3 w-screen max-w-md overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-gray-500">
                 <div className="p-4">
-                  {products.map((item) => (
+                  {menus.map((item) => (
                     <div
                       key={item.name}
-                      className="hover:bg-gray-50 group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6"
+                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-100"
                     >
-                      <div className="h-11 w-11 bg-gray-50 flex flex-none items-center justify-center rounded-lg group-hover:bg-white">
+                      <div className="h-11 w-11 flex flex-none items-center justify-center rounded-lg bg-gray-100 group-hover:bg-white">
                         <item.icon
                           className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
                           aria-hidden="true"
@@ -143,7 +183,7 @@ const Navbar = () => {
                     </div>
                   ))}
                 </div>
-                <div className="divide-x divide-gray-900/5 bg-gray-50 grid grid-cols-2">
+                <div className="divide-x grid grid-cols-2 divide-gray-900 bg-gray-100">
                   {callsToAction.map((item) => (
                     <Link
                       key={item.name}
@@ -161,39 +201,40 @@ const Navbar = () => {
               </Popover.Panel>
             </Transition>
           </Popover>
-
-          <a
-            href="#price-section"
-            className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
-          >
-            Features
-          </a>
-          <Link
-            to="/all-meals"
-            className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
-          >
-            Explore food items
-          </Link>
-          <Link
-            to="/restaurant-login"
-            className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
-          >
-            Restaurant login
-          </Link>
+          {!_.isNull(isExpiredRestaurantToken) || !isExpiredRestaurantToken ? (
+            <Link
+              to="/restaurant-login"
+              className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
+            >
+              Restaurant login
+            </Link>
+          ) : null}
         </Popover.Group>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-4">
-          <Link
-            to="/login"
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
-            Log in <span aria-hidden="true">&rarr;</span>
-          </Link>
-          <Link
-            to="/signup"
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
-            sign up<span aria-hidden="true">&rarr;</span>
-          </Link>
+        <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:gap-4">
+          {isExpiredUserToken ? (
+            <Fragment>
+              <Link
+                to="/login"
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
+                Log in <span aria-hidden="true">&rarr;</span>
+              </Link>
+              <Link
+                to="/signup"
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
+                sign up<span aria-hidden="true">&rarr;</span>
+              </Link>
+            </Fragment>
+          ) : (
+            <button
+              className="rounded-md bg-red-600 px-3 py-1 text-gray-100 shadow-lg hover:bg-red-500"
+              onClick={handleLogout}
+            >
+              Sign out
+            </button>
+          )}
+
           <Link to={"/your-cart"} className="relative">
             <div className="">
               <span className="text-slate-50 absolute right-[3px] top-[-12px] rounded-full bg-gray-400 pe-1 ps-1 text-xs">
@@ -237,7 +278,7 @@ const Navbar = () => {
                   {({ open }) => (
                     <>
                       <Disclosure.Button className="pr-3.5 hover:bg-gray-50 flex w-full items-center justify-between rounded-lg py-2 pl-3 text-base font-semibold leading-7 text-gray-900">
-                        Product
+                        Menu
                         <ChevronDownIcon
                           className={classNames(
                             open ? "rotate-180" : "",
@@ -247,12 +288,12 @@ const Navbar = () => {
                         />
                       </Disclosure.Button>
                       <Disclosure.Panel className="mt-2 space-y-2">
-                        {[...products, ...callsToAction].map((item) => (
+                        {[...menus, ...callsToAction].map((item) => (
                           <Disclosure.Button
                             key={item.name}
                             as="a"
                             to={item.to}
-                            className="hover:bg-gray-50 block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900"
+                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-100"
                           >
                             {item.name}
                           </Disclosure.Button>
@@ -262,37 +303,67 @@ const Navbar = () => {
                   )}
                 </Disclosure>
                 <Link
-                  to="#"
-                  className="hover:bg-gray-50 -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900"
+                  to="/all-meals"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
                 >
                   Features
                 </Link>
                 <Link
                   to="#"
-                  className="hover:bg-gray-50 -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
                 >
                   Marketplace
                 </Link>
-                <Link
-                  to="#"
-                  className="hover:bg-gray-50 -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900"
-                >
-                  Company
-                </Link>
+                <div>
+                  {isExpiredRestaurantToken ? (
+                    <button
+                      className="rounded-md bg-red-700 px-3 py-1 text-gray-100 shadow-lg hover:bg-red-500"
+                      onClick={handleLogout}
+                    >
+                      Sign out
+                    </button>
+                  ) : (
+                    <Fragment>
+                      <Link
+                        to="/restaurant-login"
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
+                      >
+                        Restaurant login
+                      </Link>
+                      <Link
+                        to="/restaurant-signup"
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
+                      >
+                        Restaurant Signup
+                      </Link>
+                    </Fragment>
+                  )}
+                </div>
               </div>
-              <div className="flex justify-center gap-8 py-6">
-                <Link
-                  to="/login"
-                  className="py-2.5 hover:bg-gray-50 -mx-3 block rounded-lg border-gray-900 px-3 text-base font-semibold leading-7 text-gray-900 transition-all delay-150 duration-150 hover:border-b-2"
-                >
-                  Log in
-                </Link>
-                <Link
-                  to="/signup"
-                  className="py-2.5 hover:bg-gray-50 -mx-3 block rounded-lg border-gray-900 px-3 text-base font-semibold leading-7 text-gray-900 transition-all delay-150 duration-150 hover:border-b-2"
-                >
-                  sign up
-                </Link>
+              <div className="flex flex-col justify-center gap-4 py-4">
+                {!isExpiredUserToken ? (
+                  <button
+                    className="rounded-md bg-red-700 px-3 py-1 text-gray-100 shadow-lg hover:bg-red-500"
+                    onClick={handleLogout}
+                  >
+                    Sign out
+                  </button>
+                ) : (
+                  <Fragment>
+                    <Link
+                      to="/login"
+                      className="-mx-3 block rounded-lg border-gray-900 px-3 py-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
+                    >
+                      Log in
+                    </Link>
+                    <Link
+                      to="/signup"
+                      className="-mx-3 block rounded-lg border-gray-900 px-3 py-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
+                    >
+                      Sign up
+                    </Link>
+                  </Fragment>
+                )}
               </div>
             </div>
           </div>

@@ -100,7 +100,10 @@ function Cart() {
   });
 
   return (
-    <>
+    <section id="cart">
+      <h3 className="text-center font-sans text-3xl font-semibold text-gray-800">
+        Your Cart 🛒
+      </h3>
       <div
         className="transition sticky right-0 z-[999] h-screen w-full translate-x-0 transform overflow-x-hidden duration-700 ease-in-out"
         id="scroll"
@@ -256,7 +259,7 @@ function Cart() {
                         {cartItem.description}
                       </p>
                       <p className="w-96 text-xs leading-3 text-gray-600">
-                        Discount: 0
+                        Discount:&nbsp;₹&nbsp;0.00
                       </p>
                       <div className="flex items-center justify-between pr-6 pt-5">
                         <div className="itemms-center flex">
@@ -326,12 +329,21 @@ function Cart() {
                     ₹&nbsp;{totalPrice}
                   </p>
                 </div>
-                <button
-                  onClick={() => navigate("/")}
-                  className="border w-full rounded-md border-gray-800 bg-gray-800 py-5 text-base leading-none text-white transition-all delay-75 duration-100 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
-                >
-                  Checkout
-                </button>
+                {carts.length <= 0 ? (
+                  <button
+                    onClick={() => navigate("/")}
+                    className="border w-full rounded-md border-gray-800 bg-gray-800 py-5 text-base leading-none text-white transition-all delay-75 duration-100 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+                  >
+                    No items for Checkout
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => navigate("/")}
+                    className="border w-full rounded-md border-gray-800 bg-gray-800 py-5 text-base leading-none text-white transition-all delay-75 duration-100 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+                  >
+                    Checkout
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -355,7 +367,7 @@ function Cart() {
                 }
 `}
       </style>
-    </>
+    </section>
   );
 }
 

@@ -1,33 +1,35 @@
-import React from "react";
+import React, { Fragment, useRef } from "react";
+import { priceTestimonialCards } from "../constant";
 
 const PriceTestimonial = () => {
-  let monthly = document.getElementById("monthly");
-  let annually = document.getElementById("annually");
+  let monthlyRef = useRef(null);
+  let annuallyRef = useRef(null);
 
   let flag = false;
-  const toggleIt = () => {
+  function toggleIt() {
+    if (monthlyRef.current === null && annuallyRef.current === null) return;
     if (!flag) {
-      monthly.classList.add("bg-indigo-700");
-      monthly.classList.add("text-white");
-      monthly.classList.remove("bg-gray-100");
-      monthly.classList.remove("text-gray-600");
-      annually.classList.remove("bg-indigo-700");
-      annually.classList.remove("text-white");
-      annually.classList.add("bg-gray-100");
-      annually.classList.add("text-gray-600");
+      monthlyRef.current?.classList?.add("bg-indigo-700");
+      monthlyRef.current?.classList?.add("text-white");
+      monthlyRef.current?.classList?.remove("bg-gray-100");
+      monthlyRef.current?.classList?.remove("text-gray-600");
+      annuallyRef.current?.classList?.remove("bg-indigo-700");
+      annuallyRef.current?.classList?.remove("text-white");
+      annuallyRef.current?.classList?.add("bg-gray-100");
+      annuallyRef.current?.classList?.add("text-gray-600");
       flag = true;
     } else {
-      monthly.classList.remove("bg-indigo-700");
-      monthly.classList.remove("text-white");
-      monthly.classList.add("bg-gray-100");
-      monthly.classList.add("text-gray-600");
-      annually.classList.add("bg-indigo-700");
-      annually.classList.add("text-white");
-      annually.classList.remove("bg-gray-100");
-      annually.classList.remove("text-gray-600");
+      monthlyRef.current?.classList?.remove("bg-indigo-700");
+      monthlyRef.current?.classList?.remove("text-white");
+      monthlyRef.current?.classList?.add("bg-gray-100");
+      monthlyRef.current?.classList?.add("text-gray-600");
+      annuallyRef.current?.classList?.add("bg-indigo-700");
+      annuallyRef.current?.classList?.add("text-white");
+      annuallyRef.current?.classList?.remove("bg-gray-100");
+      annuallyRef.current?.classList?.remove("text-gray-600");
       flag = false;
     }
-  };
+  }
   return (
     <div className="2xl:px-0 px-6 py-20 xl:container xl:mx-auto">
       <div className="items-center justify-between lg:flex">
@@ -43,19 +45,19 @@ const PriceTestimonial = () => {
             We’re working on a suit of tools to make managing complex systems
             easier, for everyone for free. we can’t wait to hear what you think
           </p>
-          <div className="w-56">
+          <div className="mx-auto w-56">
             <div className="shadow mt-10 flex items-center rounded-full bg-gray-100">
               <button
                 onClick={toggleIt}
                 className="mr-1 rounded-full bg-gray-100 px-6 py-4 text-base leading-none text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-offset-2"
-                id="monthly"
+                ref={monthlyRef}
               >
                 Monthly
               </button>
               <button
                 onClick={toggleIt}
                 className="rounded-full bg-indigo-700 px-6 py-4 text-base leading-none text-white focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-offset-2"
-                id="annually"
+                ref={annuallyRef}
               >
                 Annually
               </button>
@@ -71,57 +73,51 @@ const PriceTestimonial = () => {
             className="absolute -ml-12 mt-24 w-full"
             alt="background circle images"
           />
-          <div
-            role="listitem"
-            className="shadow relative z-30 cursor-pointer rounded-lg bg-white p-8"
-          >
-            <div className="items-center justify-between md:flex">
-              <h2 className="text-2xl font-semibold leading-6 text-gray-800">
-                Starter
-              </h2>
-              <p className="mt-4 text-2xl font-semibold leading-6 text-gray-800 md:mt-0">
-                FREE
-              </p>
-            </div>
-            <p className="md:w-80 mt-4 text-base leading-6 text-gray-600">
-              Full access to all features and no credit card required
-            </p>
-          </div>
-          <div
-            role="listitem"
-            className="shadow relative z-30 mt-3 flex cursor-pointer rounded-lg bg-white"
-          >
-            <div className="w-2.5  h-auto rounded-bl-md rounded-tl-md bg-indigo-700" />
-            <div className="w-full p-8">
-              <div className="items-center justify-between md:flex">
-                <h2 className="text-2xl font-semibold leading-6 text-gray-800">
-                  Personal
-                </h2>
-                <p className="mt-4 text-2xl font-semibold leading-6 text-gray-800 md:mt-0">
-                  $18<span className="text-base font-normal">/mo</span>
-                </p>
-              </div>
-              <p className="md:w-80 mt-4 text-base leading-6 text-gray-600">
-                Unlimited products features and dedicated support channels
-              </p>
-            </div>
-          </div>
-          <div
-            role="listitem"
-            className="shadow mt-7 relative z-30 cursor-pointer rounded-lg bg-white p-8"
-          >
-            <div className="items-center justify-between md:flex">
-              <h2 className="text-2xl font-semibold leading-6 text-gray-800">
-                Team
-              </h2>
-              <p className="mt-4 text-2xl font-semibold leading-6 text-gray-800 md:mt-0">
-                $18<span className="text-base font-normal">/mo</span>
-              </p>
-            </div>
-            <p className="md:w-80 mt-4 text-base leading-6 text-gray-600">
-              Unlimited products features and dedicated support channels
-            </p>
-          </div>
+          {priceTestimonialCards.map((card, index) => (
+            <Fragment key={index}>
+              {index === 0 ? (
+                <div
+                  role="listitem"
+                  className="relative z-30 cursor-pointer rounded-lg bg-white p-8 shadow-lg transition-all delay-200 duration-200 hover:-translate-y-3"
+                >
+                  <div className="items-center justify-between md:flex">
+                    <h2 className="text-2xl font-semibold leading-6 text-gray-800">
+                      {card.cardHeader}
+                    </h2>
+                    <p className="mt-4 text-2xl font-semibold leading-6 text-gray-800 md:mt-0">
+                      {card.cardPrice}
+                    </p>
+                  </div>
+                  <p className="md:w-80 mt-4 text-base leading-6 text-gray-600">
+                    {card.cardDescription}
+                  </p>
+                </div>
+              ) : (
+                <div
+                  role="listitem"
+                  className="relative z-30 mt-6 flex cursor-pointer rounded-lg bg-white shadow-lg transition-all delay-200 duration-200 hover:-translate-y-3"
+                >
+                  <div className="w-2.5  h-auto rounded-bl-md rounded-tl-md bg-indigo-700" />
+                  <div className="w-full p-8">
+                    <div className="items-center justify-between md:flex">
+                      <h2 className="text-2xl font-semibold leading-6 text-gray-800">
+                        {card.cardHeader}
+                      </h2>
+                      <p className="mt-4 text-2xl font-semibold leading-6 text-gray-800 md:mt-0">
+                        {card.cardPrice}
+                        <span className="text-base font-normal">
+                          {card.cardPriceSpan}
+                        </span>
+                      </p>
+                    </div>
+                    <p className="md:w-80 mt-4 text-base leading-6 text-gray-600">
+                      {card.cardDescription}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </Fragment>
+          ))}
         </div>
       </div>
     </div>
