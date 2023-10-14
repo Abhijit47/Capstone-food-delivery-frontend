@@ -6,9 +6,9 @@ import {
   emptyCartItems,
   removeToCart,
 } from "../redux/slices/cartSlices";
-// eslint-disable-next-line
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { orderFoodAndPayment } from "../features/stripe";
 
 function Cart() {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -92,6 +92,22 @@ function Cart() {
       return (totalQuantity = cartItem.quantity + totalQuantity);
     });
     setTotalQuantity(totalQuantity);
+  };
+
+  // make payment and book order
+  const handleMakePayment = async (carts) => {
+    try {
+      await orderFoodAndPayment(carts);
+      toast.success("Booking Successfully", {
+        position: "top-right",
+        duration: 1200,
+      });
+    } catch (err) {
+      toast.error(err.message, {
+        position: "bottom-right",
+        duration: 1200,
+      });
+    }
   };
 
   useEffect(() => {
@@ -338,7 +354,7 @@ function Cart() {
                   </button>
                 ) : (
                   <button
-                    onClick={() => navigate("/")}
+                    onClick={() => handleMakePayment(carts)}
                     className="border w-full rounded-md border-gray-800 bg-gray-800 py-5 text-base leading-none text-white transition-all delay-75 duration-100 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
                   >
                     Checkout

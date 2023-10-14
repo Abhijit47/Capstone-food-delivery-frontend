@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { userOrdersDetails } from "../features/handleOrders";
+import Loader from "../components/Loader";
 
 const UserProfile = () => {
+  const [userOrders, setUserOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const style1 = {
     transform: "scale(1.5)",
     opacity: "0.1",
@@ -12,9 +18,32 @@ const UserProfile = () => {
     opacity: "0.2",
   };
 
+  const dayMonthFormatter = (date) => {
+    const options = { day: "numeric", month: "short" };
+    return new Intl.DateTimeFormat("en-IN", options).format(new Date(date));
+  };
+
+  const yearFormatter = (date) => {
+    const options = { year: "numeric" };
+    return new Intl.DateTimeFormat("en-IN", options).format(new Date(date));
+  };
+
+  const userToken = localStorage.getItem("user-token");
+
+  useEffect(() => {
+    const getUserOrders = async () => {
+      setIsLoading(true);
+      const res = await userOrdersDetails(userToken);
+      setUserOrders(res);
+      setIsLoading(false);
+    };
+
+    getUserOrders();
+  }, [userToken]);
+
   return (
     <section className="h-full">
-      <div className="flex items-center justify-center mt-10">
+      <div className="mt-10 flex items-center justify-center">
         <div>
           {/* <!-- component --> */}
           <div className="flex items-center justify-center">
@@ -60,11 +89,95 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
-      <h4 className="text-center font-sans text-4xl font-bold text-gray-800 p-4">
+      <h4 className="p-4 text-center font-sans text-4xl font-bold text-gray-800">
         My orders
       </h4>
-      <div>
-        <div className="flex flex-wrap items-center justify-center p-1">
+      {isLoading ? (
+        <div className="flex items-start justify-center">
+          <Loader />
+        </div>
+      ) : (
+        <div className="flex flex-wrap items-center justify-center gap-6 p-8">
+          {userOrders?.map((order, index) => (
+            <div className="" key={index}>
+              <article className="flex bg-white hover:shadow-xl">
+                <div className="rotate-180 p-2 [writing-mode:_vertical-lr]">
+                  <time
+                    dateTime={order.orderDate ? order.orderDate : null}
+                    className="flex items-center justify-between gap-4 text-xs font-bold uppercase text-gray-900"
+                  >
+                    <span>
+                      {order.orderDate ? yearFormatter(order.orderDate) : null}
+                    </span>
+                    <span className="w-px flex-1 bg-gray-100"></span>
+                    <span>
+                      {order.orderDate
+                        ? dayMonthFormatter(order.orderDate)
+                        : null}
+                    </span>
+                  </time>
+                </div>
+
+                <div className="hidden sm:block sm:basis-56">
+                  <img
+                    alt={order.items[0].foodItem.itemName}
+                    src={
+                      order.items[0].foodItem.picture
+                        ? order.items[0].foodItem.picture
+                        : "https://placehold.co/600x400"
+                    }
+                    className="aspect-square h-full w-full transform-gpu cursor-pointer object-cover transition-all delay-200 duration-200 hover:scale-95"
+                  />
+                </div>
+
+                <div className="flex flex-1 flex-col justify-between">
+                  <div className="border-s border-gray-900/10 p-4 sm:border-l-transparent sm:p-6">
+                    <Link to="#!">
+                      <h3 className="font-bold uppercase text-gray-900">
+                        {order.items[0].foodItem.itemName
+                          ? order.items[0].foodItem.itemName
+                          : null}
+                      </h3>
+                    </Link>
+
+                    <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-700">
+                      {order.items[0].foodItem.description
+                        ? order.items[0].foodItem.description
+                        : null}
+                    </p>
+                    <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-700">
+                      {order.restaurant.name ? order.restaurant.name : null}
+                    </p>
+                    <address className="mt-2 line-clamp-3 text-sm/relaxed text-gray-700">
+                      {order.restaurant.address
+                        ? order.restaurant.address
+                        : null}
+                    </address>
+                    <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-700">
+                      ₹&nbsp;{order.price ? order.price : "00"}.00
+                    </p>
+                    <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-700">
+                      Order Status:&nbsp;
+                      {order.paid ? (
+                        <span className="rounded-full bg-green-500 px-1 text-xs text-white">
+                          Booked
+                        </span>
+                      ) : null}
+                    </p>
+                  </div>
+
+                  <div className="sm:flex sm:items-end sm:justify-end">
+                    <Link
+                      to="#!"
+                      className="transition block bg-yellow-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 hover:bg-yellow-400"
+                    >
+                      Know more
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            </div>
+          ))}
           <div className="relative m-6 max-w-xs flex-shrink-0 overflow-hidden rounded-lg bg-orange-500 shadow-lg">
             <svg
               className="absolute bottom-0 left-0 mb-8"
@@ -298,7 +411,7 @@ const UserProfile = () => {
             </div>
           </div>
         </div>
-      </div>
+      )}
     </section>
   );
 };

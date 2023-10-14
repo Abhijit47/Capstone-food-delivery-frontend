@@ -24,6 +24,8 @@ import Checkout from "./pages/Checkout";
 import Meals from './components/Meals';
 import Cart from './pages/Cart';
 import ContactUs from './pages/ContactUs';
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentFailure from "./pages/PaymentFailure";
 
 const App = () => {
 
@@ -44,6 +46,8 @@ const App = () => {
         {/* <Route path='/meal/:mealId' element={<GetOneMeal />} /> */}
         {/* <Route path='/checkout' element={<Checkout />} /> */}
         <Route path='/your-cart' element={<Cart />} />
+        <Route path='/success' element={<PaymentSuccess />} />
+        <Route path='/cancel' element={<PaymentFailure />} />
         <Route path='/user-profile' element={<UserProfile />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='*' element={<NotFound />} />

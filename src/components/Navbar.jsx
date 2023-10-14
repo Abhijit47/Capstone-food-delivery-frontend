@@ -103,7 +103,8 @@ const Navbar = () => {
             <span className="sr-only">Your Company</span>
             <img
               className="h-6 w-40"
-              src="https://omnifood.dev/img/omnifood-logo.png"
+              // src="https://omnifood.dev/img/omnifood-logo.png"
+              src={require("../assets/images/omnifood-logo.png")}
               alt="hero-logo"
             />
           </Link>
@@ -210,8 +211,16 @@ const Navbar = () => {
             </Link>
           ) : null}
         </Popover.Group>
+        {/* navbar login & signup button */}
         <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:gap-4">
-          {isExpiredUserToken ? (
+          {!isExpiredUserToken ? (
+            <button
+              className="text-sm font-semibold leading-6 text-gray-900 hover:text-red-500"
+              onClick={handleLogout}
+            >
+              Sign out
+            </button>
+          ) : (
             <Fragment>
               <Link
                 to="/login"
@@ -226,13 +235,6 @@ const Navbar = () => {
                 sign up<span aria-hidden="true">&rarr;</span>
               </Link>
             </Fragment>
-          ) : (
-            <button
-              className="rounded-md bg-red-600 px-3 py-1 text-gray-100 shadow-lg hover:bg-red-500"
-              onClick={handleLogout}
-            >
-              Sign out
-            </button>
           )}
 
           <Link to={"/your-cart"} className="relative">
@@ -340,6 +342,7 @@ const Navbar = () => {
                   )}
                 </div>
               </div>
+              {/* drawer login & signup button */}
               <div className="flex flex-col justify-center gap-4 py-4">
                 {!isExpiredUserToken ? (
                   <button

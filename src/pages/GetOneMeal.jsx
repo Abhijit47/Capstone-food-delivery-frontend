@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import _ from "lodash";
 import { isExpired } from "react-jwt";
 import { getOneMeal } from "../features/handleMeals";
-import { orderMeal } from "../features/stripe";
+// import { orderMeal } from "../features/stripe";
 
 const GetOneMeal = () => {
   const [mealData, setMealData] = useState({});
@@ -18,8 +18,8 @@ const GetOneMeal = () => {
 
   const goToCheckOut = async (e) => {
     e.target.textContent = "Processing";
-    let { price } = mealData;
-    await orderMeal(mealId, userToken, restaurantToken, price);
+    // let { price } = mealData;
+    // await orderMeal(mealId, userToken, restaurantToken, price);
     // navigate("/");
   };
 

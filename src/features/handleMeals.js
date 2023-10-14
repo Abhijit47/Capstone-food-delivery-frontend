@@ -49,8 +49,8 @@ export const getAllMeals = async () => {
   } catch (err) {
     console.log(err);
     toast.error(err.message, {
-      position: "top-center",
-      autoClose: 1500,
+      position: "top-left",
+      autoClose: 1000,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
