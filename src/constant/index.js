@@ -1,3 +1,9 @@
+import Instagram from "../assets/icons/Instagram";
+import Facebook from "../assets/icons/Facebook";
+import Twitter from "../assets/icons/Twitter";
+import Github from "../assets/icons/Github";
+import Dribble from "../assets/icons/Dribble";
+
 export const cardDetails = [
   {
     itemName: "Margherita Pizza",
@@ -172,4 +178,50 @@ export const testimonialData = [
     testimonialAuthor: "Michael Scott",
   },
 
+];
+
+export const footerLinks = [
+  {
+    footerHeader: "Services",
+    footerLinks: ["1on1 Coaching", "Company Review", "Accounts Review", "HR Consulting", "SEO Optimisation"]
+  },
+  {
+    footerHeader: "Company",
+    footerLinks: ["About", "Meet the Team", "Accounts Review"]
+  },
+  {
+    footerHeader: "Helpful Links",
+    footerLinks: ["Contact", "FAQs", "Live Chat"]
+  },
+  {
+    footerHeader: "Legal",
+    footerLinks: ["Accessibility", "Returns Policy", "Refund Policy", "Hiring Statistics"]
+  },
+  {
+    footerHeader: "Downloads",
+    footerLinks: ["Marketing Calendar", "SEO Infographics"]
+  }
+];
+
+export const footerIcons = [
+  {
+    iconName: "Facebook",
+    icon: Facebook
+  },
+  {
+    iconName: "Instagram",
+    icon: Instagram
+  },
+  {
+    iconName: "Twitter",
+    icon: Twitter
+  },
+  {
+    iconName: "Github",
+    icon: Github
+  },
+  {
+    iconName: "Dribble",
+    icon: Dribble
+  }
 ];

@@ -51,7 +51,7 @@ const ContactUs = () => {
                 id="name"
                 name="name"
                 placeholder="Name"
-                className="rounded form-input block w-full border-gray-300 bg-gray-100 text-base placeholder-gray-300 shadow-sm focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400"
+                className="rounded form-input block w-full border-gray-300 bg-gray-300 text-base placeholder-gray-500 shadow-sm focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
               />
             </div>
             {/* ::Email Input */}
@@ -67,7 +67,7 @@ const ContactUs = () => {
                 id="email"
                 name="email"
                 placeholder="Email Address"
-                className="rounded form-input block w-full border-gray-300 bg-gray-100 text-base placeholder-gray-300 shadow-sm focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400"
+                className="rounded form-input block w-full border-gray-300 bg-gray-300 text-base placeholder-gray-500 shadow-sm focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
               />
             </div>
             {/* ::Message Input */}
@@ -84,14 +84,14 @@ const ContactUs = () => {
                 cols="30"
                 rows="4"
                 placeholder="How can we help?"
-                className="form-textarea w-full resize-none rounded-lg border-gray-300 bg-gray-100 placeholder-gray-300 shadow-sm focus:border-indigo-400 focus:ring-indigo-400"
+                className="form-textarea w-full resize-none rounded-lg border-gray-300 bg-gray-300 placeholder-gray-500 shadow-sm focus:border-orange-400 focus:ring-orange-400"
               ></textarea>
             </div>
             {/* ::Submit Button */}
             <div>
               <button
                 type="submit"
-                className="rounded-md bg-indigo-400 px-6 py-2 text-base font-semibold uppercase text-white hover:bg-indigo-500"
+                className="rounded-md bg-orange-400 px-6 py-2 text-base font-semibold uppercase text-white hover:bg-orange-500"
               >
                 Send Message
               </button>
@@ -105,7 +105,7 @@ const ContactUs = () => {
             {/* ::Title Contact Us */}
             <h2 className="font-oswald text-4xl uppercase">Contact us</h2>
             {/* ::Text */}
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-600">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis
               unde, voluptatibus nemo molestiae iure, repudiandae quaerat ipsam,
               labore sed dolorem nisi odit at esse ullam suscipit quidem
@@ -114,13 +114,13 @@ const ContactUs = () => {
             {/* ::Email contact */}
             <Link
               to="mailto:contact@omnifood.com"
-              className="inline-flex items-center text-sm font-semibold text-blue-400 hover:text-blue-500"
+              className="inline-flex items-center text-sm font-semibold text-orange-400 hover:text-orange-500"
             >
               <EnvelopeIcon className="mr-2 w-5 text-gray-400" />
               mail-contact@omnifood.com
             </Link>
             {/* ::Address */}
-            <p className="text-sm leading-6 text-gray-500">
+            <p className="text-sm leading-6 text-gray-600">
               18 Avenue des Champs-Élysées, <br /> 75008 Paris <br /> France
             </p>
             {/* ::Socials */}

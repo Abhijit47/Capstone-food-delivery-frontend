@@ -20,13 +20,13 @@ html {
 
 @layer components {
   .hero_btn {
-    @apply inline-flex items-center rounded-lg bg-indigo-500 px-5 py-3 hover:bg-indigo-600 hover:text-white focus:outline-none;
+    @apply inline-flex items-center rounded-lg bg-orange-600 px-5 py-3 hover:bg-orange-500 hover:text-gray-100 focus:outline-none;
   }
 }
 
 @layer components {
   .price-card-btn {
-    @apply mt-auto flex w-full items-center rounded-md border-0 bg-gray-400 px-4 py-2 text-white hover:bg-gray-500 focus:outline-none;
+    @apply mt-auto flex w-full items-center rounded-md border-0 bg-orange-400 px-4 py-2 text-white hover:bg-orange-500 focus:outline-none;
   }
 }
 

@@ -39,7 +39,7 @@ const FoodItemCreate = () => {
     }
     // dispatch signin request
     await createFoodItem(foodItem, restaurantToken);
-    navigate("/");
+    navigate("/restaurant-profile");
   };
 
   return (

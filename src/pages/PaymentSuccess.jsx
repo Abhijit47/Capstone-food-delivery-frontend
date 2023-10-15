@@ -24,7 +24,7 @@ const PaymentSuccess = () => {
           <p> Have a great day! </p>
           <div className="py-10 text-center">
             <Link
-              to="/"
+              to="/user-profile"
               className="rounded-md bg-indigo-600 px-12 py-3 font-semibold text-white hover:bg-indigo-500"
             >
               GO BACK

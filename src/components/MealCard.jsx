@@ -68,29 +68,41 @@ const MealCard = ({ meal, setAllMeals }) => {
 
   return (
     <Fragment>
-      <div className="h-[32rem] cursor-pointer rounded-md bg-gray-100 shadow-lg">
-        {/* card image */}
-        <div className="relative overflow-hidden rounded-md pb-48">
-          <img
-            className="absolute inset-0 h-full w-full object-cover transition-all delay-200 duration-200 hover:scale-110"
-            src={meal.picture}
-            alt={meal.itemName}
-            loading="lazy"
-            crossOrigin="true"
-            async
-            fetchpriority="high"
-          />
-        </div>
+      <div className="group relative block cursor-pointer overflow-hidden">
+        <button className="top-5 end-100 absolute z-10 float-left rounded-full bg-orange-200 p-1 text-gray-900 transition-all hover:text-gray-900/75">
+          <span className="sr-only">Wishlist</span>
 
-        <div className="flex flex-col gap-4 p-4">
-          {/* card head */}
-          <div className="flex justify-between">
-            <span className="inline-block rounded-full bg-orange-200 px-2 py-1 text-xs font-semibold uppercase leading-none tracking-wide text-orange-800">
-              Highlight
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="h-4 w-4 hover:text-red-600"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+            />
+          </svg>
+        </button>
+
+        <img
+          src={meal.picture}
+          alt={meal.itemName}
+          className="sm:h-72 h-64 w-full object-cover transition-all duration-500 group-hover:scale-105"
+          loading="lazy"
+        />
+
+        <div className="relative rounded-b-md border-b-4 border-orange-300 bg-white p-6">
+          <div className="flex items-center justify-between">
+            <span className="whitespace-nowrap bg-orange-400 px-3 py-2 text-xs font-medium">
+              New
             </span>
             {_.isNull(restaurantToken) || isExpiredRestaurantToken ? null : (
               <div className="flex gap-2">
-                <span className="cursor-pointer hover:text-yellow-700">
+                <span className="cursor-pointer hover:text-orange-700">
                   <svg
                     onClick={handleModal}
                     xmlns="http://www.w3.org/2000/svg"
@@ -133,31 +145,29 @@ const MealCard = ({ meal, setAllMeals }) => {
               </div>
             )}
           </div>
-          {/* card body */}
-          <div className="flex flex-col items-center justify-center gap-4">
-            <h4 className="text-center text-lg font-bold text-gray-800">
-              {meal.itemName}
-            </h4>
-            <p className="text-sm">{meal.description}</p>
-            <div className="flex select-none items-center rounded-full bg-gray-300 px-3 text-gray-700">
-              <span className="text-sm font-semibold">₹</span>&nbsp;
-              <span className="text-xl font-bold">{meal.price}</span>
-            </div>
-            <div className="">
-              <span className="select-none rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 px-3 py-1 text-xs text-gray-100">
-                Remaining:&nbsp;{meal.quantity}
-              </span>
-            </div>
-          </div>
-          {/* card footer */}
-          <div className="flex items-center justify-center p-4 text-sm text-gray-600">
-            <button
-              className="rounded-md bg-indigo-500 px-3 py-2 capitalize text-gray-100 transition-all delay-200 duration-200 hover:bg-indigo-600"
-              onClick={() => handleAddToCart(meal)}
-            >
-              Add to cart
-            </button>
-          </div>
+
+          <h3 className="mt-4 text-lg font-medium text-gray-900">
+            {meal.itemName}
+          </h3>
+          <h4 className="mt-2 text-sm text-gray-700">
+            {meal?.description.length > 30
+              ? `${meal.description.substr(0, 40)} ...`
+              : meal.description}
+          </h4>
+
+          <p className="mt-2 text-xl font-semibold text-gray-900">
+            ₹&nbsp;{meal.price}
+          </p>
+          <p className="text-xs text-gray-700">
+            Item remains&nbsp;{meal.quantity}
+          </p>
+
+          <button
+            className="mt-4 block w-full rounded-md bg-orange-400 p-4 text-sm font-medium transition-all hover:scale-105"
+            onClick={() => handleAddToCart(meal)}
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
     </Fragment>

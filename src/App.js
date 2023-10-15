@@ -26,6 +26,7 @@ import Cart from './pages/Cart';
 import ContactUs from './pages/ContactUs';
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailure from "./pages/PaymentFailure";
+import DynamicPage from './pages/DynamicPage';
 
 const App = () => {
 
@@ -50,6 +51,7 @@ const App = () => {
         <Route path='/cancel' element={<PaymentFailure />} />
         <Route path='/user-profile' element={<UserProfile />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/:path' element={<DynamicPage />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
       <Footer />

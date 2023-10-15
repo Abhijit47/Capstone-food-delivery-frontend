@@ -48,13 +48,13 @@ const RestaurantLogin = () => {
 
     // dispatch signin request
     dispatch(restaurantSignIn(restaurantFormData));
-    navigate("/");
+    navigate("/restaurant-profile");
   };
 
   // console.log(restaurant);
 
   return (
-    <section className="flex min-h-[90dvh] flex-1 flex-col justify-center bg-gradient-to-tr from-pink-400 to-indigo-400 px-6 py-2 lg:px-8">
+    <section className="flex min-h-screen flex-1 flex-col justify-center bg-gradient-to-tr from-pink-400 to-indigo-400 px-6 py-2 lg:px-8">
       <div className="px-6 py-12 sm:mx-auto sm:w-full sm:max-w-sm lg:px-8">
         <img
           className="mx-auto h-10 w-auto"

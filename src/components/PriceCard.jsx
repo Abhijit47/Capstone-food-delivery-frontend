@@ -9,33 +9,33 @@ const PriceCard = () => {
 
   let flag = false;
   const toggleClass = () => {
-    if (monthlyBtnRef.current === null && annuallyBtnRef.current === null)
-      return;
+    // if (monthlyBtnRef.current === null && annuallyBtnRef.current === null)
+    //   return;
     if (!flag) {
-      monthlyBtnRef.current?.classList?.add("bg-indigo-500");
-      monthlyBtnRef.current?.classList?.add("text-white");
+      monthlyBtnRef.current?.classList?.remove("bg-orange-500");
+      monthlyBtnRef.current?.classList?.remove("text-white");
 
-      monthlyBtnRef.current?.classList?.remove("bg-gray-100");
-      monthlyBtnRef.current?.classList?.remove("text-gray-600");
+      // monthlyBtnRef.current?.classList?.remove("bg-gray-100");
+      // monthlyBtnRef.current?.classList?.remove("text-gray-600");
 
-      annuallyBtnRef.current?.classList?.remove("bg-indigo-500");
-      annuallyBtnRef.current?.classList?.remove("text-white");
+      // annuallyBtnRef.current?.classList?.add("bg-orange-500");
+      // annuallyBtnRef.current?.classList?.add("text-white");
 
       annuallyBtnRef.current?.classList?.add("bg-gray-100");
       annuallyBtnRef.current?.classList?.add("text-gray-600");
       flag = true;
     } else {
-      monthlyBtnRef.current?.classList?.remove("bg-indigo-500");
-      monthlyBtnRef.current?.classList?.remove("text-white");
+      // monthlyBtnRef.current?.classList?.remove("bg-orange-500");
+      // monthlyBtnRef.current?.classList?.remove("text-white");
 
-      monthlyBtnRef.current?.classList?.add("bg-gray-100");
-      monthlyBtnRef.current?.classList?.add("text-gray-600");
+      // monthlyBtnRef.current?.classList?.add("bg-gray-100");
+      // monthlyBtnRef.current?.classList?.add("text-gray-600");
 
-      annuallyBtnRef.current?.classList?.add("bg-indigo-500");
-      annuallyBtnRef.current?.classList?.add("text-white");
+      // annuallyBtnRef.current?.classList?.add("bg-orange-500");
+      // annuallyBtnRef.current?.classList?.add("text-white");
 
-      annuallyBtnRef.current?.classList?.remove("bg-gray-100");
-      annuallyBtnRef.current?.classList?.remove("text-gray-600");
+      // annuallyBtnRef.current?.classList?.remove("bg-gray-100");
+      // annuallyBtnRef.current?.classList?.remove("text-gray-600");
       flag = false;
     }
   };
@@ -47,14 +47,14 @@ const PriceCard = () => {
           <h1 className="title-font mb-2 text-3xl font-medium text-gray-900 xs:text-xl sm:text-4xl">
             Pricing
           </h1>
-          <p className="mx-auto text-base leading-relaxed text-gray-500 lg:w-2/3">
+          <p className="mx-auto text-base leading-relaxed text-gray-700 lg:w-2/3">
             Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical.
           </p>
-          <div className="mx-auto mt-6 flex overflow-hidden rounded-md border-2 border-indigo-500">
+          <div className="mx-auto mt-6 flex overflow-hidden rounded-md border-2 border-orange-500">
             <button
               onClick={toggleClass}
               ref={monthlyBtnRef}
-              className="bg-indigo-500 px-4 py-1 text-white focus:outline-none"
+              className="bg-orange-600 px-4 py-1 text-white focus:outline-none"
             >
               Monthly
             </button>
@@ -74,14 +74,14 @@ const PriceCard = () => {
                   className="w-full cursor-pointer p-4 transition-all delay-200 duration-200 hover:-translate-y-3 md:w-1/2 xl:w-1/4"
                   key={index}
                 >
-                  <div className="relative flex h-full flex-col overflow-hidden rounded-lg border-2 border-indigo-500 p-6">
-                    <span className="rounded-bl absolute right-0 top-0 bg-indigo-500 px-3 py-1 text-xs tracking-widest text-white">
+                  <div className="relative flex h-full flex-col overflow-hidden rounded-lg border-2 border-orange-500 p-6">
+                    <span className="rounded-bl absolute right-0 top-0 bg-orange-600 px-3 py-1 text-xs tracking-widest text-white">
                       {card.cardTag}
                     </span>
                     <h2 className="title-font mb-1 text-sm font-medium tracking-widest">
                       {card.cardHeadingSecondary}
                     </h2>
-                    <h1 className="border-b mb-4 flex items-center border-gray-200 pb-4 text-5xl leading-none text-gray-900">
+                    <h1 className="mb-4 flex items-center border-b-2 border-orange-200 pb-4 leading-none text-gray-900 xs:text-2xl sm:text-3xl lg:text-5xl">
                       <span>{card.cardHeadingPrimarySpan1}</span>
                       <span className="ml-1 text-lg font-normal text-gray-500">
                         {card.cardHeadingPrimarySpan2}
@@ -89,10 +89,10 @@ const PriceCard = () => {
                     </h1>
                     {card.cardFeatures.map((feature, index) => (
                       <p
-                        className="mb-6 flex items-center text-gray-600"
+                        className="mb-6 flex items-center text-gray-700"
                         key={index + 1}
                       >
-                        <span className="mr-2 inline-flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-gray-400 text-white">
+                        <span className="mr-2 inline-flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-orange-400 text-white">
                           <svg
                             fill="none"
                             stroke="currentColor"
@@ -108,7 +108,7 @@ const PriceCard = () => {
                         {feature}
                       </p>
                     ))}
-                    <button className="price-card-btn bg-indigo-500 hover:bg-indigo-600">
+                    <button className="price-card-btn bg-orange-600 hover:bg-orange-500">
                       {card.cardButton}
                       <svg
                         fill="none"
@@ -123,7 +123,7 @@ const PriceCard = () => {
                       </svg>
                     </button>
 
-                    <p className="mt-3 text-xs text-gray-500">
+                    <p className="mt-3 text-xs text-gray-600">
                       {card.cardFooter}
                     </p>
                   </div>
@@ -131,22 +131,22 @@ const PriceCard = () => {
               ) : (
                 <div className="w-full p-4 md:w-1/2 xl:w-1/4">
                   <div
-                    className="relative flex h-full cursor-pointer flex-col overflow-hidden rounded-lg border-2 border-gray-300 p-6 transition-all delay-200 duration-200 hover:-translate-y-3"
+                    className="relative flex h-full cursor-pointer flex-col overflow-hidden rounded-lg border-2 border-orange-300 p-6 transition-all delay-200 duration-200 hover:-translate-y-3"
                     key={index}
                   >
                     <h2 className="title-font mb-1 text-sm font-medium tracking-widest">
                       {card.cardHeadingSecondary}
                     </h2>
-                    <h1 className="border-b mb-4 border-gray-200 pb-4 text-5xl leading-none text-gray-900">
+                    <h1 className="mb-4 border-b-2 border-orange-200 pb-4 leading-none text-gray-900 xs:text-2xl sm:text-3xl lg:text-5xl">
                       {card.cardHeadingPrimary}
                     </h1>
 
                     {card.cardFeatures.map((feature, index) => (
                       <p
-                        className="mb-6 flex items-center text-gray-600"
+                        className="mb-6 flex items-center text-gray-700"
                         key={index}
                       >
-                        <span className="mr-2 inline-flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-gray-400 text-white">
+                        <span className="mr-2 inline-flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-orange-400 text-white">
                           <svg
                             fill="none"
                             stroke="currentColor"
@@ -176,7 +176,7 @@ const PriceCard = () => {
                         <path d="M5 12h14M12 5l7 7-7 7"></path>
                       </svg>
                     </button>
-                    <p className="mt-3 text-xs text-gray-500">
+                    <p className="mt-3 text-xs text-gray-600">
                       {card.cardFooter}
                     </p>
                   </div>

@@ -23,15 +23,15 @@ const Testimonials = () => {
         <section className="bg-gray-100">
           <div className="mx-auto max-w-[1340px] px-4 py-12 sm:px-6 lg:me-0 lg:py-16 lg:pe-0 lg:ps-8 xl:py-24">
             <div className="flex justify-between xs:flex-wrap sm:flex sm:pe-6 lg:pe-8">
-              <h2 className="flex font-bold tracking-tight text-gray-900 xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl">
+              <h4 className="flex font-bold tracking-tight text-gray-900 xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl">
                 Read trusted reviews from our customers
-              </h2>
+              </h4>
               {loaded && instanceRef.current && (
                 <div className="mt-8 flex gap-4 lg:mt-0">
                   <button
                     aria-label="Previous slide"
                     id="keen-slider-prev"
-                    className="border transition rounded-full border-red-600 px-4 py-2 text-red-600 outline-none hover:bg-red-600 hover:text-white focus:outline-none"
+                    className="border transition rounded-full border-orange-600 px-4 py-2 text-orange-600 outline-none hover:bg-orange-600 hover:text-white focus:outline-none"
                     left={"true"}
                     onClick={(e) =>
                       e.stopPropagation() || instanceRef.current?.prev()
@@ -57,7 +57,7 @@ const Testimonials = () => {
                   <button
                     aria-label="Next slide"
                     id="keen-slider-next"
-                    className="border transition rounded-full border-red-600 px-4 py-2 text-red-600 outline-none hover:bg-red-600 hover:text-white focus:outline-none"
+                    className="border transition rounded-full border-orange-600 px-4 py-2 text-orange-600 outline-none hover:bg-orange-600 hover:text-white focus:outline-none"
                     onClick={(e) =>
                       e.stopPropagation() || instanceRef.current?.next()
                     }
@@ -140,7 +140,7 @@ const Testimonials = () => {
                           </div>
 
                           <div className="mt-4">
-                            <p className="text-2xl font-bold text-red-600 xs:text-lg sm:text-xl">
+                            <p className="text-2xl font-bold text-orange-600 xs:text-lg sm:text-xl">
                               {testimonial.testimonialHeading} {index + 1}
                             </p>
 

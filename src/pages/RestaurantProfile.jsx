@@ -1,226 +1,347 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+// eslint-disable-next-line
+import { isExpired } from "react-jwt";
 import { restaurantOrdersDetails } from "../features/handleOrders";
+import { getRestaurantDetails } from "../features/handleRestaurents";
 
 const RestaurantProfile = () => {
-  // eslint-disable-next-line
-  const [userOrders, setUserOrders] = useState([]);
-  // eslint-disable-next-line
+  const [restaurantProfile, setRestaurantProfile] = useState({});
+  const [restaurantOrders, setRestaurantOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line
+  const navigate = useNavigate();
 
   const restaurantToken = localStorage.getItem("restaurant-token");
+
+  const starPrint = (numOfStar) => {
+    let star = [];
+    for (let i = 1; i <= numOfStar; i++) {
+      star.push("⭐");
+    }
+    return star;
+  };
 
   useEffect(() => {
     const getUserOrders = async () => {
       setIsLoading(true);
       const res = await restaurantOrdersDetails(restaurantToken);
-      setUserOrders(res);
+      setRestaurantOrders(res);
       setIsLoading(false);
     };
 
-    getUserOrders();
+    if (!isExpired(restaurantToken)) {
+      getUserOrders();
+    }
   }, [restaurantToken]);
+
+  useEffect(() => {
+    const getRestaurantProfile = async () => {
+      setIsLoading(true);
+      const res = await getRestaurantDetails(restaurantToken);
+      setRestaurantProfile(res);
+      setIsLoading(false);
+    };
+    if (!isExpired(restaurantToken)) {
+      getRestaurantProfile();
+    }
+  }, [restaurantToken]);
+
+  // useEffect(() => {
+  //   if (isExpired(restaurantToken)) {
+  //     console.log(isExpired(restaurantToken));
+  //     navigate("/restaurant-login");
+  //   }
+  // }, []);
 
   return (
     <section>
-      <div className="relative block h-[500px]">
-        <div
-          className="absolute top-0 h-full w-full bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1551218372-a8789b81b253?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80')",
-          }}
-        >
-          <span
-            id="blackOverlay"
-            className="absolute h-full w-full bg-black opacity-50"
-          ></span>
+      {isLoading ? (
+        <div className="flex h-[90vh] items-center justify-center">
+          <div className="h-16 w-16 animate-spin rounded-full border-4 border-dashed dark:border-purple-400"></div>
         </div>
-        <div
-          className="h-70-px pointer-events-none absolute bottom-0 left-0 right-0 top-auto w-full overflow-hidden"
-          style={{ transform: "translateZ(0px)" }}
-        >
-          <svg
-            className="absolute bottom-0 overflow-hidden"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-            version="1.1"
-            viewBox="0 0 2560 100"
-            x="0"
-            y="0"
-          >
-            <polygon
-              className="text-blueGray-200 fill-current"
-              points="2560 0 2560 100 0 100"
-            ></polygon>
-          </svg>
-        </div>
-      </div>
-      <div className="relative bg-gray-200 py-16">
-        <div className="container mx-auto px-4">
-          <div className="relative -mt-64 mb-6 flex w-full min-w-0 flex-col break-words rounded-lg bg-white shadow-xl">
-            <div className="px-6">
-              <div className="flex flex-wrap justify-center">
-                <div className="flex w-full justify-center px-4 lg:order-2 lg:w-3/12">
-                  <div className="relative">
-                    <img
-                      alt="..."
-                      src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
-                      className="absolute -m-16 -ml-20 h-auto max-w-[150px] rounded-full border-none align-middle shadow-xl lg:-ml-16"
-                    />
-                  </div>
-                </div>
-                <div className="w-full px-4 lg:order-3 lg:w-4/12 lg:self-center lg:text-right">
-                  <div className="mt-32 px-3 py-6 sm:mt-0">
-                    <button
-                      className="shadow rounded mb-1 bg-pink-500 px-4 py-2 text-xs font-bold uppercase text-white outline-none transition-all duration-150 ease-linear hover:shadow-md focus:outline-none active:bg-pink-600 sm:mr-2"
-                      type="button"
-                    >
-                      Connect
-                    </button>
-                  </div>
-                </div>
-                <div className="w-full px-4 lg:order-1 lg:w-4/12">
-                  <div className="flex justify-center py-4 pt-8 lg:pt-4">
-                    <div className="mr-4 p-3 text-center">
-                      <span className="text-blueGray-600 block text-xl font-bold uppercase tracking-wide">
-                        22
-                      </span>
-                      <span className="text-blueGray-400 text-sm">Friends</span>
+      ) : (
+        <Fragment>
+          <div className="relative block h-[500px]">
+            <div
+              className="absolute top-0 h-full w-full bg-cover bg-center"
+              style={{
+                backgroundImage:
+                  "url('https://images.unsplash.com/photo-1551218372-a8789b81b253?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80')",
+              }}
+            >
+              <span
+                id="blackOverlay"
+                className="absolute h-full w-full bg-black opacity-50"
+              ></span>
+            </div>
+            <div
+              className="h-70-px pointer-events-none absolute bottom-0 left-0 right-0 top-auto w-full overflow-hidden"
+              style={{ transform: "translateZ(0px)" }}
+            >
+              <svg
+                className="absolute bottom-0 overflow-hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                preserveAspectRatio="none"
+                version="1.1"
+                viewBox="0 0 2560 100"
+                x="0"
+                y="0"
+              >
+                <polygon
+                  className="text-blueGray-200 fill-current"
+                  points="2560 0 2560 100 0 100"
+                ></polygon>
+              </svg>
+            </div>
+          </div>
+          <div className="relative bg-gray-200 py-16">
+            <div className="container mx-auto px-4">
+              <div className="relative -mt-64 mb-6 flex w-full min-w-0 flex-col break-words rounded-lg bg-white shadow-xl">
+                <div className="px-6 py-8">
+                  {/*  */}
+                  <div className="flex flex-wrap justify-center">
+                    <div className="flex w-full justify-center px-4 lg:order-2 lg:w-3/12">
+                      <div className="relative">
+                        <img
+                          alt="..."
+                          src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&h=600&w=600&q=80"
+                          className="absolute -m-16 -ml-20 max-w-[150px] rounded-full border-none align-middle shadow-xl lg:-ml-16"
+                        />
+                      </div>
                     </div>
-                    <div className="mr-4 p-3 text-center">
-                      <span className="text-blueGray-600 block text-xl font-bold uppercase tracking-wide">
-                        10
-                      </span>
-                      <span className="text-blueGray-400 text-sm">Photos</span>
+                    <div className="w-full px-4 sm:mt-24 md:mt-24 lg:order-3 lg:mt-0 lg:w-4/12 lg:self-center lg:text-right">
+                      <div className="mt-32 flex items-center justify-end gap-4 xs:justify-center sm:mt-0">
+                        <Link
+                          to={"/food-item-create"}
+                          className="cursor-pointer rounded-md border-b-2 text-gray-700 hover:border-b-red-600"
+                        >
+                          Create Food Item
+                        </Link>
+                        <button
+                          className="shadow mb-1 rounded-md bg-red-500 px-4 py-2 text-xs font-bold uppercase text-white outline-none transition-all duration-150 ease-linear hover:shadow-md focus:outline-none active:bg-red-600 sm:mr-2"
+                          type="button"
+                        >
+                          Logout
+                        </button>
+                      </div>
                     </div>
-                    <div className="p-3 text-center lg:mr-4">
-                      <span className="text-blueGray-600 block text-xl font-bold uppercase tracking-wide">
-                        89
-                      </span>
-                      <span className="text-blueGray-400 text-sm">
-                        Comments
-                      </span>
+                    <div className="w-full px-4 lg:order-1 lg:w-4/12">
+                      <div className="flex justify-center py-4 pt-8 lg:pt-4">
+                        <div className="mr-4 p-3 text-center">
+                          <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
+                            {restaurantOrders?.length || 0}
+                          </span>
+                          <span className="text-sm text-gray-400">Orders</span>
+                        </div>
+                        <div className="mr-4 p-3 text-center">
+                          <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
+                            10
+                          </span>
+                          <span className="text-sm text-gray-400">Items</span>
+                        </div>
+                        <div className="p-3 text-center lg:mr-4">
+                          <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
+                            89
+                          </span>
+                          <span className="text-sm text-gray-400">Stock</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="mt-12 text-center">
-                <h3 className="text-blueGray-700 mb-2 text-4xl font-semibold leading-normal">
-                  Jenna Stones
-                </h3>
-                <div className="text-blueGray-400 mb-2 mt-0 text-sm font-bold uppercase leading-normal">
-                  <i className="fas fa-map-marker-alt text-blueGray-400 mr-2 text-lg"></i>
-                  Los Angeles, California
-                </div>
-                <div className="text-blueGray-600 mb-2 mt-10">
-                  <i className="fas fa-briefcase text-blueGray-400 mr-2 text-lg"></i>
-                  Solution Manager - Creative Tim Officer
-                </div>
-                <div className="text-blueGray-600 mb-2">
-                  <i className="fas fa-university text-blueGray-400 mr-2 text-lg"></i>
-                  University of Computer Science
-                </div>
-              </div>
-              <div className="border-t border-blueGray-200 mt-10 py-10 text-center">
-                <div className="flex flex-wrap justify-center">
-                  <div className="w-full px-4 lg:w-9/12">
-                    <p className="text-blueGray-700 mb-4 text-lg leading-relaxed">
-                      An artist of considerable range, Jenna the name taken by
-                      Melbourne-raised, Brooklyn-based Nick Murphy writes,
-                      performs and records all of his own music, giving it a
-                      warm, intimate feel with a solid groove structure. An
-                      artist of considerable range.
-                    </p>
-                    <a href="#pablo" className="font-normal text-pink-500">
-                      Show more
-                    </a>
-                  </div>
-                </div>
-              </div>
 
-              {/* cards */}
-              <div className="p-6 dark:bg-gray-900 dark:text-gray-100 sm:p-12">
-                <div className="flex flex-col space-y-4 md:flex-row md:space-x-6 md:space-y-0">
-                  <img
-                    src="https://source.unsplash.com/75x75/?portrait"
-                    alt=""
-                    className="border h-24 w-24 flex-shrink-0 self-center rounded-full dark:border-gray-700 dark:bg-gray-500 md:justify-self-start"
-                  />
-                  <div className="flex flex-col">
-                    <h4 className="text-center text-lg font-semibold md:text-left">
-                      Leroy Jenkins
-                    </h4>
-                    <p className="dark:text-gray-400">
-                      Sed non nibh iaculis, posuere diam vitae, consectetur
-                      neque. Integer velit ligula, semper sed nisl in, cursus
-                      commodo elit. Pellentesque sit amet mi luctus ligula
-                      euismod lobortis ultricies et nibh.
-                    </p>
+                  {/*  */}
+                  <div className="mt-12 text-center">
+                    {restaurantProfile.cuisine?.map((type, index) => (
+                      <div
+                        className="flex items-center justify-center"
+                        key={index}
+                      >
+                        <p className="rounded-full bg-gradient-to-tr from-pink-500 to-blue-500 px-2 text-gray-100">
+                          {type}
+                        </p>
+                      </div>
+                    ))}
                   </div>
-                </div>
-                <div className="align-center flex justify-center space-x-4 pt-4">
-                  <a
-                    rel="noopener noreferrer"
-                    href="#!"
-                    aria-label="GitHub"
-                    className="hover:dark:text-violet-400 rounded-md p-2 dark:text-gray-100"
-                  >
-                    <svg
-                      viewBox="0 0 496 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 fill-current"
-                    >
-                      <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path>
-                    </svg>
-                  </a>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#!"
-                    aria-label="Dribble"
-                    className="hover:dark:text-violet-400 rounded-md p-2 dark:text-gray-100"
-                  >
-                    <svg
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 fill-current"
-                    >
-                      <path d="M256 8C119.252 8 8 119.252 8 256s111.252 248 248 248 248-111.252 248-248S392.748 8 256 8zm163.97 114.366c29.503 36.046 47.369 81.957 47.835 131.955-6.984-1.477-77.018-15.682-147.502-6.818-5.752-14.041-11.181-26.393-18.617-41.614 78.321-31.977 113.818-77.482 118.284-83.523zM396.421 97.87c-3.81 5.427-35.697 48.286-111.021 76.519-34.712-63.776-73.185-116.168-79.04-124.008 67.176-16.193 137.966 1.27 190.061 47.489zm-230.48-33.25c5.585 7.659 43.438 60.116 78.537 122.509-99.087 26.313-186.36 25.934-195.834 25.809C62.38 147.205 106.678 92.573 165.941 64.62zM44.17 256.323c0-2.166.043-4.322.108-6.473 9.268.19 111.92 1.513 217.706-30.146 6.064 11.868 11.857 23.915 17.174 35.949-76.599 21.575-146.194 83.527-180.531 142.306C64.794 360.405 44.17 310.73 44.17 256.323zm81.807 167.113c22.127-45.233 82.178-103.622 167.579-132.756 29.74 77.283 42.039 142.053 45.189 160.638-68.112 29.013-150.015 21.053-212.768-27.882zm248.38 8.489c-2.171-12.886-13.446-74.897-41.152-151.033 66.38-10.626 124.7 6.768 131.947 9.055-9.442 58.941-43.273 109.844-90.795 141.978z"></path>
-                    </svg>
-                  </a>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#!"
-                    aria-label="Twitter"
-                    className="hover:dark:text-violet-400 rounded-md p-2 dark:text-gray-100"
-                  >
-                    <svg
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 fill-current"
-                    >
-                      <path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
-                    </svg>
-                  </a>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#!"
-                    aria-label="Email"
-                    className="hover:dark:text-violet-400 rounded-md p-2 dark:text-gray-100"
-                  >
-                    <svg
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 fill-current"
-                    >
-                      <path d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"></path>
-                    </svg>
-                  </a>
+                  <div className="mt-4 text-center">
+                    <h3 className="mb-2 font-semibold leading-normal text-gray-700 xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl">
+                      {restaurantProfile
+                        ? restaurantProfile.name
+                        : "Name not found!"}
+                    </h3>
+                    <div className="mb-2 mt-0 text-sm font-bold uppercase leading-normal text-gray-400">
+                      <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-600"></i>
+                      <address>
+                        {restaurantProfile
+                          ? restaurantProfile.address
+                          : "Address not found!"}
+                      </address>
+                    </div>
+                    <div className="mb-2 mt-10 text-gray-600">
+                      <i className="fas fa-briefcase text-blueGray-400 mr-2 text-lg"></i>
+                      {restaurantProfile
+                        ? restaurantProfile.email
+                        : "Email not found!"}
+                    </div>
+                    <div className="mb-2 flex justify-center gap-4 text-gray-600">
+                      <span>{restaurantProfile.openingTime}&nbsp;AM</span>
+                      <span>{restaurantProfile.closingTime}&nbsp;PM</span>
+                    </div>
+                    <div>{starPrint(5)}</div>
+                  </div>
+                  <h4 className="mt-4 border-y-2 border-blue-500 text-center font-sans text-3xl font-semibold">
+                    Our Menu's
+                  </h4>
+                  <div className="grid justify-items-center gap-4 lg:grid-cols-3">
+                    {restaurantProfile?.menu?.map((product, index) => (
+                      <div
+                        className="border relative flex w-full max-w-xs flex-col overflow-hidden rounded-lg border-gray-100 bg-white shadow-md"
+                        key={index}
+                      >
+                        <a
+                          className="h-60 rounded-xl relative mx-3 mt-3 flex overflow-hidden"
+                          href="#!"
+                        >
+                          <img
+                            className="mx-auto h-64 w-full object-cover object-center transition-all delay-200 duration-200 hover:scale-95"
+                            src={product.picture}
+                            alt="product_image"
+                          />
+                          <span className="absolute left-0 top-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
+                            39% OFF
+                          </span>
+                        </a>
+                        <div className="mt-4 px-5 pb-5">
+                          <a href="#!">
+                            <h5 className="text-xl tracking-tight text-gray-900">
+                              {product.itemName}
+                            </h5>
+                          </a>
+                          <div className="mb-5 mt-2 flex flex-col items-center justify-between gap-4">
+                            <p className="text-sm text-gray-700">
+                              {product.description}
+                            </p>
+
+                            <p>
+                              <span className="text-3xl font-bold text-gray-900">
+                                ₹&nbsp;{product.price}&nbsp;
+                              </span>
+                              <span className="text-sm text-gray-900 line-through">
+                                ₹&nbsp;{product.price}
+                              </span>
+                            </p>
+                            <p className="border-y-2">
+                              Reamining stock:&nbsp;{product.quantity}&nbsp;Pcs.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <h4 className="mb-8 mt-8 border-x-4 border-blue-500 text-center font-sans text-3xl font-semibold">
+                    Order's List
+                  </h4>
+                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    {restaurantOrders?.map((order, index) => (
+                      <article
+                        className="rounded-lg border-x-2 border-gray-600 bg-white p-4 shadow-sm transition-all hover:shadow-lg sm:p-6"
+                        key={index}
+                      >
+                        <span className="mx-auto flex w-6/12 rounded-md bg-gray-100 p-2 text-white">
+                          <img
+                            className="mx-auto h-32 w-32 cursor-pointer rounded-full transition-all delay-200 duration-200 hover:scale-95"
+                            src={order?.items[0]?.foodItem?.picture}
+                            alt={order?.items[0]?.foodItem?.itemName}
+                          />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 64 64"
+                            id="food-stand"
+                            className="h-8 w-8"
+                          >
+                            <circle
+                              cx="32"
+                              cy="32"
+                              r="32"
+                              fill="#4d94bc"
+                            ></circle>
+                            <path
+                              fill="#141414"
+                              d="M44.99 13.91c-.34 0-.62.28-.62.62v4.85c0 2.12-1.57 3.88-3.61 4.18v-9.03c0-.34-.28-.62-.62-.62-.34 0-.62.28-.62.62v9.03a4.232 4.232 0 0 1-3.61-4.18v-4.85c0-.34-.28-.62-.62-.62-.34 0-.62.28-.62.62v4.85c0 2.81 2.13 5.13 4.85 5.43v25.55c0 .34.28.62.62.62.34 0 .62-.28.62-.62V24.82a5.475 5.475 0 0 0 4.85-5.43v-4.85c0-.35-.28-.63-.62-.63zM25.11 33.66v-5c3.07-.44 5.48-4.11 5.48-8.56 0-4.74-2.74-8.6-6.1-8.6-3.36 0-6.1 3.86-6.1 8.6 0 4.45 2.4 8.12 5.48 8.56v5a3.73 3.73 0 0 0-3.11 3.67v11.44c0 2.06 1.68 3.73 3.73 3.73s3.73-1.67 3.73-3.73V37.33a3.71 3.71 0 0 0-3.11-3.67zM19.64 20.1c0-4.06 2.18-7.35 4.86-7.35s4.86 3.3 4.86 7.35c0 4.06-2.18 7.36-4.86 7.36s-4.86-3.3-4.86-7.36zm7.34 28.67a2.49 2.49 0 0 1-4.98 0V37.33c0-1.37 1.12-2.49 2.49-2.49a2.49 2.49 0 0 1 2.49 2.49v11.44z"
+                            ></path>
+                            <path
+                              fill="#98d3ba"
+                              d="M26.98 37.33v11.44a2.49 2.49 0 0 1-4.98 0V37.33c0-1.37 1.12-2.49 2.49-2.49s2.49 1.12 2.49 2.49zm2.37-17.23c0 4.06-2.18 7.36-4.86 7.36s-4.86-3.3-4.86-7.36c0-4.06 2.18-7.35 4.86-7.35s4.86 3.29 4.86 7.35z"
+                            ></path>
+                          </svg>
+                        </span>
+
+                        <Link to="#!">
+                          <h3 className="mt-1 text-center text-lg font-medium text-gray-900">
+                            {order?.items[0]?.foodItem?.itemName}
+                          </h3>
+                        </Link>
+
+                        <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
+                          {order?.items[0]?.foodItem?.description.length > 50
+                            ? `${order?.items[0]?.foodItem?.description.substr(
+                                0,
+                                50,
+                              )} ...`
+                            : order?.items[0]?.foodItem?.description}
+                        </p>
+
+                        <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-600">
+                          Quantity:&nbsp;
+                          {order?.items[0]?.quantity}&nbsp;Pcs.
+                        </p>
+                        <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-600">
+                          Price:&nbsp;₹
+                          {order?.items[0]?.quantity * order?.price}
+                          <span className="text-xs">
+                            &nbsp;(Each:&nbsp;₹
+                            {order?.price})
+                          </span>
+                        </p>
+                        <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-600">
+                          Status:&nbsp;
+                          {order?.paid ? (
+                            <span className="rounded-full bg-green-500 px-3 text-sm text-gray-100">
+                              Paid
+                            </span>
+                          ) : (
+                            <apan>Unpaid</apan>
+                          )}
+                        </p>
+                        <p className="mt-2 line-clamp-3 text-sm/relaxed capitalize text-gray-600">
+                          {order?.user?.name}
+                        </p>
+                        <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-600">
+                          {order?.user?.email}
+                        </p>
+
+                        <Link
+                          to="#!"
+                          className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
+                        >
+                          Find out more
+                          <span
+                            aria-hidden="true"
+                            className="group-hover:ms-0.5 block transition-all rtl:rotate-180"
+                          >
+                            &rarr;
+                          </span>
+                        </Link>
+                      </article>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </Fragment>
+      )}
     </section>
   );
 };

@@ -87,11 +87,6 @@ const Navbar = () => {
     }
   }, [userToken, restaurantToken]);
 
-  // console.log("ut", !isExpiredUserToken && "rt", !isExpiredRestaurantToken);
-  // console.log(_.isNull(restaurantToken));
-  // console.log("ut", isExpiredUserToken);
-  // console.log("rt", isExpiredRestaurantToken);
-
   return (
     <header className="sticky top-0 z-[1000] bg-white shadow-md">
       <nav
@@ -202,18 +197,26 @@ const Navbar = () => {
               </Popover.Panel>
             </Transition>
           </Popover>
-          {!_.isNull(isExpiredRestaurantToken) || !isExpiredRestaurantToken ? (
+          {/* restaurant login */}
+          {!_.isNull(restaurantToken) && !isExpiredRestaurantToken ? (
+            <button
+              onClick={handleLogout}
+              className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
+            >
+              Log out&nbsp;<span className="text-sm">&rarr;</span>
+            </button>
+          ) : (
             <Link
               to="/restaurant-login"
               className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
             >
               Restaurant login
             </Link>
-          ) : null}
+          )}
         </Popover.Group>
         {/* navbar login & signup button */}
         <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:gap-4">
-          {!isExpiredUserToken ? (
+          {!_.isNull(userToken) && !isExpiredUserToken ? (
             <button
               className="text-sm font-semibold leading-6 text-gray-900 hover:text-red-500"
               onClick={handleLogout}
@@ -316,10 +319,11 @@ const Navbar = () => {
                 >
                   Marketplace
                 </Link>
+                {/* drawer restaurant login & signup button  */}
                 <div>
-                  {isExpiredRestaurantToken ? (
+                  {!_.isNull(restaurantToken) && !isExpiredRestaurantToken ? (
                     <button
-                      className="rounded-md bg-red-700 px-3 py-1 text-gray-100 shadow-lg hover:bg-red-500"
+                      className="-mx-3 block rounded-lg px-2 py-1 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-300 hover:text-gray-900"
                       onClick={handleLogout}
                     >
                       Sign out
@@ -342,9 +346,9 @@ const Navbar = () => {
                   )}
                 </div>
               </div>
-              {/* drawer login & signup button */}
+              {/* drawer user login & signup button */}
               <div className="flex flex-col justify-center gap-4 py-4">
-                {!isExpiredUserToken ? (
+                {!_.isNull(userToken) && !isExpiredUserToken ? (
                   <button
                     className="rounded-md bg-red-700 px-3 py-1 text-gray-100 shadow-lg hover:bg-red-500"
                     onClick={handleLogout}

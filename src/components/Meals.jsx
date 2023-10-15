@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getAllMeals, deleteOneMeal } from "../features/handleMeals";
@@ -11,6 +11,7 @@ const Meals = () => {
   // eslint-disable-next-line
   const [showModal, setShowModal] = useState(false);
   const [meals, setAllMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // eslint-disable-next-line
   const [isExpiredUserToken, setIsExpiredUserToken] = useState(false);
@@ -59,7 +60,9 @@ const Meals = () => {
   useEffect(() => {
     getAllMeals()
       .then((res) => {
+        setIsLoading(true);
         setAllMeals(res);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -68,22 +71,35 @@ const Meals = () => {
 
   return (
     <section className="p-10">
-      <h3 className="mb-10 text-center font-sans text-2xl font-bold">Meals</h3>
-      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {meals?.slice(0, 8).map((meal, index) => (
-          <MealCard key={index} meal={meal} setAllMeals={setAllMeals} />
-        ))}
-      </div>
-      <div className="mt-12 flex justify-center">
-        {pathname === "/all-meals" ? null : (
-          <Link
-            to={"/all-meals"}
-            className="rounded-md bg-indigo-500 px-4 py-2 capitalize text-white shadow-2xl transition-all delay-200 duration-200 hover:translate-y-2"
-          >
-            view more
-          </Link>
-        )}
-      </div>
+      <h3 className="mb-4 text-center font-sans text-xl font-bold text-orange-700">
+        Meals
+      </h3>
+      <p className="mb-6 text-center font-sans text-5xl font-bold text-gray-800">
+        Omnifood AI chooses from 5,000+ recipes
+      </p>
+      {isLoading ? (
+        <div className="flex h-[90vh] items-center justify-center">
+          <div className="h-16 w-16 animate-spin rounded-full border-4 border-dashed border-blue-500"></div>
+        </div>
+      ) : (
+        <Fragment>
+          <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {meals?.slice(0, 8).map((meal, index) => (
+              <MealCard key={index} meal={meal} setAllMeals={setAllMeals} />
+            ))}
+          </div>
+          <div className="mt-12 flex justify-center">
+            {pathname === "/all-meals" ? null : (
+              <Link
+                to={"/all-meals"}
+                className="rounded-md bg-orange-500 px-4 py-2 capitalize text-white shadow-2xl transition-all delay-200 duration-200 hover:translate-y-2"
+              >
+                view more
+              </Link>
+            )}
+          </div>
+        </Fragment>
+      )}
     </section>
   );
 };

@@ -9,21 +9,21 @@ const PriceTestimonial = () => {
   function toggleIt() {
     if (monthlyRef.current === null && annuallyRef.current === null) return;
     if (!flag) {
-      monthlyRef.current?.classList?.add("bg-indigo-700");
+      monthlyRef.current?.classList?.add("bg-orange-700");
       monthlyRef.current?.classList?.add("text-white");
       monthlyRef.current?.classList?.remove("bg-gray-100");
       monthlyRef.current?.classList?.remove("text-gray-600");
-      annuallyRef.current?.classList?.remove("bg-indigo-700");
+      annuallyRef.current?.classList?.remove("bg-orange-700");
       annuallyRef.current?.classList?.remove("text-white");
       annuallyRef.current?.classList?.add("bg-gray-100");
       annuallyRef.current?.classList?.add("text-gray-600");
       flag = true;
     } else {
-      monthlyRef.current?.classList?.remove("bg-indigo-700");
+      monthlyRef.current?.classList?.remove("bg-orange-700");
       monthlyRef.current?.classList?.remove("text-white");
       monthlyRef.current?.classList?.add("bg-gray-100");
       monthlyRef.current?.classList?.add("text-gray-600");
-      annuallyRef.current?.classList?.add("bg-indigo-700");
+      annuallyRef.current?.classList?.add("bg-orange-700");
       annuallyRef.current?.classList?.add("text-white");
       annuallyRef.current?.classList?.remove("bg-gray-100");
       annuallyRef.current?.classList?.remove("text-gray-600");
@@ -34,13 +34,15 @@ const PriceTestimonial = () => {
     <div className="2xl:px-0 px-6 py-20 xl:container xl:mx-auto">
       <div className="items-center justify-between lg:flex">
         <div className=" w-full lg:w-1/2">
-          <p className="text-base leading-4 text-gray-600">Choose your plan</p>
+          <p className="text-base font-semibold leading-4 text-orange-700">
+            Choose your plan
+          </p>
           <p className="mt-3 text-3xl font-bold leading-10 text-gray-800 md:text-5xl">
             Our pricing plan
           </p>
           <p
             role="contentinfo"
-            className="mt-5 text-base leading-5 text-gray-600"
+            className="mt-5 text-base leading-6 text-gray-600"
           >
             We’re working on a suit of tools to make managing complex systems
             easier, for everyone for free. we can’t wait to hear what you think
@@ -49,14 +51,14 @@ const PriceTestimonial = () => {
             <div className="shadow mt-10 flex items-center rounded-full bg-gray-100">
               <button
                 onClick={toggleIt}
-                className="mr-1 rounded-full bg-gray-100 px-6 py-4 text-base leading-none text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-offset-2"
+                className="mr-1 rounded-full bg-gray-100 px-6 py-4 text-base leading-none text-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-700 focus:ring-offset-2"
                 ref={monthlyRef}
               >
                 Monthly
               </button>
               <button
                 onClick={toggleIt}
-                className="rounded-full bg-indigo-700 px-6 py-4 text-base leading-none text-white focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-offset-2"
+                className="rounded-full bg-orange-700 px-6 py-4 text-base leading-none text-white focus:outline-none focus:ring-2 focus:ring-orange-700 focus:ring-offset-2"
                 ref={annuallyRef}
               >
                 Annually
@@ -64,10 +66,7 @@ const PriceTestimonial = () => {
             </div>
           </div>
         </div>
-        <div
-          className="relative mt-12 w-full md:px-8 lg:mt-0 lg:w-7/12 xl:w-1/2"
-          role="list"
-        >
+        <div className="relative mt-12 w-full md:px-8 lg:mt-0 lg:w-7/12 xl:w-1/2">
           <img
             src="https://i.ibb.co/0n6DSS3/bgimg.png"
             className="absolute -ml-12 mt-24 w-full"
@@ -76,10 +75,7 @@ const PriceTestimonial = () => {
           {priceTestimonialCards.map((card, index) => (
             <Fragment key={index}>
               {index === 0 ? (
-                <div
-                  role="listitem"
-                  className="relative z-30 cursor-pointer rounded-lg bg-white p-8 shadow-lg transition-all delay-200 duration-200 hover:-translate-y-3"
-                >
+                <div className="relative z-30 cursor-pointer rounded-lg bg-white p-8 shadow-lg transition-all delay-200 duration-200 hover:-translate-y-3">
                   <div className="items-center justify-between md:flex">
                     <h2 className="text-2xl font-semibold leading-6 text-gray-800">
                       {card.cardHeader}
@@ -93,10 +89,7 @@ const PriceTestimonial = () => {
                   </p>
                 </div>
               ) : (
-                <div
-                  role="listitem"
-                  className="relative z-30 mt-6 flex cursor-pointer rounded-lg bg-white shadow-lg transition-all delay-200 duration-200 hover:-translate-y-3"
-                >
+                <div className="relative z-30 mt-6 flex cursor-pointer rounded-lg bg-white shadow-lg transition-all delay-200 duration-200 hover:-translate-y-3">
                   <div className="w-2.5  h-auto rounded-bl-md rounded-tl-md bg-indigo-700" />
                   <div className="w-full p-8">
                     <div className="items-center justify-between md:flex">
