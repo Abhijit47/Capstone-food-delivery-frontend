@@ -3,11 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { userOrdersDetails } from "../features/handleOrders";
 import { isExpired } from "react-jwt";
 import Loader from "../components/Loader";
+import _ from "lodash";
 
 const UserProfile = () => {
   const [userOrders, setUserOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  // eslint-disable-next-line
+
   const navigate = useNavigate();
 
   const dayMonthFormatter = (date) => {
@@ -23,25 +24,23 @@ const UserProfile = () => {
   const userToken = localStorage.getItem("user-token");
 
   useEffect(() => {
+    if (!isExpired(userToken) && !_.isEmpty(userToken)) {
+      navigate("/user-profile");
+    } else {
+      localStorage.removeItem("user-token");
+      navigate("/login");
+    }
+  }, [navigate, userToken]);
+
+  useEffect(() => {
     const getUserOrders = async () => {
       setIsLoading(true);
       const res = await userOrdersDetails(userToken);
       setUserOrders(res);
       setIsLoading(false);
     };
-
-    if (!isExpired(userToken)) {
-      console.log(isExpired(userToken));
-      getUserOrders();
-    }
-    // getUserOrders();
+    getUserOrders();
   }, [userToken]);
-
-  useEffect(() => {
-    if (isExpired(userToken)) {
-      navigate("/login");
-    }
-  }, [navigate, userToken]);
 
   return (
     <section className="h-full">

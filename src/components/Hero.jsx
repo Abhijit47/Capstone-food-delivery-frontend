@@ -6,9 +6,9 @@ const Hero = () => {
   const notify = () => toast("Wow so easy !");
   return (
     <section className="body-font bg-slate-100 text-gray-800">
-      <div className="container mx-auto flex flex-col items-center gap-x-48 px-5 py-24 md:flex-row">
-        <div className="lg:flex-grow mb-16 flex flex-col items-center text-center">
-          <h1 className="title-font text-slate-800 mb-4 font-sans xs:text-2xl xs:font-medium sm:text-4xl lg:text-5xl lg:font-bold">
+      <div className="container mx-auto flex flex-col items-center bg-yellow-600 px-5 py-24 md:flex-row md:gap-x-20 lg:gap-x-48">
+        <div className="lg:flex-grow mb-16 flex flex-col items-center bg-red-600 text-center">
+          <h1 className="mb-4 font-sans text-gray-800 xs:text-3xl xs:font-semibold sm:text-4xl sm:font-semibold lg:text-5xl lg:font-bold">
             A healthy meal delivered to your door, every single day
           </h1>
           <p className="mb-8 font-medium leading-relaxed">
@@ -78,7 +78,7 @@ const Hero = () => {
             </button>
           </div>
         </div>
-        <div className="w-5/6 md:w-1/2 lg:w-full lg:max-w-lg">
+        <div className="w-5/6 bg-green-500 md:w-1/2 lg:w-full lg:max-w-lg">
           <img
             className="rounded object-cover object-center"
             alt="hero"

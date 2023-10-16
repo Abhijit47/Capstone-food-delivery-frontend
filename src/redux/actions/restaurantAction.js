@@ -10,7 +10,7 @@ const restaurantSignIn = createAsyncThunk(
   // create payload Creator
   async (payload) => {
     // try to login here and send payload to userSlice for further use.
-    const API_URI = `http://localhost:9999/api/v1/restaurant/signin`;
+    const API_URI = `${process.env.REACT_APP_BASE_API_URL}/restaurant/signin`;
 
     try {
       const res = await axios.post(API_URI, payload);
@@ -27,8 +27,9 @@ const restaurantSignIn = createAsyncThunk(
         pauseOnHover: true,
         draggable: true
       });
+
       // return this response payload
-      return res.data.data;
+      return res.data.data.token;
 
     } catch (error) {
       // if any error

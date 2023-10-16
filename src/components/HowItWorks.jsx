@@ -28,7 +28,7 @@ const HowItWorks = () => {
     <section className="h-auto bg-white p-12">
       <div>
         <h3 className="font-sans font-bold text-orange-700">HOW IT WORKS</h3>
-        <p className="text-5xl font-bold text-gray-800">
+        <p className="font-bold text-gray-800 xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
           Your daily dose of health in 3 simple steps
         </p>
       </div>
@@ -47,13 +47,13 @@ const HowItWorks = () => {
                     />
                   </div>
                   <div>
-                    <h4 className="text-6xl font-extrabold text-orange-300">
+                    <h4 className="font-extrabold text-orange-300 xs:text-4xl lg:text-6xl">
                       {item.id}
                     </h4>
-                    <h5 className="text-3xl font-bold text-gray-800">
+                    <h5 className="font-bold text-gray-800 xs:text-2xl lg:text-3xl">
                       {item.heading}
                     </h5>
-                    <p className="text-lg font-medium leading-8 text-gray-700">
+                    <p className="font-medium text-gray-700 xs:text-sm xs:leading-5 lg:text-lg lg:leading-8">
                       {item.description}
                     </p>
                   </div>
@@ -63,13 +63,13 @@ const HowItWorks = () => {
               <div className="p-8">
                 <div className="grid justify-items-center gap-8 lg:grid-cols-2">
                   <div>
-                    <h4 className="text-6xl font-extrabold text-orange-300">
+                    <h4 className="font-extrabold text-orange-300 xs:text-4xl lg:text-6xl">
                       {item.id}
                     </h4>
-                    <h5 className="text-3xl font-bold text-gray-800">
+                    <h5 className="font-bold text-gray-800 xs:text-2xl lg:text-3xl">
                       {item.heading}
                     </h5>
-                    <p className="text-lg font-medium leading-8 text-gray-700">
+                    <p className="font-medium text-gray-700 xs:text-sm xs:leading-5 lg:text-lg lg:leading-8">
                       {item.description}
                     </p>
                   </div>

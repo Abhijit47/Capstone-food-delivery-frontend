@@ -18,7 +18,7 @@ const Footer = () => {
                     <li key={idx}>
                       <Link
                         to={`/${link?.toLowerCase()}`}
-                        className="transition text-gray-700 hover:opacity-75"
+                        className="transition text-gray-700 hover:text-orange-400"
                       >
                         {link}
                       </Link>
@@ -34,7 +34,7 @@ const Footer = () => {
                     href="/"
                     rel="noreferrer"
                     target="_blank"
-                    className="transition text-gray-700 hover:opacity-75"
+                    className="transition text-gray-700 hover:text-orange-400"
                   >
                     <span className="sr-only">{footerIcon.iconName}</span>
 

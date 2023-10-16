@@ -14,7 +14,7 @@ export const orderFoodAndPayment = async (products) => {
 
     // Create a checkout session for book orders
     const sessionResponse = await axios.post(
-      `${BASE_URI}/checkout-session`,
+      `${BASE_URI}/order/checkout-session`,
       products,
       configs,
     );
@@ -22,7 +22,7 @@ export const orderFoodAndPayment = async (products) => {
 
     // Create booking for user orders
     const bookingResponse = await axios.post(
-      `${BASE_URI}/create-order`,
+      `${BASE_URI}/order/create-order`,
       products,
       configs,
     );

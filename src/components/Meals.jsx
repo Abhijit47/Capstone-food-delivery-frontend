@@ -74,16 +74,16 @@ const Meals = () => {
       <h3 className="mb-4 text-center font-sans text-xl font-bold text-orange-700">
         Meals
       </h3>
-      <p className="mb-6 text-center font-sans text-5xl font-bold text-gray-800">
+      <p className="mb-6 text-center font-sans font-bold text-gray-800 sm:text-2xl md:text-3xl lg:text-5xl">
         Omnifood AI chooses from 5,000+ recipes
       </p>
       {isLoading ? (
-        <div className="flex h-[90vh] items-center justify-center">
+        <div className="flex h-[90vh] items-start justify-center">
           <div className="h-16 w-16 animate-spin rounded-full border-4 border-dashed border-blue-500"></div>
         </div>
       ) : (
         <Fragment>
-          <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="mb-10 mt-16 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {meals?.slice(0, 8).map((meal, index) => (
               <MealCard key={index} meal={meal} setAllMeals={setAllMeals} />
             ))}

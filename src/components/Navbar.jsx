@@ -61,6 +61,11 @@ const callsToAction = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+export const handleLogout = () => {
+  localStorage.clear();
+  window.location.reload();
+  window.location.href = "/";
+};
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -69,11 +74,6 @@ const Navbar = () => {
     useState(null);
 
   const { carts } = useSelector((state) => state.carts);
-
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location.reload();
-  };
 
   const userToken = localStorage.getItem("user-token");
   const restaurantToken = localStorage.getItem("restaurant-token");
@@ -105,17 +105,19 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="flex gap-4 lg:hidden">
+          {/* md to xs cart icon */}
           <Link to={"/your-cart"} className="relative">
             <div className="">
-              <span className="text-slate-50 absolute right-[3px] top-[-12px] rounded-full bg-gray-400 pe-1 ps-1 text-xs">
+              <span className="text-slate-50 absolute right-[3px] top-[-12px] rounded-full pe-1 ps-1 text-xs hover:text-orange-500">
                 {carts.length}
               </span>
               <CartIcon />
             </div>
           </Link>
+          {/* md to xs hamburger icon */}
           <button
             type="button"
-            className="-m-2.5 p-2.5 inline-flex items-center justify-center rounded-md text-gray-700"
+            className="-m-2.5 p-2.5 inline-flex items-center justify-center rounded-md text-gray-700 hover:text-orange-500"
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
@@ -123,23 +125,23 @@ const Navbar = () => {
           </button>
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
-          <a
-            href="#price-section"
-            className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
+          <Link
+            to="/all-restaurents"
+            className="text-sm font-semibold leading-6 text-gray-900 hover:text-orange-500"
           >
-            Features
-          </a>
+            Explore restaurants
+          </Link>
           <Link
             to="/all-meals"
-            className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
+            className="text-sm font-semibold leading-6 text-gray-900 hover:text-orange-500"
           >
             Explore food items
           </Link>
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 outline-none focus:outline-none">
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 outline-none hover:text-orange-500 focus:outline-none">
               Menu
               <ChevronDownIcon
-                className="h-5 w-5 flex-none text-gray-400"
+                className="h-5 w-5 flex-none text-gray-500 hover:text-orange-500"
                 aria-hidden="true"
               />
             </Popover.Button>
@@ -153,16 +155,17 @@ const Navbar = () => {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="top-full absolute inset-x-[-20rem] z-10 mt-3 w-screen max-w-md overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-gray-500">
+              <Popover.Panel className="top-full absolute inset-x-[-20rem] z-10 mt-3 w-screen max-w-md overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-orange-500">
+                {/* popover list icons */}
                 <div className="p-4">
                   {menus.map((item) => (
                     <div
                       key={item.name}
-                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-100"
+                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-orange-100"
                     >
                       <div className="h-11 w-11 flex flex-none items-center justify-center rounded-lg bg-gray-100 group-hover:bg-white">
                         <item.icon
-                          className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
+                          className="h-6 w-6 text-gray-600 group-hover:text-orange-600"
                           aria-hidden="true"
                         />
                       </div>
@@ -179,12 +182,13 @@ const Navbar = () => {
                     </div>
                   ))}
                 </div>
+                {/* popover call to action */}
                 <div className="divide-x grid grid-cols-2 divide-gray-900 bg-gray-100">
                   {callsToAction.map((item) => (
                     <Link
                       key={item.name}
                       to={item.to}
-                      className="gap-x-2.5 flex items-center justify-center p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
+                      className="flex items-center justify-center gap-x-2 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-orange-100"
                     >
                       <item.icon
                         className="h-5 w-5 flex-none text-gray-400"
@@ -198,17 +202,17 @@ const Navbar = () => {
             </Transition>
           </Popover>
           {/* restaurant login */}
-          {!_.isNull(restaurantToken) && !isExpiredRestaurantToken ? (
+          {!isExpiredRestaurantToken && restaurantToken ? (
             <button
               onClick={handleLogout}
-              className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
+              className="text-sm font-semibold leading-6 text-gray-900 hover:text-red-600"
             >
               Log out&nbsp;<span className="text-sm">&rarr;</span>
             </button>
           ) : (
             <Link
               to="/restaurant-login"
-              className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
+              className="text-sm font-semibold leading-6 text-gray-900 hover:text-orange-500"
             >
               Restaurant login
             </Link>
@@ -216,9 +220,9 @@ const Navbar = () => {
         </Popover.Group>
         {/* navbar login & signup button */}
         <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:gap-4">
-          {!_.isNull(userToken) && !isExpiredUserToken ? (
+          {!_.isEmpty(userToken) && !isExpiredUserToken ? (
             <button
-              className="text-sm font-semibold leading-6 text-gray-900 hover:text-red-500"
+              className="text-sm font-semibold leading-6 text-gray-900 hover:text-red-600"
               onClick={handleLogout}
             >
               Sign out
@@ -227,22 +231,23 @@ const Navbar = () => {
             <Fragment>
               <Link
                 to="/login"
-                className="text-sm font-semibold leading-6 text-gray-900"
+                className="text-sm font-semibold leading-6 text-gray-900 hover:text-orange-500"
               >
                 Log in <span aria-hidden="true">&rarr;</span>
               </Link>
               <Link
                 to="/signup"
-                className="text-sm font-semibold leading-6 text-gray-900"
+                className="text-sm font-semibold leading-6 text-gray-900 hover:text-orange-500"
               >
                 sign up<span aria-hidden="true">&rarr;</span>
               </Link>
             </Fragment>
           )}
 
+          {/* cart icon */}
           <Link to={"/your-cart"} className="relative">
             <div className="">
-              <span className="text-slate-50 absolute right-[3px] top-[-12px] rounded-full bg-gray-400 pe-1 ps-1 text-xs">
+              <span className="text-slate-50 absolute right-[3px] top-[-12px] rounded-full pe-1 ps-1 text-xs hover:text-orange-500">
                 {carts.length}
               </span>
               <CartIcon />
@@ -277,12 +282,12 @@ const Navbar = () => {
             </button>
           </div>
           <div className="mt-6 flow-root">
-            <div className="divide-y divide-gray-500/10 -my-6">
+            <div className="-my-6 divide-y-2 divide-orange-500">
               <div className="space-y-2 py-6">
                 <Disclosure as="div" className="-mx-3">
                   {({ open }) => (
                     <>
-                      <Disclosure.Button className="pr-3.5 hover:bg-gray-50 flex w-full items-center justify-between rounded-lg py-2 pl-3 text-base font-semibold leading-7 text-gray-900">
+                      <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-4 text-base font-semibold leading-7 text-gray-900 hover:bg-orange-100 hover:text-orange-500">
                         Menu
                         <ChevronDownIcon
                           className={classNames(
@@ -298,7 +303,7 @@ const Navbar = () => {
                             key={item.name}
                             as="a"
                             to={item.to}
-                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-100"
+                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-orange-100"
                           >
                             {item.name}
                           </Disclosure.Button>
@@ -309,13 +314,13 @@ const Navbar = () => {
                 </Disclosure>
                 <Link
                   to="/all-meals"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-orange-100 hover:text-orange-500"
                 >
                   Features
                 </Link>
                 <Link
                   to="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-orange-100 hover:text-orange-500"
                 >
                   Marketplace
                 </Link>
@@ -323,7 +328,7 @@ const Navbar = () => {
                 <div>
                   {!_.isNull(restaurantToken) && !isExpiredRestaurantToken ? (
                     <button
-                      className="-mx-3 block rounded-lg px-2 py-1 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-300 hover:text-gray-900"
+                      className="-mx-3 block rounded-lg px-2 py-1 text-base font-semibold leading-7 text-gray-900 hover:bg-orange-100 hover:text-red-600"
                       onClick={handleLogout}
                     >
                       Sign out
@@ -332,13 +337,13 @@ const Navbar = () => {
                     <Fragment>
                       <Link
                         to="/restaurant-login"
-                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-orange-100 hover:text-orange-500"
                       >
                         Restaurant login
                       </Link>
                       <Link
                         to="/restaurant-signup"
-                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-orange-100 hover:text-orange-500"
                       >
                         Restaurant Signup
                       </Link>

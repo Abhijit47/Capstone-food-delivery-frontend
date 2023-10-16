@@ -5,7 +5,7 @@ import restaurantSignIn from "../actions/restaurantAction";
 let initialState = {
   isLoading: false,
   isError: false,
-  restaurantDetails: {}
+  token: ""
 };
 
 // create user slices
@@ -27,7 +27,7 @@ const restaurantSlices = createSlice({
     // 3. if state is resolved
     builder.addCase(restaurantSignIn.fulfilled, (state, action) => {
       // state.initialState = Object.assign({}, action.payload);
-      state.restaurantDetails = Object.assign({}, action.payload);
+      state.token = action.payload;
     });
   }
 });

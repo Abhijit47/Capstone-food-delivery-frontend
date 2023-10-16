@@ -1,26 +1,33 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// eslint-disable-next-line
 import { isExpired } from "react-jwt";
 import { restaurantOrdersDetails } from "../features/handleOrders";
 import { getRestaurantDetails } from "../features/handleRestaurents";
+import { starPrint } from "../features/starPrint";
+import _ from "lodash";
+import {
+  MapPinIcon,
+  BriefcaseIcon,
+  ClockIcon,
+} from "@heroicons/react/24/outline";
+import { handleLogout } from "../components/Navbar";
 
 const RestaurantProfile = () => {
   const [restaurantProfile, setRestaurantProfile] = useState({});
   const [restaurantOrders, setRestaurantOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  // eslint-disable-next-line
   const navigate = useNavigate();
 
   const restaurantToken = localStorage.getItem("restaurant-token");
 
-  const starPrint = (numOfStar) => {
-    let star = [];
-    for (let i = 1; i <= numOfStar; i++) {
-      star.push("⭐");
+  useEffect(() => {
+    if (!isExpired(restaurantToken) && !_.isEmpty(restaurantToken)) {
+      navigate("/restaurant-profile");
+    } else {
+      localStorage.removeItem("restaurant-token");
+      navigate("/restaurant-login");
     }
-    return star;
-  };
+  }, [navigate, restaurantToken]);
 
   useEffect(() => {
     const getUserOrders = async () => {
@@ -30,10 +37,8 @@ const RestaurantProfile = () => {
       setIsLoading(false);
     };
 
-    if (!isExpired(restaurantToken)) {
-      getUserOrders();
-    }
-  }, [restaurantToken]);
+    getUserOrders();
+  }, [restaurantToken, navigate]);
 
   useEffect(() => {
     const getRestaurantProfile = async () => {
@@ -42,17 +47,9 @@ const RestaurantProfile = () => {
       setRestaurantProfile(res);
       setIsLoading(false);
     };
-    if (!isExpired(restaurantToken)) {
-      getRestaurantProfile();
-    }
-  }, [restaurantToken]);
 
-  // useEffect(() => {
-  //   if (isExpired(restaurantToken)) {
-  //     console.log(isExpired(restaurantToken));
-  //     navigate("/restaurant-login");
-  //   }
-  // }, []);
+    getRestaurantProfile();
+  }, [restaurantToken]);
 
   return (
     <section>
@@ -121,6 +118,7 @@ const RestaurantProfile = () => {
                         <button
                           className="shadow mb-1 rounded-md bg-red-500 px-4 py-2 text-xs font-bold uppercase text-white outline-none transition-all duration-150 ease-linear hover:shadow-md focus:outline-none active:bg-red-600 sm:mr-2"
                           type="button"
+                          onClick={handleLogout}
                         >
                           Logout
                         </button>
@@ -169,25 +167,42 @@ const RestaurantProfile = () => {
                         ? restaurantProfile.name
                         : "Name not found!"}
                     </h3>
-                    <div className="mb-2 mt-0 text-sm font-bold uppercase leading-normal text-gray-400">
-                      <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-600"></i>
-                      <address>
+                    <div className="mb-2 mt-0 flex items-center justify-center  gap-4 text-sm font-bold uppercase leading-normal text-gray-400">
+                      <MapPinIcon className="h-6 w-6 text-orange-300" />
+                      <address className="text-orange-400">
                         {restaurantProfile
                           ? restaurantProfile.address
                           : "Address not found!"}
                       </address>
                     </div>
-                    <div className="mb-2 mt-10 text-gray-600">
-                      <i className="fas fa-briefcase text-blueGray-400 mr-2 text-lg"></i>
-                      {restaurantProfile
-                        ? restaurantProfile.email
-                        : "Email not found!"}
+                    <div className="mb-2 mt-10 flex items-center justify-center gap-4 text-gray-600">
+                      <BriefcaseIcon className="h-6 w-6 text-orange-400" />
+                      {restaurantProfile ? (
+                        <span className="cursor-pointer hover:text-orange-400">
+                          <Link to={`mailto:${restaurantProfile.email}`}>
+                            {restaurantProfile.email}
+                          </Link>
+                        </span>
+                      ) : (
+                        "Email not found!"
+                      )}
                     </div>
-                    <div className="mb-2 flex justify-center gap-4 text-gray-600">
-                      <span>{restaurantProfile.openingTime}&nbsp;AM</span>
-                      <span>{restaurantProfile.closingTime}&nbsp;PM</span>
+                    <div className="mb-2 flex items-center justify-center gap-4 text-gray-600">
+                      <span className="flex items-center justify-center gap-2">
+                        <ClockIcon className="h-4 w-4" />
+                        {restaurantProfile.openingTime}&nbsp;AM
+                      </span>
+                      ||
+                      <span className="flex items-center justify-center gap-2">
+                        <ClockIcon className="h-4 w-4" />
+                        {restaurantProfile.closingTime}&nbsp;PM
+                      </span>
                     </div>
-                    <div>{starPrint(5)}</div>
+                    <div className="flex items-center justify-center gap-2">
+                      <span>Rating&nbsp;</span>
+                      <span>{restaurantProfile?.rating || 0}</span>
+                      <span>{starPrint(restaurantProfile.rating)}</span>
+                    </div>
                   </div>
                   <h4 className="mt-4 border-y-2 border-blue-500 text-center font-sans text-3xl font-semibold">
                     Our Menu's

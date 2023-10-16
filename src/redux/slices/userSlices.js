@@ -8,7 +8,7 @@ const userSlices = createSlice({
   initialState: {
     isLoading: false,
     isError: false,
-    userDetails: {}
+    token: ""
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -24,7 +24,7 @@ const userSlices = createSlice({
 
     // 3. if state is resolved
     builder.addCase(signIn.fulfilled, (state, action) => {
-      state.userDetails = Object.assign({}, action.payload);
+      state.token = action.payload;
     });
   }
 });

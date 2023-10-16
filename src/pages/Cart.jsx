@@ -20,58 +20,58 @@ function Cart() {
 
   const handleIncrement = (item) => {
     dispatch(addToCart(item));
-    // toast.success("Items added to your cart.", {
-    //   duration: 1500,
-    //   position: "top-center",
-    //   className: "bg-green-500 text-white",
-    //   icon: "✅",
-    //   ariaProps: {
-    //     role: "status",
-    //     "aria-live": "polite",
-    //   },
-    // });
+    toast.success("Items added to your cart.", {
+      duration: 1000,
+      position: "top-right",
+      className: "bg-green-500 text-white",
+      icon: "✅",
+      ariaProps: {
+        role: "status",
+        "aria-live": "polite",
+      },
+    });
   };
 
   const handleRemoveCart = (itemId) => {
     dispatch(removeToCart(itemId));
-    // toast.success("Item successfully removed from your cart.", {
-    //   duration: 1800,
-    //   position: "top-center",
-    //   className: "bg-green-500 text-white",
-    //   icon: "❌",
-    //   ariaProps: {
-    //     role: "status",
-    //     "aria-live": "polite",
-    //   },
-    // });
+    toast.success("Item successfully removed from your cart.", {
+      duration: 1000,
+      position: "top-center",
+      className: "bg-green-500 text-white",
+      icon: "❌",
+      ariaProps: {
+        role: "status",
+        "aria-live": "polite",
+      },
+    });
   };
 
   const handleDecrement = (item) => {
     dispatch(decrementCartItem(item));
-    // toast.error("Items remove to your cart.", {
-    //   duration: 1500,
-    //   position: "top-center",
-    //   className: "bg-green-500 text-white",
-    //   icon: "❎",
-    //   ariaProps: {
-    //     role: "status",
-    //     "aria-live": "polite",
-    //   },
-    // });
+    toast("Items remove to your cart.", {
+      duration: 1000,
+      position: "top-center",
+      className: "bg-green-500 text-white",
+      icon: "❎",
+      ariaProps: {
+        role: "status",
+        "aria-live": "polite",
+      },
+    });
   };
 
   const handleEmptyCart = () => {
     dispatch(emptyCartItems());
-    // toast.dismiss("All items successfully removed to your cart.", {
-    //   duration: 2000,
-    //   position: "top-center",
-    //   className: "bg-green-500 text-white",
-    //   icon: "✅",
-    //   ariaProps: {
-    //     role: "status",
-    //     "aria-live": "polite",
-    //   },
-    // });
+    toast.dismiss("All items successfully removed to your cart.", {
+      duration: 1000,
+      position: "bottom-center",
+      className: "bg-green-500 text-white",
+      icon: "✅",
+      ariaProps: {
+        role: "status",
+        "aria-live": "polite",
+      },
+    });
   };
 
   // calculate total price
@@ -117,14 +117,14 @@ function Cart() {
 
   return (
     <section id="cart">
-      <h3 className="text-center font-sans text-3xl font-semibold text-gray-800">
+      {/* <h3 className="text-center font-sans text-3xl font-semibold text-gray-800">
         Your Cart 🛒
-      </h3>
+      </h3> */}
       <div
         className="transition sticky right-0 z-[999] h-screen w-full translate-x-0 transform overflow-x-hidden duration-700 ease-in-out"
         id="scroll"
       >
-        <div className="flex flex-col justify-end md:flex-row" id="scroll">
+        <div className="flex flex-col justify-between md:flex-row" id="scroll">
           {/* Left side */}
           <div
             className="h-screen w-full overflow-x-hidden overflow-y-scroll bg-white py-8 pl-4 pr-10 md:py-12 md:pl-10 md:pr-4 lg:w-1/2"
@@ -152,7 +152,7 @@ function Cart() {
               <p className="pl-2 text-sm leading-none">Back</p>
             </div>
             <div className="flex items-center justify-between p-4">
-              <p className="text-5xl font-black leading-10 text-gray-800">
+              <p className="font-black leading-10 text-gray-800 xs:text-2xl xs:leading-5 lg:text-5xl">
                 Items<span className="text-sm">({carts.length})</span>
               </p>
               {carts.length <= 0 ? null : (
@@ -184,7 +184,7 @@ function Cart() {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="text-slate-800 h-12 w-12"
+                  className="text-slate-800 h-12 w-12 xs:h-8 xs:w-8 sm:h-10 sm:w-10"
                 >
                   <path
                     fillRule="evenodd"
@@ -192,7 +192,9 @@ function Cart() {
                     clipRule="evenodd"
                   />
                 </svg>
-                <h3 className="text-3xl">Your cart is empty!</h3>
+                <h3 className="xs:text-base lg:text-3xl">
+                  Your cart is empty!
+                </h3>
               </div>
             ) : (
               <Fragment>
@@ -303,12 +305,12 @@ function Cart() {
 
           {/* Right side */}
           <div
-            className="h-full w-full bg-gray-100 md:w-1/3 xl:w-1/2"
+            className="h-full w-full bg-gray-100 md:w-full lg:w-1/2 xl:w-1/2"
             id="scroll"
           >
             <div className="flex flex-col justify-between overflow-y-auto px-20 py-20 md:h-screen">
               <div>
-                <p className="text-4xl font-black leading-9 text-gray-800">
+                <p className="font-black leading-9 text-gray-800 xs:text-2xl lg:text-4xl">
                   Summary
                 </p>
                 <div className="flex items-center justify-between pt-16">
@@ -348,7 +350,7 @@ function Cart() {
                 {carts.length <= 0 ? (
                   <button
                     onClick={() => navigate("/")}
-                    className="border w-full rounded-md border-gray-800 bg-gray-800 py-5 text-base leading-none text-white transition-all delay-75 duration-100 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+                    className="border w-full rounded-md border-gray-800 bg-gray-800 text-base leading-none text-white transition-all delay-75 duration-100 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2 xs:py-2 sm:py-3 md:py-4 lg:py-5"
                   >
                     No items for Checkout
                   </button>

@@ -1,22 +1,27 @@
 import React, { useState } from "react";
 import _ from "lodash";
+import { useNavigate } from "react-router-dom";
 import GenericButton from "../components/GenericButton";
 import { restaurentSignUp } from "../features/handlerFormSubmit";
+import { BuildingStorefrontIcon } from "@heroicons/react/24/outline";
 
 const ReataurantSignup = () => {
   const [restaurantFormData, setRestaurantFormData] = useState({
-    name: "Casa Mexicana",
-    address: "101 Maple Lane, Riverside",
-    cuisine: "Mexican",
-    rating: "4.0",
-    openingTime: "09:00",
-    closingTime: "22:00",
-    username: "casamexicana",
-    email: "thecasamexicana@gmail.com",
+    name: "",
+    address: "",
+    cuisine: "",
+    rating: "",
+    openingTime: "",
+    closingTime: "",
+    username: "",
+    email: "",
     role: "admin",
-    password: "admin123",
-    confirmPassword: "admin123",
+    password: "",
+    confirmPassword: "",
   });
+
+  const navigate = useNavigate();
+
   // destructuring form data
   const {
     name,
@@ -51,16 +56,14 @@ const ReataurantSignup = () => {
 
     // dispatch signup request with form data
     await restaurentSignUp(restaurantFormData);
+    navigate("/restaurant-login");
+    setRestaurantFormData({});
   };
 
   return (
     <section className="flex min-h-full flex-1 flex-col justify-center bg-gradient-to-tr from-pink-400 to-indigo-400 px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
-        />
+        <BuildingStorefrontIcon className="mx-auto h-20 w-20 text-orange-300" />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Restaurant Sign up
         </h2>
@@ -190,7 +193,7 @@ const ReataurantSignup = () => {
                 id="username"
                 name="username"
                 type="text"
-                maxLength={3}
+                minLength={3}
                 autoComplete="off"
                 required
                 className="form-input"

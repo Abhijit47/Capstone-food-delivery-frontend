@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BASE_URI = "http://localhost:9999/api/v1";
+const BASE_URI = `${process.env.REACT_APP_BASE_API_URL}`;
 
 export const getRestaurantDetails = async (restaurantToken) => {
   try {
@@ -10,8 +10,22 @@ export const getRestaurantDetails = async (restaurantToken) => {
     };
 
     const res = await axios.get(`${BASE_URI}/restaurant/get-restaurant`, configs);
-    return res.data.data.restaurant;
+    if (res.status === 200) {
+      return res.data.data.restaurant;
+    }
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
+  }
+};
+
+export const getAllRestaurants = async () => {
+  try {
+
+    const res = await axios.get(`${BASE_URI}/restaurant/get-all-restaurants`);
+    if (res.status === 200) {
+      return res.data.data.restaurants;
+    }
+  } catch (error) {
+    console.log(error.message);
   }
 };

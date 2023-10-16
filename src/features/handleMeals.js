@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const BASE_URI = `http://localhost:9999/api/v1`;
+const BASE_URI = `${process.env.REACT_APP_BASE_API_URL}`;
 
 export const createFoodItem = async (formData, token) => {
 

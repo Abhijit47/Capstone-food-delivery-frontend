@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GenericButton from "../components/GenericButton";
 import FormFooter from "../components/FormFooter";
 import { useDispatch, useSelector } from "react-redux";
 import signIn from "../redux/actions/userActions";
+import { UserCircleIcon } from "@heroicons/react/20/solid";
+import _ from "lodash";
 
 const Login = () => {
   const [userDetails, setUserDetails] = useState({
-    email: "jhondoe@gmail.com",
-    password: "admin123",
+    email: "",
+    password: "",
   });
 
   // A hook to access the redux dispatch function.
@@ -33,11 +35,10 @@ const Login = () => {
   const handleSubmit = (e) => {
     // prevent the from default behaviour
     e.preventDefault();
-    // console.log(userDetails);
 
     // dispatch signin action creator for login
     dispatch(signIn(userDetails));
-    navigate("/");
+    navigate("/user-profile");
   };
 
   // A hook to access the redux store's state.
@@ -47,12 +48,13 @@ const Login = () => {
   const userToken = localStorage.getItem("user-token");
 
   // check user is already in store or not
-  // useEffect(() => {
-  //   if (userToken) {
-  //     console.log(userToken);
-  //     navigate("/");
-  //   }
-  // }, [userToken, navigate]);
+  useEffect(() => {
+    if (_.isNull(userToken)) {
+      navigate("/login");
+    } else {
+      navigate("/user-profile");
+    }
+  }, [userToken, navigate]);
 
   return (
     <>
@@ -61,11 +63,7 @@ const Login = () => {
       ) : (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img
-              className="mx-auto h-6 w-40"
-              src="https://omnifood.dev/img/omnifood-logo.png"
-              alt="hero-logo"
-            />
+            <UserCircleIcon className="mx-auto h-20 w-20 text-orange-300" />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
               User Login
             </h2>

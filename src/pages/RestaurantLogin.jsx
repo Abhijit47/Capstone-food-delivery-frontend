@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import _ from "lodash";
 import GenericButton from "../components/GenericButton";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import restaurantSignIn from "../redux/actions/restaurantAction";
+import { BuildingStorefrontIcon } from "@heroicons/react/24/outline";
 
 const RestaurantLogin = () => {
   const [restaurantFormData, setRestaurantFormData] = useState({
-    email: "theitaliankitchen@gmail.com",
-    password: "admin123",
+    email: "",
+    password: "",
     role: "admin",
   });
+
+  // eslint-disable-next-line
+  const { isLoading } = useSelector((state) => state.restaurants);
 
   const dispatch = useDispatch();
 
@@ -28,12 +32,6 @@ const RestaurantLogin = () => {
   // eslint-disable-next-line
   const restaurantToken = localStorage.getItem("restaurant-token");
 
-  // useEffect(() => {
-  //   if (_.isNull(restaurantToken)) {
-  //     navigate("/restaurant-login");
-  //   }
-  // }, [navigate, restaurantToken]);
-
   // define a function for handle form request
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,19 +46,22 @@ const RestaurantLogin = () => {
 
     // dispatch signin request
     dispatch(restaurantSignIn(restaurantFormData));
+    setRestaurantFormData({});
     navigate("/restaurant-profile");
   };
 
-  // console.log(restaurant);
+  useEffect(() => {
+    if (_.isNull(restaurantToken)) {
+      navigate("/restaurant-login");
+    } else {
+      navigate("/restaurant-profile");
+    }
+  }, [navigate, restaurantToken]);
 
   return (
-    <section className="flex min-h-screen flex-1 flex-col justify-center bg-gradient-to-tr from-pink-400 to-indigo-400 px-6 py-2 lg:px-8">
-      <div className="px-6 py-12 sm:mx-auto sm:w-full sm:max-w-sm lg:px-8">
-        <img
-          className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
-        />
+    <section className="flex min-h-screen flex-1 flex-col items-center justify-center bg-gradient-to-tr from-pink-400 to-indigo-400 px-6 py-2 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm lg:px-8">
+        <BuildingStorefrontIcon className="mx-auto h-20 w-20 text-orange-300" />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Restaurant Login
         </h2>

@@ -9,7 +9,7 @@ export const userOrdersDetails = async (userToken) => {
       headers: { Authorization: `Bearer ${userToken}` },
     };
 
-    const res = await axios.get(`${BASE_URI}/get-user-orders`, configs);
+    const res = await axios.get(`${BASE_URI}/order/get-user-orders`, configs);
     return res.data.data.userOrders;
   } catch (error) {
     console.log(error);
@@ -22,7 +22,7 @@ export const restaurantOrdersDetails = async (restaurantToken) => {
       headers: { Authorization: `Bearer ${restaurantToken}` },
     };
 
-    const res = await axios.get(`${BASE_URI}/get-all-orders`, configs);
+    const res = await axios.get(`${BASE_URI}/order/get-all-orders`, configs);
     return res.data.data.allOrders;
   } catch (error) {
     console.log(error);

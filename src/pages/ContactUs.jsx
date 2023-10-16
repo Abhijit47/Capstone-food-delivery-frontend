@@ -1,17 +1,29 @@
 import React, { useRef } from "react";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import _ from "lodash";
+import { contactUs } from "../features/handleQueries";
 
 const ContactUs = () => {
   const nameRef = useRef();
   const emailRef = useRef();
   const messageRef = useRef();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    /* 
-    Do something here !
-    */
+    if (
+      _.isEmpty(nameRef.current.value) &&
+      _.isEmpty(emailRef.current.value) &&
+      _.isEmpty(messageRef.current.value)
+    ) {
+      return;
+    }
+    const formData = {
+      name: nameRef.current?.value,
+      email: emailRef.current?.value,
+      message: messageRef.current?.value,
+    };
+    await contactUs(formData);
   };
 
   return (
@@ -51,6 +63,8 @@ const ContactUs = () => {
                 id="name"
                 name="name"
                 placeholder="Name"
+                required
+                minLength={3}
                 className="rounded form-input block w-full border-gray-300 bg-gray-300 text-base placeholder-gray-500 shadow-sm focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
               />
             </div>
@@ -66,6 +80,7 @@ const ContactUs = () => {
                 type="email"
                 id="email"
                 name="email"
+                required
                 placeholder="Email Address"
                 className="rounded form-input block w-full border-gray-300 bg-gray-300 text-base placeholder-gray-500 shadow-sm focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
               />
@@ -83,6 +98,8 @@ const ContactUs = () => {
                 id="message"
                 cols="30"
                 rows="4"
+                minLength={20}
+                required
                 placeholder="How can we help?"
                 className="form-textarea w-full resize-none rounded-lg border-gray-300 bg-gray-300 placeholder-gray-500 shadow-sm focus:border-orange-400 focus:ring-orange-400"
               ></textarea>
@@ -103,7 +120,9 @@ const ContactUs = () => {
         <div className="order-2 col-span-12 px-6 py-5 md:order-3 md:col-span-1 md:py-10">
           <div className="mx-auto flex max-w-xl flex-col space-y-5">
             {/* ::Title Contact Us */}
-            <h2 className="font-oswald text-4xl uppercase">Contact us</h2>
+            <h2 className="font-oswald uppercase xs:text-2xl lg:text-4xl">
+              Contact us
+            </h2>
             {/* ::Text */}
             <p className="text-sm text-gray-600">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis
@@ -116,7 +135,7 @@ const ContactUs = () => {
               to="mailto:contact@omnifood.com"
               className="inline-flex items-center text-sm font-semibold text-orange-400 hover:text-orange-500"
             >
-              <EnvelopeIcon className="mr-2 w-5 text-gray-400" />
+              <EnvelopeIcon className="mr-2 w-5 text-orange-400" />
               mail-contact@omnifood.com
             </Link>
             {/* ::Address */}
