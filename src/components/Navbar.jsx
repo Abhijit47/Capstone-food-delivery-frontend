@@ -97,8 +97,7 @@ const Navbar = () => {
           <Link to="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img
-              className="h-6 w-40"
-              // src="https://omnifood.dev/img/omnifood-logo.png"
+              className="h-4 w-30 xs:w-30 xs:h-4 lg:h-5 lg:w-5/5 xl:h-6 xl:w-40"
               src={require("../assets/images/omnifood-logo.png")}
               alt="hero-logo"
             />

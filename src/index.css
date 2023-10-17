@@ -8,7 +8,7 @@ html {
 
 @layer components {
   .form-input {
-    @apply block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;
+    @apply block w-full rounded-md border-0 px-2 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-orange-600 xs:px-3 xs:py-2 sm:text-sm sm:leading-6;
   }
 }
 
@@ -39,6 +39,12 @@ html {
 @layer components {
   .reg-form-button {
     @apply inline-block shrink-0 rounded-md border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition-all delay-200 duration-200 hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500;
+  }
+}
+
+@layer components {
+  .price-plan-button {
+    @apply rounded-full px-2 py-2 text-sm leading-none focus:outline-none focus:ring-2 focus:ring-orange-700 focus:ring-offset-2 xs:px-2 xs:py-2 xs:text-sm md:px-3 md:py-2 md:text-sm lg:px-6 lg:py-4 lg:text-base;
   }
 }
 

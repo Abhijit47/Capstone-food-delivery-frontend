@@ -1,6 +1,4 @@
 import React, { Fragment, useRef } from "react";
-// eslint-disable-next-line
-import { Link } from "react-router-dom";
 import { priceCards } from "../constant/index";
 
 const PriceCard = () => {
@@ -8,43 +6,29 @@ const PriceCard = () => {
   let annuallyBtnRef = useRef(null);
 
   let flag = false;
+
+  // function for toggling class
   const toggleClass = () => {
-    // if (monthlyBtnRef.current === null && annuallyBtnRef.current === null)
-    //   return;
     if (!flag) {
-      monthlyBtnRef.current?.classList?.remove("bg-orange-500");
-      monthlyBtnRef.current?.classList?.remove("text-white");
-
-      // monthlyBtnRef.current?.classList?.remove("bg-gray-100");
-      // monthlyBtnRef.current?.classList?.remove("text-gray-600");
-
-      // annuallyBtnRef.current?.classList?.add("bg-orange-500");
-      // annuallyBtnRef.current?.classList?.add("text-white");
-
-      annuallyBtnRef.current?.classList?.add("bg-gray-100");
-      annuallyBtnRef.current?.classList?.add("text-gray-600");
+      monthlyBtnRef.current?.classList?.add("bg-orange-600");
+      monthlyBtnRef.current?.classList?.add("text-white");
+      annuallyBtnRef.current?.classList?.remove("bg-orange-600");
+      annuallyBtnRef.current?.classList?.remove("text-white");
       flag = true;
     } else {
-      // monthlyBtnRef.current?.classList?.remove("bg-orange-500");
-      // monthlyBtnRef.current?.classList?.remove("text-white");
-
-      // monthlyBtnRef.current?.classList?.add("bg-gray-100");
-      // monthlyBtnRef.current?.classList?.add("text-gray-600");
-
-      // annuallyBtnRef.current?.classList?.add("bg-orange-500");
-      // annuallyBtnRef.current?.classList?.add("text-white");
-
-      // annuallyBtnRef.current?.classList?.remove("bg-gray-100");
-      // annuallyBtnRef.current?.classList?.remove("text-gray-600");
+      monthlyBtnRef.current?.classList?.remove("bg-orange-600");
+      monthlyBtnRef.current?.classList?.remove("text-white");
+      annuallyBtnRef.current?.classList?.add("bg-orange-600");
+      annuallyBtnRef.current?.classList?.add("text-white");
       flag = false;
     }
   };
 
   return (
     <section className="body-font overflow-hidden text-gray-600">
-      <div className="container mx-auto px-5 py-24">
+      <div className="container mx-auto px-3 py-8 xs:px-5 xs:py-24">
         <div className="mb-20 flex w-full flex-col text-center">
-          <h1 className="title-font mb-2 text-3xl font-medium text-gray-900 xs:text-xl sm:text-4xl">
+          <h1 className="title-font mb-2 text-2xl font-medium text-gray-900 xs:text-xl sm:text-4xl">
             Pricing
           </h1>
           <p className="mx-auto text-base leading-relaxed text-gray-700 lg:w-2/3">
@@ -61,6 +45,7 @@ const PriceCard = () => {
             <button
               onClick={toggleClass}
               className="px-4 py-1 focus:outline-none"
+              ref={annuallyBtnRef}
             >
               Annually
             </button>

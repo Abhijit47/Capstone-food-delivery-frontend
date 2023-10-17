@@ -6,6 +6,7 @@ const AllRestaurents = () => {
   const [restaurantsData, setRestaurantsData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  // call getRestaurantsData function
   useEffect(() => {
     const getRestaurantsData = async () => {
       setIsLoading(true);

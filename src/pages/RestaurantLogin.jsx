@@ -22,7 +22,7 @@ const RestaurantLogin = () => {
   const navigate = useNavigate();
 
   // destructuring form data
-  const { email, password, role } = restaurantFormData;
+  const { email, password } = restaurantFormData;
   // define a function for handle form inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -115,7 +115,7 @@ const RestaurantLogin = () => {
             </div>
           </div>
 
-          <div>
+          {/* <div>
             <label htmlFor="role" className="form-label">
               role
             </label>
@@ -131,7 +131,7 @@ const RestaurantLogin = () => {
                 disabled
               />
             </div>
-          </div>
+          </div> */}
 
           <GenericButton buttonName={"Sign in"} />
         </form>

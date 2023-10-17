@@ -6,6 +6,8 @@ const PriceTestimonial = () => {
   let annuallyRef = useRef(null);
 
   let flag = false;
+
+  // function for toggling class
   function toggleIt() {
     if (monthlyRef.current === null && annuallyRef.current === null) return;
     if (!flag) {
@@ -37,7 +39,7 @@ const PriceTestimonial = () => {
           <p className="text-base font-semibold leading-4 text-orange-700">
             Choose your plan
           </p>
-          <p className="mt-3 text-3xl font-bold leading-10 text-gray-800 md:text-5xl">
+          <p className="mt-3 font-bold leading-10 text-gray-800 xs:text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
             Our pricing plan
           </p>
           <p
@@ -47,23 +49,22 @@ const PriceTestimonial = () => {
             We’re working on a suit of tools to make managing complex systems
             easier, for everyone for free. we can’t wait to hear what you think
           </p>
-          <div className="mx-auto w-56">
-            <div className="shadow mt-10 flex items-center rounded-full bg-gray-100">
-              <button
-                onClick={toggleIt}
-                className="mr-1 rounded-full bg-gray-100 px-6 py-4 text-base leading-none text-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-700 focus:ring-offset-2"
-                ref={monthlyRef}
-              >
-                Monthly
-              </button>
-              <button
-                onClick={toggleIt}
-                className="rounded-full bg-orange-700 px-6 py-4 text-base leading-none text-white focus:outline-none focus:ring-2 focus:ring-orange-700 focus:ring-offset-2"
-                ref={annuallyRef}
-              >
-                Annually
-              </button>
-            </div>
+
+          <div className="shadow mt-10 flex items-center justify-center gap-2 p-2">
+            <button
+              onClick={toggleIt}
+              className="price-plan-button bg-gray-100 text-gray-600"
+              ref={monthlyRef}
+            >
+              Monthly
+            </button>
+            <button
+              onClick={toggleIt}
+              className="price-plan-button bg-orange-700 text-white"
+              ref={annuallyRef}
+            >
+              Annually
+            </button>
           </div>
         </div>
         <div className="relative mt-12 w-full md:px-8 lg:mt-0 lg:w-7/12 xl:w-1/2">

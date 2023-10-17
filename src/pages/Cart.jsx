@@ -131,7 +131,7 @@ function Cart() {
             id="scroll"
           >
             <div
-              className="flex cursor-pointer items-center text-gray-500 hover:text-gray-600"
+              className="flex cursor-pointer items-center text-gray-600 hover:text-orange-600"
               onClick={() => navigate("/")}
             >
               <svg
@@ -152,7 +152,7 @@ function Cart() {
               <p className="pl-2 text-sm leading-none">Back</p>
             </div>
             <div className="flex items-center justify-between p-4">
-              <p className="font-black leading-10 text-gray-800 xs:text-2xl xs:leading-5 lg:text-5xl">
+              <p className="text-lg font-black leading-10 text-orange-800 xs:text-2xl xs:leading-5 lg:text-5xl">
                 Items<span className="text-sm">({carts.length})</span>
               </p>
               {carts.length <= 0 ? null : (
@@ -184,7 +184,7 @@ function Cart() {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="text-slate-800 h-12 w-12 xs:h-8 xs:w-8 sm:h-10 sm:w-10"
+                  className="text-slate-800 h-6 w-6 xs:h-8 xs:w-8 sm:h-10 sm:w-10"
                 >
                   <path
                     fillRule="evenodd"
@@ -350,7 +350,7 @@ function Cart() {
                 {carts.length <= 0 ? (
                   <button
                     onClick={() => navigate("/")}
-                    className="border w-full rounded-md border-gray-800 bg-gray-800 text-base leading-none text-white transition-all delay-75 duration-100 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2 xs:py-2 sm:py-3 md:py-4 lg:py-5"
+                    className="border w-full rounded-md border-gray-800 bg-gray-800 py-2 text-base leading-none text-white transition-all delay-75 duration-100 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2 xs:py-2 sm:py-3 md:py-4 lg:py-5"
                   >
                     No items for Checkout
                   </button>

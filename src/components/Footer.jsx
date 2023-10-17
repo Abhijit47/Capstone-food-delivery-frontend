@@ -4,16 +4,19 @@ import { footerIcons, footerLinks } from "../constant";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-100">
-      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+    <footer>
+      <div className="mx-auto max-w-screen-xl px-3 py-8 xs:px-4 xs:py-16 sm:px-6 lg:px-8">
         <div className="justify-center lg:flex lg:items-start lg:gap-8">
-          <div className="mt-8 grid grid-cols-2 justify-center justify-items-center gap-8 lg:mt-0 lg:grid-cols-5 lg:gap-y-16">
+          <div className="mt-8 grid justify-items-center gap-8 xs:grid-cols-2 lg:mt-0 lg:gap-y-8">
             {footerLinks.map((footerLink, index) => (
-              <div className="col-span-2 p-10 sm:col-span-1" key={index}>
-                <p className="font-medium text-gray-900">
+              <div
+                className="col-span-2 cursor-pointer p-12 xs:col-span-1"
+                key={index}
+              >
+                <p className="font-medium text-gray-900 hover:text-orange-400">
                   {footerLink.footerHeader}
                 </p>
-                <ul className="mt-6 space-y-4 text-sm">
+                <ul className="mt-6 flex flex-col gap-4 text-sm">
                   {footerLink.footerLinks.map((link, idx) => (
                     <li key={idx}>
                       <Link

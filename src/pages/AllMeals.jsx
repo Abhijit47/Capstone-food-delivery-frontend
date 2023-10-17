@@ -18,11 +18,11 @@ const AllMeals = () => {
       });
   }, []);
   return (
-    <section className="h-auto p-10">
+    <section className="p-10">
       <h3 className="text-center font-sans text-4xl font-bold text-gray-700">
         All Food Item's
       </h3>
-      {isLoading ? (
+      {isLoading || meals.length <= 0 ? (
         <div className="flex h-screen items-start justify-center">
           <div className="h-16 w-16 animate-spin rounded-full border-4 border-dashed dark:border-purple-400"></div>
         </div>

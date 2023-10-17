@@ -1,8 +1,8 @@
 import axios from "axios";
 
-
 const BASE_URI = `${process.env.REACT_APP_BASE_API_URL}`;
 
+// function for get restaurant profile details
 export const getRestaurantDetails = async (restaurantToken) => {
   try {
     let configs = {
@@ -13,11 +13,13 @@ export const getRestaurantDetails = async (restaurantToken) => {
     if (res.status === 200) {
       return res.data.data.restaurant;
     }
+
   } catch (error) {
     console.log(error.message);
   }
 };
 
+// function for get all restaurants details
 export const getAllRestaurants = async () => {
   try {
 

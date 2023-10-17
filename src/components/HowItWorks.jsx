@@ -25,51 +25,53 @@ const HowItWorks = () => {
     },
   ];
   return (
-    <section className="h-auto bg-white p-12">
+    <section className="h-auto bg-white p-6 xs:p-12">
       <div>
-        <h3 className="font-sans font-bold text-orange-700">HOW IT WORKS</h3>
-        <p className="font-bold text-gray-800 xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+        <h3 className="font-sans font-semibold text-orange-700 xs:font-bold">
+          HOW IT WORKS
+        </h3>
+        <p className="font-medium text-gray-800 xs:text-2xl xs:font-bold sm:text-3xl md:text-4xl lg:text-5xl">
           Your daily dose of health in 3 simple steps
         </p>
       </div>
 
-      <div className="">
+      <div>
         {data.map((item, index) => (
           <Fragment key={index}>
             {index === 1 ? (
-              <div className="p-8">
-                <div className="grid justify-items-center gap-8 lg:grid-cols-2">
-                  <div className="xs:order-last sm:order-last md:order-last lg:order-first">
+              <div className="p-2 xs:p-8">
+                <div className="grid justify-items-center gap-6 xs:gap-8 lg:grid-cols-2">
+                  <div className="order-last xs:order-last sm:order-last md:order-last lg:order-first">
                     <img
                       src={item.imageURL}
                       alt={item.id}
-                      className="h-[20rem]"
+                      className="h-[14rem] xs:h-[15rem] md:h-[18rem] lg:h-[20rem]"
                     />
                   </div>
                   <div>
-                    <h4 className="font-extrabold text-orange-300 xs:text-4xl lg:text-6xl">
+                    <h4 className="text-3xl font-extrabold text-orange-300 xs:text-4xl lg:text-6xl">
                       {item.id}
                     </h4>
-                    <h5 className="font-bold text-gray-800 xs:text-2xl lg:text-3xl">
+                    <h5 className="text-lg font-bold text-gray-800 xs:text-xl xs:font-medium lg:text-3xl">
                       {item.heading}
                     </h5>
-                    <p className="font-medium text-gray-700 xs:text-sm xs:leading-5 lg:text-lg lg:leading-8">
+                    <p className="font-normal text-gray-700 xs:text-sm xs:font-normal xs:leading-6 lg:text-lg lg:leading-8">
                       {item.description}
                     </p>
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="p-8">
+              <div className="p-2 xs:p-8">
                 <div className="grid justify-items-center gap-8 lg:grid-cols-2">
                   <div>
-                    <h4 className="font-extrabold text-orange-300 xs:text-4xl lg:text-6xl">
+                    <h4 className="text-3xl font-extrabold text-orange-300 xs:text-4xl lg:text-6xl">
                       {item.id}
                     </h4>
-                    <h5 className="font-bold text-gray-800 xs:text-2xl lg:text-3xl">
+                    <h5 className="text-lg font-bold text-gray-800 xs:text-xl xs:font-medium lg:text-3xl">
                       {item.heading}
                     </h5>
-                    <p className="font-medium text-gray-700 xs:text-sm xs:leading-5 lg:text-lg lg:leading-8">
+                    <p className="font-normal text-gray-700 xs:text-sm xs:font-normal xs:leading-6 lg:text-lg lg:leading-8">
                       {item.description}
                     </p>
                   </div>
@@ -77,7 +79,7 @@ const HowItWorks = () => {
                     <img
                       src={item.imageURL}
                       alt={item.id}
-                      className="h-[20rem]"
+                      className="h-[14rem] xs:h-[15rem] md:h-[18rem] lg:h-[20rem]"
                     />
                   </div>
                 </div>

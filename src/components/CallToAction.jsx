@@ -7,13 +7,12 @@ export default function CallToAction() {
       <div className="2xl:mx-auto 2xl:container py-9 px-4 md:px-20 md:py-12">
         <div className="relative rounded-md">
           <img
-            // src="https://i.ibb.co/SBpL1cK/pexels-aleksandar-pasaric-325185-1.png"
             src={require("./../assets/images/CTA.jpg")}
             alt="food view"
+            loading="lazy"
             className="absolute hidden h-full w-full rounded-md object-cover  sm:block"
           />
           <img
-            // src="https://i.ibb.co/LQpxBsc/mobile.png"
             src={require("./../assets/images/CTA.jpg")}
             alt="food view"
             loading="lazy"

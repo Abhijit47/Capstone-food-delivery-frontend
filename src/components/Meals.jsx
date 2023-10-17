@@ -74,16 +74,16 @@ const Meals = () => {
       <h3 className="mb-4 text-center font-sans text-xl font-bold text-orange-700">
         Meals
       </h3>
-      <p className="mb-6 text-center font-sans font-bold text-gray-800 sm:text-2xl md:text-3xl lg:text-5xl">
+      <p className="mb-6 text-center font-sans font-bold text-gray-800 xs:text-lg sm:text-2xl md:text-3xl lg:text-5xl">
         Omnifood AI chooses from 5,000+ recipes
       </p>
-      {isLoading ? (
+      {isLoading && meals.length <= 0 ? (
         <div className="flex h-[90vh] items-start justify-center">
           <div className="h-16 w-16 animate-spin rounded-full border-4 border-dashed border-blue-500"></div>
         </div>
       ) : (
         <Fragment>
-          <div className="mb-10 mt-16 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="mb-10 mt-16 grid gap-y-4 xs:gap-y-6 sm:grid-cols-2 sm:gap-4 sm:gap-y-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 xl:grid-cols-4">
             {meals?.slice(0, 8).map((meal, index) => (
               <MealCard key={index} meal={meal} setAllMeals={setAllMeals} />
             ))}
@@ -92,7 +92,7 @@ const Meals = () => {
             {pathname === "/all-meals" ? null : (
               <Link
                 to={"/all-meals"}
-                className="rounded-md bg-orange-500 px-4 py-2 capitalize text-white shadow-2xl transition-all delay-200 duration-200 hover:translate-y-2"
+                className="rounded-md bg-orange-500 px-2 py-1 text-[0.8rem] capitalize text-white shadow-2xl transition-all delay-75 duration-300 hover:translate-y-2 xs:px-2 xs:py-1 xs:text-sm md:px-4 md:py-2"
               >
                 view more
               </Link>

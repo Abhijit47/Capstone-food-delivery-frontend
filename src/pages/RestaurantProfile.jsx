@@ -20,15 +20,21 @@ const RestaurantProfile = () => {
 
   const restaurantToken = localStorage.getItem("restaurant-token");
 
+  // check token is expired or not
   useEffect(() => {
-    if (!isExpired(restaurantToken) && !_.isEmpty(restaurantToken)) {
-      navigate("/restaurant-profile");
-    } else {
-      localStorage.removeItem("restaurant-token");
-      navigate("/restaurant-login");
+    try {
+      if (!isExpired(restaurantToken) && !_.isEmpty(restaurantToken)) {
+        navigate("/restaurant-profile");
+      } else {
+        localStorage.removeItem("restaurant-token");
+        navigate("/restaurant-login");
+      }
+    } catch (error) {
+      console.log(error);
     }
   }, [navigate, restaurantToken]);
 
+  // call restaurant order details
   useEffect(() => {
     const getUserOrders = async () => {
       setIsLoading(true);
@@ -40,6 +46,7 @@ const RestaurantProfile = () => {
     getUserOrders();
   }, [restaurantToken, navigate]);
 
+  // call restaurant profile details
   useEffect(() => {
     const getRestaurantProfile = async () => {
       setIsLoading(true);
@@ -53,7 +60,7 @@ const RestaurantProfile = () => {
 
   return (
     <section>
-      {isLoading ? (
+      {isLoading || _.isEmpty(restaurantProfile) ? (
         <div className="flex h-[90vh] items-center justify-center">
           <div className="h-16 w-16 animate-spin rounded-full border-4 border-dashed dark:border-purple-400"></div>
         </div>
@@ -61,10 +68,10 @@ const RestaurantProfile = () => {
         <Fragment>
           <div className="relative block h-[500px]">
             <div
-              className="absolute top-0 h-full w-full bg-cover bg-center"
+              className="absolute top-0 h-[20rem] w-full bg-cover bg-center xs:h-[22rem] sm:h-64"
               style={{
                 backgroundImage:
-                  "url('https://images.unsplash.com/photo-1551218372-a8789b81b253?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80')",
+                  "url('https://images.unsplash.com/photo-1551218372-a8789b81b253?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80')",
               }}
             >
               <span
@@ -72,7 +79,7 @@ const RestaurantProfile = () => {
                 className="absolute h-full w-full bg-black opacity-50"
               ></span>
             </div>
-            <div
+            {/* <div
               className="h-70-px pointer-events-none absolute bottom-0 left-0 right-0 top-auto w-full overflow-hidden"
               style={{ transform: "translateZ(0px)" }}
             >
@@ -86,18 +93,20 @@ const RestaurantProfile = () => {
                 y="0"
               >
                 <polygon
-                  className="text-blueGray-200 fill-current"
+                  className="fill-current text-gray-800"
                   points="2560 0 2560 100 0 100"
                 ></polygon>
               </svg>
-            </div>
+            </div> */}
           </div>
-          <div className="relative bg-gray-200 py-16">
+          <div className="relative bg-gray-200 py-16 sm:py-0">
             <div className="container mx-auto px-4">
+              {/* restaurant profile-card */}
               <div className="relative -mt-64 mb-6 flex w-full min-w-0 flex-col break-words rounded-lg bg-white shadow-xl">
-                <div className="px-6 py-8">
-                  {/*  */}
+                <div className="sm:px-3 sm:py-4 md:px-6 md:py-8">
+                  {/* restaurant topbar */}
                   <div className="flex flex-wrap justify-center">
+                    {/*profile top bar image */}
                     <div className="flex w-full justify-center px-4 lg:order-2 lg:w-3/12">
                       <div className="relative">
                         <img
@@ -107,11 +116,13 @@ const RestaurantProfile = () => {
                         />
                       </div>
                     </div>
+
+                    {/* profile top bar button and link  */}
                     <div className="w-full px-4 sm:mt-24 md:mt-24 lg:order-3 lg:mt-0 lg:w-4/12 lg:self-center lg:text-right">
-                      <div className="mt-32 flex items-center justify-end gap-4 xs:justify-center sm:mt-0">
+                      <div className="mt-32 flex items-center justify-end gap-8 xs:justify-center sm:mt-0">
                         <Link
                           to={"/food-item-create"}
-                          className="cursor-pointer rounded-md border-b-2 text-gray-700 hover:border-b-red-600"
+                          className="cursor-pointer rounded-md border-b-2 text-gray-700 hover:border-b-orange-500"
                         >
                           Create Food Item
                         </Link>
@@ -124,6 +135,8 @@ const RestaurantProfile = () => {
                         </button>
                       </div>
                     </div>
+
+                    {/* profile top bar statictics */}
                     <div className="w-full px-4 lg:order-1 lg:w-4/12">
                       <div className="flex justify-center py-4 pt-8 lg:pt-4">
                         <div className="mr-4 p-3 text-center">
@@ -148,7 +161,7 @@ const RestaurantProfile = () => {
                     </div>
                   </div>
 
-                  {/*  */}
+                  {/* restaurant types */}
                   <div className="mt-12 text-center">
                     {restaurantProfile.cuisine?.map((type, index) => (
                       <div
@@ -161,6 +174,8 @@ const RestaurantProfile = () => {
                       </div>
                     ))}
                   </div>
+
+                  {/* restaurant name */}
                   <div className="mt-4 text-center">
                     <h3 className="mb-2 font-semibold leading-normal text-gray-700 xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl">
                       {restaurantProfile
@@ -204,6 +219,8 @@ const RestaurantProfile = () => {
                       <span>{starPrint(restaurantProfile.rating)}</span>
                     </div>
                   </div>
+
+                  {/* restaurant menu */}
                   <h4 className="mt-4 border-y-2 border-blue-500 text-center font-sans text-3xl font-semibold">
                     Our Menu's
                   </h4>
@@ -234,7 +251,9 @@ const RestaurantProfile = () => {
                           </a>
                           <div className="mb-5 mt-2 flex flex-col items-center justify-between gap-4">
                             <p className="text-sm text-gray-700">
-                              {product.description}
+                              {product.description.length > 30
+                                ? `${product.description.substring(0, 35)} ...`
+                                : product.description}
                             </p>
 
                             <p>
@@ -253,7 +272,9 @@ const RestaurantProfile = () => {
                       </div>
                     ))}
                   </div>
+                  {/* restaurant menu end*/}
 
+                  {/* restaurant order */}
                   <h4 className="mb-8 mt-8 border-x-4 border-blue-500 text-center font-sans text-3xl font-semibold">
                     Order's List
                   </h4>
@@ -351,6 +372,7 @@ const RestaurantProfile = () => {
                       </article>
                     ))}
                   </div>
+                  {/* restaurant order end */}
                 </div>
               </div>
             </div>
