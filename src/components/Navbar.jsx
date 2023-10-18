@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 import CartIcon from "../assets/icons/CartIcon";
 import _ from "lodash";
 import { isExpired } from "react-jwt";
+import { toast } from "react-toastify";
 
 const menus = [
   {
@@ -61,8 +62,15 @@ const callsToAction = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+
+// function for handle logout
 export const handleLogout = () => {
   localStorage.clear();
+  toast.success("Logout successfully!", {
+    position: "top-center",
+    autoClose: 300,
+    closeOnClick: true,
+  });
   window.location.reload();
   window.location.href = "/";
 };
@@ -73,11 +81,17 @@ const Navbar = () => {
   const [isExpiredRestaurantToken, setIsExpiredRestaurantToken] =
     useState(null);
 
+  // Get redux state
   const { carts } = useSelector((state) => state.carts);
+  const userState = useSelector((state) => state.users.token);
+  // const restaurantState = useSelector((state) => state.restaurants.token);
+  // console.log("restaurantState navbar", restaurantState);
 
+  // Get token local storage
   const userToken = localStorage.getItem("user-token");
   const restaurantToken = localStorage.getItem("restaurant-token");
 
+  // check token expired or not
   useEffect(() => {
     if (!_.isNull(userToken)) {
       setIsExpiredUserToken(isExpired(userToken));
@@ -87,22 +101,33 @@ const Navbar = () => {
     }
   }, [userToken, restaurantToken]);
 
+  // console.log(
+  //   "trio",
+  //   _.isEmpty(userState) || (!_.isEmpty(userToken) && isExpiredUserToken),
+  // );
+  // console.log("userstate", _.isEmpty(userState));
+  // console.log("utoken", _.isEmpty(userToken));
+  // console.log("expire", isExpiredUserToken);
+
   return (
     <header className="sticky top-0 z-[1000] bg-white shadow-md">
       <nav
         className="max-w-7xl mx-auto flex items-center justify-between p-6 lg:px-8"
         aria-label="Global"
       >
+        {/* Nav logo */}
         <div className="flex lg:flex-1">
           <Link to="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img
-              className="h-4 w-30 xs:w-30 xs:h-4 lg:h-5 lg:w-5/5 xl:h-6 xl:w-40"
+              className="w-30 xs:w-30 lg:w-5/5 h-4 xs:h-4 lg:h-5 xl:h-6 xl:w-40"
               src={require("../assets/images/omnifood-logo.png")}
               alt="hero-logo"
             />
           </Link>
         </div>
+
+        {/* Navbar right hidden in lg-screen */}
         <div className="flex gap-4 lg:hidden">
           {/* md to xs cart icon */}
           <Link to={"/your-cart"} className="relative">
@@ -123,9 +148,11 @@ const Navbar = () => {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
+
+        {/* Dropdown menu start*/}
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Link
-            to="/all-restaurents"
+            to="/all-restaurants"
             className="text-sm font-semibold leading-6 text-gray-900 hover:text-orange-500"
           >
             Explore restaurants
@@ -217,9 +244,12 @@ const Navbar = () => {
             </Link>
           )}
         </Popover.Group>
-        {/* navbar login & signup button */}
+        {/* Dropdown menu end */}
+
+        {/* navbar user login & signup button */}
         <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:gap-4">
-          {!_.isEmpty(userToken) && !isExpiredUserToken ? (
+          {!_.isEmpty(userState) ||
+          (!_.isEmpty(userToken) && !isExpiredUserToken) ? (
             <button
               className="text-sm font-semibold leading-6 text-gray-900 hover:text-red-600"
               onClick={handleLogout}
@@ -254,6 +284,8 @@ const Navbar = () => {
           </Link>
         </div>
       </nav>
+
+      {/* Dialog box start */}
       <Dialog
         as="div"
         className="lg:hidden"
@@ -263,6 +295,7 @@ const Navbar = () => {
         <div className="fixed inset-0 z-10" />
         <Dialog.Panel className="sm:ring-gray-900/10 fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1">
           <div className="flex items-center justify-between">
+            {/* Drawer logo */}
             <Link to="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <img
@@ -271,6 +304,7 @@ const Navbar = () => {
                 alt="hero-logo"
               />
             </Link>
+            {/* Drawer hamburger */}
             <button
               type="button"
               className="-m-2.5 p-2.5 rounded-md text-gray-700"
@@ -311,23 +345,26 @@ const Navbar = () => {
                     </>
                   )}
                 </Disclosure>
+
+                {/* Below dropdown links */}
+                <Link
+                  to="/all-restaurants"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-orange-100 hover:text-orange-500"
+                >
+                  Explore all restaurants
+                </Link>
                 <Link
                   to="/all-meals"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-orange-100 hover:text-orange-500"
                 >
-                  Features
+                  Explore all meals
                 </Link>
-                <Link
-                  to="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-orange-100 hover:text-orange-500"
-                >
-                  Marketplace
-                </Link>
+
                 {/* drawer restaurant login & signup button  */}
                 <div>
                   {!_.isNull(restaurantToken) && !isExpiredRestaurantToken ? (
                     <button
-                      className="-mx-3 block rounded-lg px-2 py-1 text-base font-semibold leading-7 text-gray-900 hover:bg-orange-100 hover:text-red-600"
+                      className="-mx-2 block rounded-lg px-2 py-1 text-base font-semibold leading-7 text-gray-900 hover:bg-orange-100 hover:text-red-600"
                       onClick={handleLogout}
                     >
                       Sign out
@@ -350,8 +387,9 @@ const Navbar = () => {
                   )}
                 </div>
               </div>
+
               {/* drawer user login & signup button */}
-              <div className="flex flex-col justify-center gap-4 py-4">
+              <div className="flex flex-col items-center justify-center gap-2 py-4">
                 {!_.isNull(userToken) && !isExpiredUserToken ? (
                   <button
                     className="rounded-md bg-red-700 px-3 py-1 text-gray-100 shadow-lg hover:bg-red-500"
@@ -380,6 +418,7 @@ const Navbar = () => {
           </div>
         </Dialog.Panel>
       </Dialog>
+      {/* Dialog box end */}
     </header>
   );
 };

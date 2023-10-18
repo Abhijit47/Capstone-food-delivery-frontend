@@ -225,3 +225,18 @@ export const footerIcons = [
     icon: Dribble
   }
 ];
+
+export const footerButtomLinks = [
+  {
+    linkName: "Terms & Conditions",
+    link: "/terms-conditions"
+  },
+  {
+    linkName: "Privacy Policy",
+    link: "/privacy-policy"
+  },
+  {
+    linkName: "Cookies",
+    link: "/cookies"
+  }
+];

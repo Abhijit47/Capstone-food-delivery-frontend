@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { signUp } from "../redux/actions/userActions";
+import { useDispatch } from "react-redux";
 // import GenericButton from "../components/GenericButton";
 // import FormFooter from "../components/FormFooter";
 
@@ -13,6 +16,11 @@ const Signup = () => {
     confirmPassword: "",
   });
 
+  const dispatch = useDispatch();
+
+  // to navigate other page
+  const navigate = useNavigate();
+
   const { first_name, last_name, email, phone, password, confirmPassword } =
     userData;
 
@@ -24,10 +32,17 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    e.target.children[9].children[0].textContent = "Creating your account...";
+    // check password and confirm password are matched or not
     if (password !== confirmPassword) {
-      return alert("Passwords aren't matched");
+      return toast.error("Passwords aren't matched", {
+        autoClose: 300,
+        hideProgressBar: true,
+        position: "bottom-center",
+      });
     }
 
+    // create form-data
     const formdata = {
       name: `${first_name} ${last_name}`,
       email,
@@ -35,9 +50,27 @@ const Signup = () => {
       password,
     };
 
-    console.log(formdata);
     // dispatch an action to sign up
+    try {
+      dispatch(signUp(formdata));
+      toast.success("Registration successfully!", {
+        position: "top-center",
+        autoClose: 300,
+        closeOnClick: true,
+      });
+      setUserData({});
+      navigate("/login");
+    } catch (error) {
+      toast.error(error.code, {
+        position: "bottom-center",
+        autoClose: 400,
+        closeOnClick: true,
+      });
+      setUserData({});
+      navigate("/signup");
+    }
   };
+
   return (
     <section className="bg-white">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
@@ -79,7 +112,7 @@ const Signup = () => {
           <div className="max-w-xl lg:max-w-3xl">
             <div className="relative -mt-16 block lg:hidden">
               <Link
-                className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-blue-600 sm:h-20 sm:w-20"
+                className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-orange-600 sm:h-20 sm:w-20"
                 to="/"
               >
                 <span className="sr-only">Home</span>
@@ -107,9 +140,10 @@ const Signup = () => {
             </div>
 
             <form
-              onSubmit={handleSubmit}
+              onSubmit={(ev) => handleSubmit(ev)}
               className="grid grid-cols-6 gap-6 xs:mt-8"
             >
+              {/* logo */}
               <div className="col-span-6">
                 <img
                   className="mx-auto h-6 w-40"
@@ -117,6 +151,8 @@ const Signup = () => {
                   alt="hero-logo"
                 />
               </div>
+
+              {/* firstname */}
               <div className="col-span-6 sm:col-span-3">
                 <label
                   htmlFor="FirstName"
@@ -139,6 +175,7 @@ const Signup = () => {
                 />
               </div>
 
+              {/* lastname */}
               <div className="col-span-6 sm:col-span-3">
                 <label
                   htmlFor="LastName"
@@ -160,6 +197,7 @@ const Signup = () => {
                 />
               </div>
 
+              {/* email */}
               <div className="col-span-6">
                 <label
                   htmlFor="Email"
@@ -172,7 +210,7 @@ const Signup = () => {
                   type="email"
                   id="Email"
                   name="email"
-                  className="reg-form-input"
+                  className="reg-form-input peer-[required]"
                   required
                   placeholder="Enter your email"
                   autoComplete="email"
@@ -181,6 +219,7 @@ const Signup = () => {
                 />
               </div>
 
+              {/* phone */}
               <div className="col-span-6">
                 <label
                   htmlFor="phone"
@@ -195,6 +234,8 @@ const Signup = () => {
                   name="phone"
                   className="reg-form-input"
                   required
+                  minLength={10}
+                  maxLength={10}
                   placeholder="Enter your mobile number"
                   autoComplete="tel"
                   value={phone}
@@ -202,6 +243,7 @@ const Signup = () => {
                 />
               </div>
 
+              {/* password */}
               <div className="col-span-6 sm:col-span-3">
                 <label
                   htmlFor="Password"
@@ -223,6 +265,7 @@ const Signup = () => {
                 />
               </div>
 
+              {/* confirm password */}
               <div className="col-span-6 sm:col-span-3">
                 <label
                   htmlFor="PasswordConfirmation"
@@ -244,13 +287,14 @@ const Signup = () => {
                 />
               </div>
 
+              {/* checkbox */}
               <div className="col-span-6">
-                <label htmlFor="MarketingAccept" className="flex gap-4">
+                <label htmlFor="checkBox" className="flex items-center gap-4">
                   <input
                     type="checkbox"
-                    id="MarketingAccept"
-                    name="marketing_accept"
-                    className="h-5 w-5 rounded-md border-gray-200 bg-white shadow-sm"
+                    id="checkBox"
+                    name="checkBox"
+                    className="h-5 w-5 rounded-md border-gray-200 bg-gray-100 accent-orange-500 shadow-sm focus:ring-2 focus:ring-orange-500"
                   />
 
                   <span className="text-sm text-gray-700">
@@ -260,6 +304,7 @@ const Signup = () => {
                 </label>
               </div>
 
+              {/* chekbox text */}
               <div className="col-span-6">
                 <p className="text-sm text-gray-500">
                   By creating an account, you agree to our&nbsp;
@@ -274,7 +319,8 @@ const Signup = () => {
                 </p>
               </div>
 
-              <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
+              {/* sign up button */}
+              <div className="col-span-6 justify-self-center sm:flex sm:items-center sm:gap-4">
                 <button type="submit" className="reg-form-button">
                   Create an account
                 </button>

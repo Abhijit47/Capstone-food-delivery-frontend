@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
 import GenericButton from "../components/GenericButton";
-// eslint-disable-next-line
 import { restaurentSignUp } from "../features/handlerFormSubmit";
 import { BuildingStorefrontIcon } from "@heroicons/react/24/outline";
 
@@ -21,7 +20,6 @@ const ReataurantSignup = () => {
     confirmPassword: "",
   });
 
-  // eslint-disable-next-line
   const navigate = useNavigate();
 
   // destructuring form data
@@ -56,29 +54,28 @@ const ReataurantSignup = () => {
     console.log(restaurantFormData);
 
     // dispatch signup request with form data
-    // await restaurentSignUp(restaurantFormData);
-    // navigate("/restaurant-login");
-    // setRestaurantFormData({});
+    await restaurentSignUp(restaurantFormData);
+    navigate("/restaurant-login");
+    setRestaurantFormData({});
   };
 
   return (
     <section className="flex min-h-full flex-1 flex-col justify-center bg-gradient-to-tr from-pink-400 to-indigo-400 px-6 pb-32 pt-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <BuildingStorefrontIcon className="mx-auto h-20 w-20 text-orange-300" />
+        <BuildingStorefrontIcon className="mx-auto h-10 w-10 text-orange-300 xs:h-10 xs:w-10 sm:h-12 sm:w-12 md:h-16 md:w-16 lg:h-20 lg:w-20" />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Restaurant Sign up
         </h2>
       </div>
 
-      {/* <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm md:max-w-md lg:max-w-lg"> */}
-      <div className="">
+      <div>
         <form
-          className="grid grid-cols-4 gap-x-8 gap-y-8 bg-teal-600 p-8"
+          className="grid grid-cols-12 gap-x-1 p-2 xs:gap-x-8 xs:gap-y-3 xs:p-8 sm:gap-y-3 md:gap-y-6 lg:gap-y-8"
           onSubmit={handleSubmit}
           method="POST"
         >
           {/* name */}
-          <div className="xl:col-span-2">
+          <div className="col-span-12 xs:col-span-12 sm:col-span-12 lg:col-span-6">
             <label htmlFor="name" className="form-label">
               restaurant name
             </label>
@@ -90,6 +87,7 @@ const ReataurantSignup = () => {
                 autoComplete="off"
                 required
                 className="form-input"
+                placeholder="Ex: casa mexicana"
                 value={name}
                 onChange={handleChange}
               />
@@ -97,7 +95,7 @@ const ReataurantSignup = () => {
           </div>
 
           {/* address */}
-          <div className="xl:col-span-2">
+          <div className="col-span-12 lg:col-span-6">
             <label htmlFor="address" className="form-label">
               restaurant address
             </label>
@@ -109,6 +107,7 @@ const ReataurantSignup = () => {
                 autoComplete="off"
                 required
                 className="form-input"
+                placeholder="Ex: 123, main street, NY"
                 value={address}
                 onChange={handleChange}
               />
@@ -116,7 +115,7 @@ const ReataurantSignup = () => {
           </div>
 
           {/* cuisine/type */}
-          <div className="">
+          {/* <div className="">
             <label htmlFor="cuisine" className="form-label">
               cuisine
             </label>
@@ -132,26 +131,39 @@ const ReataurantSignup = () => {
                 onChange={handleChange}
               />
             </div>
-          </div>
+          </div> */}
 
-          <div className="">
-            <label htmlFor="country" className="form-label">
+          {/* cuisine/type select menu option */}
+          <div className="col-span-12 md:col-span-3 lg:col-span-3">
+            <label htmlFor="cuisine" className="form-label">
               Cuisine
             </label>
             <div className="mt-2">
-              <select id="cuisine" name="cuisine" className="form-input">
-                <option>Indian</option>
-                <option>Japanese</option>
-                <option>Mexican</option>
-                <option>Itanlian</option>
-                <option>Thai</option>
-                <option>American</option>
+              <select
+                id="cuisine"
+                name="cuisine"
+                type="text"
+                autoComplete="off"
+                required
+                className="form-input"
+                defaultValue={cuisine}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  Choose a restaurant type
+                </option>
+                <option value={"indian"}>Indian</option>
+                <option value={"japanese"}>Japanese</option>
+                <option value={"mexican"}>Mexican</option>
+                <option value={"itanlian"}>Itanlian</option>
+                <option value={"thai"}>Thai</option>
+                <option value={"american"}>American</option>
               </select>
             </div>
           </div>
 
           {/* rating */}
-          <div className="">
+          <div className="col-span-12 md:col-span-3 lg:col-span-3">
             <label htmlFor="rating" className="form-label">
               rating
             </label>
@@ -165,13 +177,14 @@ const ReataurantSignup = () => {
                 required
                 className="form-input"
                 value={rating}
+                placeholder="Ex: 4.3"
                 onChange={handleChange}
               />
             </div>
           </div>
 
           {/* opening/time */}
-          <div className="">
+          <div className="col-span-12 md:col-span-3 lg:col-span-3">
             <label htmlFor="openingTime" className="form-label">
               opening time
             </label>
@@ -192,7 +205,7 @@ const ReataurantSignup = () => {
           </div>
 
           {/* closing time */}
-          <div className="">
+          <div className="col-span-12 md:col-span-3 lg:col-span-3">
             <label htmlFor="closingTime" className="form-label">
               closing time
             </label>
@@ -213,7 +226,7 @@ const ReataurantSignup = () => {
           </div>
 
           {/* username */}
-          <div className="">
+          <div className="col-span-12 lg:col-span-6">
             <label htmlFor="username" className="form-label">
               username
             </label>
@@ -227,13 +240,14 @@ const ReataurantSignup = () => {
                 required
                 className="form-input"
                 value={username}
+                placeholder="Ex: restaurant123"
                 onChange={handleChange}
               />
             </div>
           </div>
 
           {/* email */}
-          <div className="">
+          <div className="col-span-12 lg:col-span-6">
             <label htmlFor="email" className="form-label">
               email address
             </label>
@@ -246,6 +260,7 @@ const ReataurantSignup = () => {
                 required
                 className="form-input"
                 value={email}
+                placeholder="Ex: jhon@example.com"
                 onChange={handleChange}
               />
             </div>
@@ -270,7 +285,7 @@ const ReataurantSignup = () => {
           </div> */}
 
           {/* password */}
-          <div className="">
+          <div className="col-span-12 lg:col-span-6">
             <div className="flex items-center justify-between">
               <label htmlFor="password" className="form-label">
                 password
@@ -291,7 +306,7 @@ const ReataurantSignup = () => {
           </div>
 
           {/* password confirm */}
-          <div className="">
+          <div className="col-span-12 lg:col-span-6">
             <div className="flex items-center justify-between">
               <label htmlFor="confirmPassword" className="form-label">
                 confirm password
@@ -310,7 +325,7 @@ const ReataurantSignup = () => {
               />
             </div>
           </div>
-          <div className="col-span-2 w-32 justify-self-center md:col-span-3">
+          <div className="col-span-12 mt-6 w-32 justify-self-center">
             <GenericButton buttonName={"Sign up"} />
           </div>
         </form>

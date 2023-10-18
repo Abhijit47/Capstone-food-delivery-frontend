@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-const BASE_URI = `${process.env.REACT_APP_BASE_API_URL}`;
+const BASE_URI = `${process.env.REACT_APP_BASE_URI}`;
 
 export const contactUs = async (formData) => {
   try {

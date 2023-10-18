@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
 import GenericButton from "../components/GenericButton";
-import FormFooter from "../components/FormFooter";
 import FoodItemInputs from "../components/FoodItemInputs";
 import { createFoodItem } from "../features/handleMeals";
 
@@ -19,12 +18,6 @@ const FoodItemCreate = () => {
   const navigate = useNavigate();
 
   const restaurantToken = localStorage.getItem("restaurant-token");
-  // // // console.log(token);
-  // useEffect(() => {
-  //   if (!restaurantToken) {
-  //     navigate("/restaurant-login");
-  //   }
-  // }, [navigate, restaurantToken]);
 
   // define a function for handle form request
   const handleSubmit = async (e) => {
@@ -37,32 +30,40 @@ const FoodItemCreate = () => {
         autoClose: 1500,
       });
     }
+
     // dispatch signin request
     await createFoodItem(foodItem, restaurantToken);
     navigate("/restaurant-profile");
   };
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <img
-          className="h-15 mx-auto w-auto"
-          src={require("../assets/icons/pizza-slice.png")}
-          alt="Your Company"
-        />
-        <h2 className="mt-10 text-center text-2xl font-bold capitalize leading-9 tracking-tight text-gray-900">
-          create a food item
+    <div className="flex min-h-full flex-1 flex-col justify-center gap-y-6 px-6 pb-12 pt-6 lg:px-8">
+      <div className="mx-auto">
+        <div className="p-4">
+          <img
+            className="mx-auto h-16 w-16 rounded-full bg-orange-400 xs:h-24 xs:w-24 sm:h-32 sm:w-32 md:h-32 md:w-32 lg:h-40 lg:w-40"
+            src={require("../assets/icons/pizza-slice.png")}
+            alt="Your Company"
+          />
+        </div>
+        <h2 className="mt-6 text-center text-xl font-bold capitalize leading-9 tracking-tight text-gray-900 md:text-2xl">
+          create food item
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
-        <form className="space-y-6" onSubmit={handleSubmit} method="POST">
+      {/* <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm md:max-w-md lg:max-w-lg"> */}
+      <div className="mx-auto mt-10 w-11/12 lg:w-6/12">
+        <form
+          className="grid grid-cols-6 gap-x-6 gap-y-4 p-0 sm:gap-y-6 sm:p-8"
+          onSubmit={handleSubmit}
+          method="POST"
+        >
           <FoodItemInputs foodItem={foodItem} setFoodItem={setFoodItem} />
 
-          <GenericButton buttonName={"Create food item"} />
+          <div className="lg:4/12 xl:5/12 col-span-6 justify-self-center">
+            <GenericButton buttonName={"Create food item"} />
+          </div>
         </form>
-
-        <FormFooter to={"/signup"} />
       </div>
     </div>
   );

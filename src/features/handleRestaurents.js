@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URI = `${process.env.REACT_APP_BASE_API_URL}`;
+const BASE_URI = `${process.env.REACT_APP_BASE_URI}`;
 
 // function for get restaurant profile details
 export const getRestaurantDetails = async (restaurantToken) => {

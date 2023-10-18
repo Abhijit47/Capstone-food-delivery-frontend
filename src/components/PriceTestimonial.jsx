@@ -11,21 +11,21 @@ const PriceTestimonial = () => {
   function toggleIt() {
     if (monthlyRef.current === null && annuallyRef.current === null) return;
     if (!flag) {
-      monthlyRef.current?.classList?.add("bg-orange-700");
+      monthlyRef.current?.classList?.add("bg-orange-600");
       monthlyRef.current?.classList?.add("text-white");
       monthlyRef.current?.classList?.remove("bg-gray-100");
       monthlyRef.current?.classList?.remove("text-gray-600");
-      annuallyRef.current?.classList?.remove("bg-orange-700");
+      annuallyRef.current?.classList?.remove("bg-orange-600");
       annuallyRef.current?.classList?.remove("text-white");
       annuallyRef.current?.classList?.add("bg-gray-100");
       annuallyRef.current?.classList?.add("text-gray-600");
       flag = true;
     } else {
-      monthlyRef.current?.classList?.remove("bg-orange-700");
+      monthlyRef.current?.classList?.remove("bg-orange-600");
       monthlyRef.current?.classList?.remove("text-white");
       monthlyRef.current?.classList?.add("bg-gray-100");
       monthlyRef.current?.classList?.add("text-gray-600");
-      annuallyRef.current?.classList?.add("bg-orange-700");
+      annuallyRef.current?.classList?.add("bg-orange-600");
       annuallyRef.current?.classList?.add("text-white");
       annuallyRef.current?.classList?.remove("bg-gray-100");
       annuallyRef.current?.classList?.remove("text-gray-600");
@@ -60,7 +60,7 @@ const PriceTestimonial = () => {
             </button>
             <button
               onClick={toggleIt}
-              className="price-plan-button bg-orange-700 text-white"
+              className="price-plan-button bg-orange-600 text-white"
               ref={annuallyRef}
             >
               Annually
@@ -91,7 +91,7 @@ const PriceTestimonial = () => {
                 </div>
               ) : (
                 <div className="relative z-30 mt-6 flex cursor-pointer rounded-lg bg-white shadow-lg transition-all delay-200 duration-200 hover:-translate-y-3">
-                  <div className="w-2.5  h-auto rounded-bl-md rounded-tl-md bg-indigo-700" />
+                  <div className="h-auto w-1 rounded-bl-md rounded-tl-md bg-orange-600" />
                   <div className="w-full p-8">
                     <div className="items-center justify-between md:flex">
                       <h2 className="text-2xl font-semibold leading-6 text-gray-800">

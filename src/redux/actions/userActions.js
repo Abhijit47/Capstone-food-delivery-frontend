@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 // create a user action
 const signIn = createAsyncThunk(
@@ -9,7 +8,7 @@ const signIn = createAsyncThunk(
   // create payload Creator
   async (payload) => {
     // try to login here and send payload to userSlice for further use.
-    const API_URI = `${process.env.REACT_APP_BASE_API_URL}/user/signin`;
+    const API_URI = `${process.env.REACT_APP_BASE_URI}/user/signin`;
 
     try {
       const res = await axios.post(API_URI, payload);
@@ -19,29 +18,35 @@ const signIn = createAsyncThunk(
         localStorage.setItem("user-token", res.data.data.token);
       }
 
-      toast.success(res.data.message, {
-        position: "top-center",
-        autoClose: 1500,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true
-      });
-
       // return this response payload
       return res.data.data.token;
 
     } catch (error) {
       // if any error
-      return toast.error(error.message, {
-        position: "top-right",
-        autoClose: 5000,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true
-      });
+      console.log(error.code);
     }
   }
 );
 
+export const signUp = createAsyncThunk(
+  "signup",
+
+  // create payload Creator
+  async (payload) => {
+    // try to login here and send payload to userSlice for further use.
+    const API_URI = `${process.env.REACT_APP_BASE_URI}/user/signup`;
+
+    try {
+      const res = await axios.post(API_URI, payload);
+
+      // return this response payload
+      return res.data.data.user;
+
+    } catch (error) {
+      // if any error
+      console.log(error.code);
+    }
+  }
+);
 
 export default signIn;

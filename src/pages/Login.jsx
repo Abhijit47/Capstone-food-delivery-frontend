@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import signIn from "../redux/actions/userActions";
 import { UserCircleIcon } from "@heroicons/react/20/solid";
 import _ from "lodash";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [userDetails, setUserDetails] = useState({
@@ -37,17 +38,32 @@ const Login = () => {
     e.preventDefault();
 
     // dispatch signin action creator for login
-    dispatch(signIn(userDetails));
-    navigate("/user-profile");
+    try {
+      dispatch(signIn(userDetails));
+      toast.success("Login successfully!", {
+        position: "top-center",
+        autoClose: 300,
+        closeOnClick: true,
+      });
+      setUserDetails({});
+      navigate("/");
+    } catch (error) {
+      toast.error(error.code, {
+        position: "bottom-center",
+        autoClose: 400,
+        closeOnClick: true,
+      });
+      setUserDetails({});
+      navigate("/login");
+    }
   };
 
   // A hook to access the redux store's state.
   const user = useSelector((state) => state.users.isLoading);
-  // console.log(user);
-  // eslint-disable-next-line
+
   const userToken = localStorage.getItem("user-token");
 
-  // check user is already in store or not
+  // check user is already in logged in or not
   useEffect(() => {
     if (_.isNull(userToken)) {
       navigate("/login");
@@ -59,7 +75,9 @@ const Login = () => {
   return (
     <>
       {user.isLoading ? (
-        <h3 className="bg-red-500 text-4xl">Loading...</h3>
+        <div className="h-64">
+          <h3 className="bg-orange-500 text-center text-4xl">Loading...</h3>
+        </div>
       ) : (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -97,7 +115,7 @@ const Login = () => {
                   <div className="text-sm">
                     <Link
                       to="/forgot-password"
-                      className="font-semibold text-indigo-700 hover:text-indigo-600"
+                      className="font-semibold text-orange-700 hover:text-orange-500"
                     >
                       Forgot password?
                     </Link>

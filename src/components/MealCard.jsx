@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { isExpired } from "react-jwt";
 import { getAllMeals, deleteOneMeal } from "../features/handleMeals";
 import UpdateModal from "./UpdateModal";
@@ -15,27 +15,28 @@ const MealCard = ({ meal, setAllMeals }) => {
     useState(false);
 
   const dispatch = useDispatch();
+  const userState = useSelector((state) => state.users.token);
 
+  // function for handle addTocart => user access
   const handleAddToCart = (card) => {
     dispatch(addToCart(card));
-    toast.success("Items added to your cart.", {
-      duration: 100,
+    toast.success("Item added to your cart.", {
+      autoClose: 150,
       position: "top-center",
-      className: "bg-green-500 text-white",
-      icon: "✅",
-      ariaProps: {
-        role: "status",
-        "aria-live": "polite",
-      },
+      hideProgressBar: true,
     });
   };
 
+  // Get local-storage tokens
   const userToken = localStorage.getItem("user-token");
   const restaurantToken = localStorage.getItem("restaurant-token");
 
+  // function for handle update modal => admin access
   const handleModal = () => {
     setShowModal(true);
   };
+
+  // function for handle delete item => admin access
   const handleDelete = async (mealId) => {
     await deleteOneMeal(mealId, restaurantToken);
     getAllMeals()
@@ -150,13 +151,28 @@ const MealCard = ({ meal, setAllMeals }) => {
           <p className="text-xs text-gray-700">
             Item remains&nbsp;{meal.quantity}
           </p>
-
-          <button
+          {!_.isEmpty(userState) ||
+          (!_.isEmpty(userToken) && !isExpiredUserToken) ? (
+            <button
+              className="mt-4 block w-full rounded-md bg-orange-400 p-2 text-sm font-medium transition-all delay-100 duration-100 hover:scale-105 xs:p-2 md:p-3 lg:p-4"
+              onClick={() => handleAddToCart(meal)}
+            >
+              Add to Cart
+            </button>
+          ) : (
+            <button
+              className="mt-4 block w-full rounded-md bg-orange-400 p-2 text-sm font-medium transition-all delay-100 duration-100 hover:scale-105 xs:p-2 md:p-3 lg:p-4"
+              disabled
+            >
+              Add to Cart
+            </button>
+          )}
+          {/* <button
             className="mt-4 block w-full rounded-md bg-orange-400 p-2 text-sm font-medium transition-all delay-100 duration-100 hover:scale-105 xs:p-2 md:p-3 lg:p-4"
             onClick={() => handleAddToCart(meal)}
           >
             Add to Cart
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

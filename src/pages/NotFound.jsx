@@ -8,8 +8,8 @@ const NotFound = () => {
     navigate("/");
   };
   return (
-    <div className="flex items-center justify-center py-12">
-      <div className="border mx-4 flex items-center justify-center rounded-md bg-white shadow-lg dark:border-gray-900 dark:bg-gray-800 md:w-2/3">
+    <div className="flex h-screen items-center justify-center">
+      <div className="mx-4 flex items-center justify-center rounded-md border-gray-900 bg-gray-100 shadow-lg md:w-2/3">
         <div className="flex flex-col items-center py-16">
           <img
             alt="not-found"
@@ -21,15 +21,15 @@ const NotFound = () => {
             className="md:hidden"
             src="https://i.ibb.co/RgYQvV7/undraw-page-not-found-su7k-1.png"
           />
-          <h1 className="px-4 pb-4 pt-8 text-center text-5xl font-bold leading-10 text-gray-800 dark:text-white">
+          <h1 className="px-4 pb-4 pt-8 text-center text-5xl font-bold leading-10 text-gray-800">
             OOPS!
           </h1>
-          <p className="px-4 pb-10 text-center text-base leading-none text-gray-600 dark:text-gray-200">
+          <p className="px-4 pb-10 text-center text-base leading-none text-gray-700">
             No signal here! we cannot find the page you are looking for
           </p>
           <button
             onClick={handleGoBack}
-            className="mx-4 h-10 w-48  rounded-md bg-indigo-700 text-base text-white hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:ring-opacity-50"
+            className="mx-4 h-10 w-48  rounded-md bg-orange-700 text-base text-gray-100 hover:bg-orange-800 focus:outline-none focus:ring-2 focus:ring-orange-800 focus:ring-opacity-50"
           >
             Go Back
           </button>

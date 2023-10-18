@@ -9,7 +9,7 @@ import CallToAction from "../components/CallToAction";
 
 const Homepage = () => {
   return (
-    <>
+    <main>
       <Hero />
       <Features />
       <HowItWorks />
@@ -17,7 +17,7 @@ const Homepage = () => {
       <Testimonials />
       <PriceSection />
       <CallToAction />
-    </>
+    </main>
   );
 };
 

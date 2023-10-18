@@ -37,6 +37,7 @@ const UpdateModal = ({ mealId, setAllMeals, showModal, setShowModal }) => {
     }
   }, [isExpiredRestaurantToken, navigate]);
 
+  // for update food items
   useEffect(() => {
     if (_.isNull(restaurantToken)) {
       return;
@@ -59,11 +60,11 @@ const UpdateModal = ({ mealId, setAllMeals, showModal, setShowModal }) => {
       return;
     }
   }, [mealId, navigate, showModal, restaurantToken, setAllMeals]);
-  // console.log(mealData);
+
   // 2. send a request to update
   const handleUpdate = async (e) => {
     e.preventDefault();
-    // console.log(Object.assign(foodItem, { id: mealId }));
+
     const formData = Object.assign(foodItem, { id: mealId });
     await updateOneMeal(formData, restaurantToken);
     // after successfull update
@@ -94,11 +95,11 @@ const UpdateModal = ({ mealId, setAllMeals, showModal, setShowModal }) => {
                 </div>
                 {/*body*/}
                 <div className="flex flex-1 flex-col justify-center px-6 py-12 xs:w-[450px] sm:w-[600px] md:w-[600px] lg:w-[600px] lg:px-8">
-                  <div className="sm:mx-auto sm:w-full sm:max-w-md">
+                  <div className="bg-blue-400 sm:mx-auto sm:w-full sm:max-w-md">
                     <img
-                      className="mx-auto h-[8rem] w-auto rounded-lg shadow-lg transition-all delay-200 duration-200 hover:scale-110"
+                      className="mx-auto h-[10rem] w-full rounded-md object-cover object-center shadow-lg transition-all delay-200 duration-200 hover:scale-105"
                       src={
-                        mealData
+                        mealData?.picture
                           ? mealData.picture
                           : "https://placehold.co/600x400"
                       }

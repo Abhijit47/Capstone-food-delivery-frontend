@@ -64,7 +64,7 @@ const FoodItemInputs = ({ foodItem, setFoodItem }) => {
       {formInputs.map((input, index) => (
         <Fragment key={index}>
           {index === 3 ? (
-            <div>
+            <div className="col-span-6 sm:col-span-6">
               <label htmlFor={input.labelFor} className="form-label">
                 {input.labelName}
               </label>
@@ -85,47 +85,31 @@ const FoodItemInputs = ({ foodItem, setFoodItem }) => {
             </div>
           ) : (
             <Fragment key={index}>
-              {!index === -1 ? (
-                <div>
-                  <label htmlFor={input.labelFor} className="form-label">
-                    {input.labelName}
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id={input.id}
-                      name={input.name}
-                      type={input.type}
-                      autoComplete="off"
-                      placeholder={input.placeholder}
-                      required
-                      className="form-input"
-                      value={input.value}
-                      onChange={handleChange}
-                    />
-                  </div>
+              <div
+                className={`${
+                  index === 0 || index === 1
+                    ? "col-span-6 sm:col-span-3"
+                    : "col-span-6 sm:col-span-3 sm:row-start-2"
+                }`}
+              >
+                <label htmlFor={input.labelFor} className="form-label">
+                  {input.labelName}
+                </label>
+                <div className="mt-2">
+                  <input
+                    id={input.id}
+                    name={input.name}
+                    type={input.type}
+                    autoComplete="off"
+                    placeholder={input.placeholder}
+                    required
+                    pattern={index === -1 ? input.pattern : null}
+                    className="form-input"
+                    value={input.value}
+                    onChange={handleChange}
+                  />
                 </div>
-              ) : (
-                <div>
-                  <label htmlFor={input.labelFor} className="form-label">
-                    {input.labelName}
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id={input.id}
-                      name={input.name}
-                      type={input.type}
-                      autoComplete="off"
-                      pattern={input.pattern}
-                      placeholder={input.placeholder}
-                      size={input.size}
-                      required
-                      className="form-input"
-                      value={input.value}
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-              )}
+              </div>
             </Fragment>
           )}
         </Fragment>

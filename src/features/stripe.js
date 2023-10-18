@@ -1,7 +1,8 @@
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js/pure";
+import { toast } from "react-toastify";
 
-const BASE_URI = `${process.env.REACT_APP_BASE_API_URL}`;
+const BASE_URI = `${process.env.REACT_APP_BASE_URI}`;
 const userToken = localStorage.getItem("user-token");
 
 export const orderFoodAndPayment = async (products) => {
@@ -30,10 +31,20 @@ export const orderFoodAndPayment = async (products) => {
       await stripe.redirectToCheckout({
         sessionId: session.id,
       });
+      toast.success("Booking Successfully", {
+        position: "top-right",
+        autoClose: 300,
+        hideProgressBar: true
+      });
     }
 
   } catch (error) {
     console.log(error);
+    toast.error(error.code, {
+      position: "bottom-right",
+      autoClose: 1000,
+      hideProgressBar: true,
+    });
   }
 };
 

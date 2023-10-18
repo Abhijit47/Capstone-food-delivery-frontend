@@ -43,7 +43,7 @@ const App = () => {
         <Route path='/cancel' element={<PaymentFailure />} />
         <Route path='/user-profile' element={<UserProfile />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
-        <Route path='/all-restaurents' element={<AllRestaurents />} />
+        <Route path='/all-restaurants' element={<AllRestaurents />} />
         {/* <Route path='/:path' element={<DynamicPage />} /> */}
         <Route path='*' element={<NotFound />} />
       </Routes>

@@ -6,7 +6,7 @@ import {
   emptyCartItems,
   removeToCart,
 } from "../redux/slices/cartSlices";
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { orderFoodAndPayment } from "../features/stripe";
 
@@ -15,62 +15,48 @@ function Cart() {
   const [totalQuantity, setTotalQuantity] = useState(0);
 
   const { carts } = useSelector((state) => state.carts);
+  const userState = useSelector((state) => state.users.token);
+  const userToken = localStorage.getItem("user-token");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // function to handle increment cart
   const handleIncrement = (item) => {
     dispatch(addToCart(item));
-    toast.success("Items added to your cart.", {
-      duration: 1000,
-      position: "top-right",
-      className: "bg-green-500 text-white",
-      icon: "✅",
-      ariaProps: {
-        role: "status",
-        "aria-live": "polite",
-      },
+    toast.info("Items added to your cart.", {
+      autoClose: 300,
+      position: "top-center",
+      hideProgressBar: true,
     });
   };
 
+  // function to handle remove one item in cart
   const handleRemoveCart = (itemId) => {
     dispatch(removeToCart(itemId));
-    toast.success("Item successfully removed from your cart.", {
-      duration: 1000,
+    toast.success("Items removed successfully.", {
+      autoClose: 300,
       position: "top-center",
-      className: "bg-green-500 text-white",
-      icon: "❌",
-      ariaProps: {
-        role: "status",
-        "aria-live": "polite",
-      },
+      hideProgressBar: true,
     });
   };
 
+  // function to handle decrement cart
   const handleDecrement = (item) => {
     dispatch(decrementCartItem(item));
-    toast("Items remove to your cart.", {
-      duration: 1000,
+    toast.info("Item removed to your cart.", {
+      autoClose: 300,
       position: "top-center",
-      className: "bg-green-500 text-white",
-      icon: "❎",
-      ariaProps: {
-        role: "status",
-        "aria-live": "polite",
-      },
+      hideProgressBar: true,
     });
   };
 
+  // function to handle empty cart
   const handleEmptyCart = () => {
     dispatch(emptyCartItems());
-    toast.dismiss("All items successfully removed to your cart.", {
-      duration: 1000,
-      position: "bottom-center",
-      className: "bg-green-500 text-white",
-      icon: "✅",
-      ariaProps: {
-        role: "status",
-        "aria-live": "polite",
-      },
+    toast.error("All items removed to your cart.", {
+      autoClose: 300,
+      position: "top-center",
+      hideProgressBar: true,
     });
   };
 
@@ -95,21 +81,23 @@ function Cart() {
   };
 
   // make payment and book order
-  const handleMakePayment = async (carts) => {
-    try {
-      await orderFoodAndPayment(carts);
-      toast.success("Booking Successfully", {
-        position: "top-right",
-        duration: 1200,
-      });
-    } catch (err) {
-      toast.error(err.message, {
-        position: "bottom-right",
-        duration: 1200,
-      });
-    }
+  const handleMakePayment = async (event, cartItems) => {
+    event.target.textContent = "Processing...";
+
+    // dispatch order and make payment
+    await orderFoodAndPayment(cartItems);
   };
 
+  // check user-state or user-token available or not
+  useEffect(() => {
+    if (userState || userToken) {
+      navigate("/your-cart");
+    } else {
+      navigate("/login");
+    }
+  }, [userState, userToken, navigate]);
+
+  // calculate total price and total quantity
   useEffect(() => {
     calcTotalPrice();
     calTotalQuantity();
@@ -309,6 +297,7 @@ function Cart() {
             id="scroll"
           >
             <div className="flex flex-col justify-between overflow-y-auto px-20 py-20 md:h-screen">
+              {/* checkout summary */}
               <div>
                 <p className="font-black leading-9 text-gray-800 xs:text-2xl lg:text-4xl">
                   Summary
@@ -340,6 +329,8 @@ function Cart() {
                   <p className="text-base leading-none text-gray-800">$0</p>
                 </div>
               </div>
+
+              {/* checkout button */}
               <div>
                 <div className="flex items-center justify-between pb-6 pt-20 lg:pt-5">
                   <p className="text-2xl leading-normal text-gray-800">Total</p>
@@ -356,7 +347,7 @@ function Cart() {
                   </button>
                 ) : (
                   <button
-                    onClick={() => handleMakePayment(carts)}
+                    onClick={(ev) => handleMakePayment(ev, carts)}
                     className="border w-full rounded-md border-gray-800 bg-gray-800 py-5 text-base leading-none text-white transition-all delay-75 duration-100 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
                   >
                     Checkout
