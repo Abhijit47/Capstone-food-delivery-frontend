@@ -1,11 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getAllMeals, deleteOneMeal } from "../features/handleMeals";
+import { getAllMeals, deleteOneMeal } from "../../features/handleMeals";
 // eslint-disable-next-line
 import { toast } from "react-toastify";
-import { addToCart } from "../redux/slices/cartSlices";
-import MealCard from "./MealCard";
+import { addToCart } from "../../redux/slices/cartSlices";
+import MealCard from "../MealCard";
 
 const Meals = () => {
   // eslint-disable-next-line

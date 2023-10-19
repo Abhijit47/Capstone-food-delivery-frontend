@@ -2,51 +2,90 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // create a user action
-const signIn = createAsyncThunk(
-  "signIn",
-
-  // create payload Creator
-  async (payload) => {
-    // try to login here and send payload to userSlice for further use.
+const userSignIn = createAsyncThunk("userSignIn", async ({ userDetails, cb }) => {
+  try {
+    // try to login here and send payload to userslice for further use.
     const API_URI = `${process.env.REACT_APP_BASE_URI}/user/signin`;
 
-    try {
-      const res = await axios.post(API_URI, payload);
+    const res = await axios.post(API_URI, userDetails);
 
-      // after successful login user token will be saved to local-storage
-      if (res.status === 200) {
-        localStorage.setItem("user-token", res.data.data.token);
-      }
-
-      // return this response payload
-      return res.data.data.token;
-
-    } catch (error) {
-      // if any error
-      console.log(error.code);
+    // set the local storage
+    if (res.status === 200) {
+      localStorage.setItem("user-token", res.data.data.token);
     }
+
+    cb?.(res);
+    return res.data.data.token;
+
+  } catch (err) {
+    cb?.(err.response);
+    console.error(err.code);
   }
-);
+});
 
-export const signUp = createAsyncThunk(
-  "signup",
-
-  // create payload Creator
-  async (payload) => {
-    // try to login here and send payload to userSlice for further use.
+const userSignUp = createAsyncThunk("userSignUp", async ({ formdata, cb }) => {
+  try {
+    // try to login here and send payload to userslice for further use.
     const API_URI = `${process.env.REACT_APP_BASE_URI}/user/signup`;
 
-    try {
-      const res = await axios.post(API_URI, payload);
+    const res = await axios.post(API_URI, formdata);
 
-      // return this response payload
-      return res.data.data.user;
+    cb?.(res);
+    return res.data.data.user;
 
-    } catch (error) {
-      // if any error
-      console.log(error.code);
-    }
+  } catch (err) {
+    cb?.(err.response);
+    console.error(err.code);
   }
-);
+});
 
-export default signIn;
+export { userSignIn, userSignUp };
+
+// old redux code
+
+// const userSignInn = createAsyncThunk({
+//   "userSignIn", async({ userDetails ,cb}=)
+
+//   // create payload Creator
+//   // async (payload) => {
+//   //   // try to login here and send payload to userSlice for further use.
+//   //   const API_URI = `${process.env.REACT_APP_BASE_URI}/user/signin`;
+
+//   //   try {
+//   //     const res = await axios.post(API_URI, payload);
+
+//   //     // after successful login user token will be saved to local-storage
+//   //     if (res.status === 200) {
+//   //       localStorage.setItem("user-token", res.data.data.token);
+//   //     }
+
+//   //     // return this response payload
+//   //     return res.data.data.token;
+
+//   //   } catch (error) {
+//   //     // if any error
+//   //     console.log(error.code);
+//   //   }
+//   // }
+// });
+
+// export const signUp = createAsyncThunk(
+//   "signup",
+
+//   // create payload Creator
+//   async (payload) => {
+//     // try to login here and send payload to userSlice for further use.
+//     const API_URI = `${process.env.REACT_APP_BASE_URI}/user/signup`;
+
+//     try {
+//       const res = await axios.post(API_URI, payload);
+
+//       // return this response payload
+//       return res.data.data.user;
+
+//     } catch (error) {
+//       // if any error
+//       console.log(error.code);
+//     }
+//   }
+// );

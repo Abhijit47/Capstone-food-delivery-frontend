@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 // import the user action to create reducer for login a user
-import signIn, { signUp } from "../actions/userActions";
+import { userSignIn, userSignUp } from "../actions/userActions";
 
 
 // create user slices
@@ -14,30 +14,35 @@ const userSlices = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+    // Sign in reducers
     // 1. if state is pending or not
-    builder.addCase(signIn.pending, (state) => {
+    builder.addCase(userSignIn.pending, (state) => {
       state.isLoading = true;
     });
 
     // 2. if state is error or not
-    builder.addCase(signIn.rejected, (state) => {
+    builder.addCase(userSignIn.rejected, (state) => {
       state.isError = true;
     });
 
     // 3. if state is resolved
-    builder.addCase(signIn.fulfilled, (state, action) => {
+    builder.addCase(userSignIn.fulfilled, (state, action) => {
       state.token = action.payload;
     });
 
-    builder.addCase(signUp.pending, (state, action) => {
+    // Sign up reducers
+    // 1. if state is pending or not
+    builder.addCase(userSignUp.pending, (state, action) => {
       state.isLoading = true;
     });
 
-    builder.addCase(signUp.rejected, (state, action) => {
+    // 2. if state is error or not
+    builder.addCase(userSignUp.rejected, (state, action) => {
       state.isError = true;
     });
 
-    builder.addCase(signUp.fulfilled, (state, action) => {
+    // 3. if state is resolved
+    builder.addCase(userSignUp.fulfilled, (state, action) => {
       state.user = Object.assign({}, action.payload);
     });
 

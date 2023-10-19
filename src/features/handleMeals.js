@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 
 const BASE_URI = `${process.env.REACT_APP_BASE_URI}`;
 
+// function for create food item => admin access
 export const createFoodItem = async (formData, token) => {
 
   let config = {
@@ -34,6 +35,7 @@ export const createFoodItem = async (formData, token) => {
   }
 };
 
+// function for get all meals data => all access
 export const getAllMeals = async () => {
   try {
     const res = await axios.get(`${BASE_URI}/foodItem/all-food-items`);
@@ -59,6 +61,7 @@ export const getAllMeals = async () => {
   }
 };
 
+// function for get one meal details => user access (not used)
 export const getOneMeal = async (id, restaurantToken, userToken) => {
 
   let config = {
@@ -89,6 +92,7 @@ export const getOneMeal = async (id, restaurantToken, userToken) => {
   }
 };
 
+// function for get one meal details => admin access
 export const updateOneMeal = async (formdata, restaurantToken) => {
   let config = {
     headers: { Authorization: `Bearer ${restaurantToken}` }
@@ -117,6 +121,7 @@ export const updateOneMeal = async (formdata, restaurantToken) => {
   }
 };
 
+// function for get one meal details => admin access
 export const deleteOneMeal = async (mealId, restaurantToken) => {
 
   let config = {

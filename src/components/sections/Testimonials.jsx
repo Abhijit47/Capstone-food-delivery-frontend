@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "keen-slider/keen-slider.min.css";
 import { useKeenSlider } from "keen-slider/react";
-import { testimonialData } from "../constant";
+import { testimonialData } from "../../constant";
 // import from 'keen-slider/react.es' for to get an ES module
 
 const Testimonials = () => {

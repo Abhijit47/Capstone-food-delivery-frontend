@@ -1,5 +1,5 @@
 import React from "react";
-import { featureImages } from "../constant/index";
+import { featureImages } from "../../constant/index";
 
 const Features = () => {
   return (

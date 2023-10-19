@@ -3,6 +3,7 @@ import axios from "axios";
 
 const BASE_URI = `${process.env.REACT_APP_BASE_URI}`;
 
+// Get user order details
 export const userOrdersDetails = async (userToken) => {
   try {
     let configs = {
@@ -16,6 +17,7 @@ export const userOrdersDetails = async (userToken) => {
   }
 };
 
+// Get restaurantOrder details
 export const restaurantOrdersDetails = async (restaurantToken) => {
   try {
     let configs = {

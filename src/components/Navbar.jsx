@@ -79,13 +79,12 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isExpiredUserToken, setIsExpiredUserToken] = useState(false);
   const [isExpiredRestaurantToken, setIsExpiredRestaurantToken] =
-    useState(null);
+    useState(false);
 
   // Get redux state
   const { carts } = useSelector((state) => state.carts);
   const userState = useSelector((state) => state.users.token);
-  // const restaurantState = useSelector((state) => state.restaurants.token);
-  // console.log("restaurantState navbar", restaurantState);
+  const restaurantState = useSelector((state) => state.restaurants.token);
 
   // Get token local storage
   const userToken = localStorage.getItem("user-token");
@@ -100,14 +99,6 @@ const Navbar = () => {
       setIsExpiredRestaurantToken(isExpired(restaurantToken));
     }
   }, [userToken, restaurantToken]);
-
-  // console.log(
-  //   "trio",
-  //   _.isEmpty(userState) || (!_.isEmpty(userToken) && isExpiredUserToken),
-  // );
-  // console.log("userstate", _.isEmpty(userState));
-  // console.log("utoken", _.isEmpty(userToken));
-  // console.log("expire", isExpiredUserToken);
 
   return (
     <header className="sticky top-0 z-[1000] bg-white shadow-md">
@@ -149,8 +140,9 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Dropdown menu start*/}
+        {/* popover menu start*/}
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
+          {/* navbar links */}
           <Link
             to="/all-restaurants"
             className="text-sm font-semibold leading-6 text-gray-900 hover:text-orange-500"
@@ -163,6 +155,9 @@ const Navbar = () => {
           >
             Explore food items
           </Link>
+          {/* navbar links */}
+
+          {/* dropdown menu start */}
           <Popover className="relative">
             <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 outline-none hover:text-orange-500 focus:outline-none">
               Menu
@@ -227,8 +222,11 @@ const Navbar = () => {
               </Popover.Panel>
             </Transition>
           </Popover>
+          {/* dropdown menu end */}
+
           {/* restaurant login */}
-          {!isExpiredRestaurantToken && restaurantToken ? (
+          {!_.isEmpty(restaurantState) ||
+          (!_.isEmpty(restaurantToken) && !isExpiredRestaurantToken) ? (
             <button
               onClick={handleLogout}
               className="text-sm font-semibold leading-6 text-gray-900 hover:text-red-600"
@@ -244,7 +242,7 @@ const Navbar = () => {
             </Link>
           )}
         </Popover.Group>
-        {/* Dropdown menu end */}
+        {/* popover menu end */}
 
         {/* navbar user login & signup button */}
         <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:gap-4">
@@ -332,14 +330,13 @@ const Navbar = () => {
                       </Disclosure.Button>
                       <Disclosure.Panel className="mt-2 space-y-2">
                         {[...menus, ...callsToAction].map((item) => (
-                          <Disclosure.Button
+                          <Link
                             key={item.name}
-                            as="a"
                             to={item.to}
                             className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-orange-100"
                           >
                             {item.name}
-                          </Disclosure.Button>
+                          </Link>
                         ))}
                       </Disclosure.Panel>
                     </>
@@ -362,7 +359,8 @@ const Navbar = () => {
 
                 {/* drawer restaurant login & signup button  */}
                 <div>
-                  {!_.isNull(restaurantToken) && !isExpiredRestaurantToken ? (
+                  {!_.isEmpty(restaurantState) ||
+                  (!_.isEmpty(restaurantToken) && !isExpiredRestaurantToken) ? (
                     <button
                       className="-mx-2 block rounded-lg px-2 py-1 text-base font-semibold leading-7 text-gray-900 hover:bg-orange-100 hover:text-red-600"
                       onClick={handleLogout}
@@ -389,10 +387,11 @@ const Navbar = () => {
               </div>
 
               {/* drawer user login & signup button */}
-              <div className="flex flex-col items-center justify-center gap-2 py-4">
-                {!_.isNull(userToken) && !isExpiredUserToken ? (
+              <div className="flex flex-col items-start justify-center gap-2 py-4">
+                {!_.isEmpty(userState) ||
+                (!_.isEmpty(userToken) && !isExpiredUserToken) ? (
                   <button
-                    className="rounded-md bg-red-700 px-3 py-1 text-gray-100 shadow-lg hover:bg-red-500"
+                    className="rounded-md bg-orange-700 px-3 py-1 text-gray-100 shadow-lg hover:bg-orange-600"
                     onClick={handleLogout}
                   >
                     Sign out

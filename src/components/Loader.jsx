@@ -5,11 +5,9 @@ const Loader = () => {
     <div
       aria-label="Loading..."
       role="status"
-      className="flex h-[85dvh] items-center justify-center space-x-2"
+      className="flex h-[90vh] items-center justify-center"
     >
-      <span className="animate-pulse text-4xl font-medium text-gray-600">
-        Loading...
-      </span>
+      <div className="h-16 w-16 animate-spin rounded-full border-4 border-dashed border-orange-700"></div>
     </div>
   );
 };

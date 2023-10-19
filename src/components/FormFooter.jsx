@@ -7,7 +7,7 @@ const FormFooter = ({ text, to, message }) => {
       {text ? text : "Not a member?"}{" "}
       <Link
         to={to}
-        className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+        className="font-semibold leading-6 text-orange-600 hover:text-orange-500"
       >
         {message ? message : "Start a 14 day free trial"}
       </Link>

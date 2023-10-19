@@ -7,9 +7,9 @@ const DynamicPage = () => {
 
   return (
     <section className="flex h-screen items-center justify-center">
-      <h1 className="text-center font-sans text-4xl font-bold capitalize">
+      <h4 className="text-center font-sans text-5xl font-bold capitalize">
         {pathname.slice(1).replaceAll("%20", " ")}&nbsp;Page
-      </h1>
+      </h4>
     </section>
   );
 };

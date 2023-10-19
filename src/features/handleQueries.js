@@ -2,6 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 const BASE_URI = `${process.env.REACT_APP_BASE_URI}`;
 
+// function for handle contact-us form
 export const contactUs = async (formData) => {
   try {
     const response = await axios.post(`${BASE_URI}/query/contact-us`, formData);
@@ -21,6 +22,7 @@ export const contactUs = async (formData) => {
   }
 };
 
+// function for get all queries => admin access
 export const getQueries = async (restaurantToken) => {
   try {
     let configs = {

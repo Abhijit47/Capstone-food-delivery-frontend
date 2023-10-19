@@ -1,6 +1,6 @@
 import React from "react";
-import PriceCard from "./PriceCard";
-import PriceTestimonial from "./PriceTestimonial";
+import PriceCard from "../PriceCard";
+import PriceTestimonial from "../PriceTestimonial";
 
 const PriceSection = () => {
   return (

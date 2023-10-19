@@ -1,9 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { userOrdersDetails } from "../features/handleOrders";
-import { isExpired } from "react-jwt";
-import Loader from "../components/Loader";
 import _ from "lodash";
+import { isExpired } from "react-jwt";
+import { userOrdersDetails } from "../features/handleOrders";
 
 const UserProfile = () => {
   const [userOrders, setUserOrders] = useState([]);
@@ -11,11 +10,13 @@ const UserProfile = () => {
 
   const navigate = useNavigate();
 
+  // function for day month formatter
   const dayMonthFormatter = (date) => {
     const options = { day: "numeric", month: "short" };
     return new Intl.DateTimeFormat("en-IN", options).format(new Date(date));
   };
 
+  // function for year formatter
   const yearFormatter = (date) => {
     const options = { year: "numeric" };
     return new Intl.DateTimeFormat("en-IN", options).format(new Date(date));
@@ -23,6 +24,7 @@ const UserProfile = () => {
 
   const userToken = localStorage.getItem("user-token");
 
+  // check if not user-token is expired and available.
   useEffect(() => {
     if (!isExpired(userToken) && !_.isEmpty(userToken)) {
       navigate("/user-profile");
@@ -32,6 +34,7 @@ const UserProfile = () => {
     }
   }, [navigate, userToken]);
 
+  // Get user orders
   useEffect(() => {
     const getUserOrders = async () => {
       setIsLoading(true);
@@ -93,9 +96,16 @@ const UserProfile = () => {
       <h4 className="p-4 text-center font-sans text-4xl font-bold text-gray-800">
         My orders
       </h4>
+      {userOrders.length <= 0 ? (
+        <div className="flex min-h-screen items-center justify-center">
+          <h4 className="text-center font-sans text-4xl font-semibold">
+            There is no orders to show
+          </h4>
+        </div>
+      ) : null}
       {isLoading ? (
-        <div className="flex items-start justify-center">
-          <Loader />
+        <div className="flex min-h-screen items-start justify-center">
+          <div className="h-16 w-16 animate-spin rounded-full border-4 border-dashed dark:border-purple-400"></div>
         </div>
       ) : (
         <Fragment>

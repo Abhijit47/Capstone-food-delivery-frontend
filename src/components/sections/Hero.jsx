@@ -96,7 +96,7 @@ const Hero = () => {
           <img
             className="w-full object-cover object-center"
             alt="hero"
-            src={require("../assets/images/hero.webp")}
+            src={require("../../assets/images/hero.webp")}
             loading="lazy"
           />
         </div>

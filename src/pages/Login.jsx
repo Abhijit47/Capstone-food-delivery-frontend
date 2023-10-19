@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import GenericButton from "../components/GenericButton";
 import FormFooter from "../components/FormFooter";
 import { useDispatch, useSelector } from "react-redux";
-import signIn from "../redux/actions/userActions";
+import { userSignIn } from "../redux/actions/userActions";
 import { UserCircleIcon } from "@heroicons/react/20/solid";
 import _ from "lodash";
 import { toast } from "react-toastify";
@@ -38,24 +38,57 @@ const Login = () => {
     e.preventDefault();
 
     // dispatch signin action creator for login
-    try {
-      dispatch(signIn(userDetails));
-      toast.success("Login successfully!", {
-        position: "top-center",
-        autoClose: 300,
-        closeOnClick: true,
-      });
-      setUserDetails({});
-      navigate("/");
-    } catch (error) {
-      toast.error(error.code, {
-        position: "bottom-center",
-        autoClose: 400,
-        closeOnClick: true,
-      });
-      setUserDetails({});
-      navigate("/login");
-    }
+    dispatch(
+      userSignIn({
+        userDetails,
+        cb: (result) => {
+          console.log(result);
+          switch (result.status) {
+            case 200:
+              toast.success(result.data.status, {
+                position: "top-center",
+                autoClose: 500,
+              });
+              setUserDetails({ email: "", password: "" });
+              navigate("/");
+              break;
+            case 400:
+              toast.info(result.data.message, {
+                position: "top-center",
+                autoClose: 1500,
+                bodyClassName: "w-full text-xs",
+              });
+              setUserDetails({ email: "", password: "" });
+              navigate("/login");
+              break;
+            case 404:
+              toast.info(result.data.message, {
+                position: "top-center",
+                autoClose: 500,
+              });
+              setUserDetails({ email: "", password: "" });
+              navigate("/login");
+              break;
+            case 500:
+              toast.error("Internal Server Error", {
+                position: "top-center",
+                autoClose: 500,
+              });
+              setUserDetails({ email: "", password: "" });
+              navigate("/");
+              break;
+            default:
+              toast.info("Something really going wrong", {
+                position: "top-center",
+                autoClose: 500,
+              });
+              setUserDetails({ email: "", password: "" });
+              navigate("/");
+              break;
+          }
+        },
+      }),
+    );
   };
 
   // A hook to access the redux store's state.

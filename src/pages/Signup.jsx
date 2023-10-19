@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { signUp } from "../redux/actions/userActions";
+import { userSignUp } from "../redux/actions/userActions";
 import { useDispatch } from "react-redux";
-// import GenericButton from "../components/GenericButton";
-// import FormFooter from "../components/FormFooter";
 
 const Signup = () => {
   const [userData, setUserData] = useState({
@@ -21,18 +19,22 @@ const Signup = () => {
   // to navigate other page
   const navigate = useNavigate();
 
+  // destructuring form state
   const { first_name, last_name, email, phone, password, confirmPassword } =
     userData;
 
+  // function for handle form-input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
 
+  // function for handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
 
     e.target.children[9].children[0].textContent = "Creating your account...";
+
     // check password and confirm password are matched or not
     if (password !== confirmPassword) {
       return toast.error("Passwords aren't matched", {
@@ -51,24 +53,53 @@ const Signup = () => {
     };
 
     // dispatch an action to sign up
-    try {
-      dispatch(signUp(formdata));
-      toast.success("Registration successfully!", {
-        position: "top-center",
-        autoClose: 300,
-        closeOnClick: true,
-      });
-      setUserData({});
-      navigate("/login");
-    } catch (error) {
-      toast.error(error.code, {
-        position: "bottom-center",
-        autoClose: 400,
-        closeOnClick: true,
-      });
-      setUserData({});
-      navigate("/signup");
-    }
+    dispatch(
+      userSignUp({
+        formdata,
+        cb: (result) => {
+          console.log(result);
+          switch (result.status) {
+            case 201:
+              toast.success(result.data.status, {
+                position: "top-center",
+                autoClose: 500,
+              });
+              navigate("/login");
+              break;
+            case 400:
+              toast.info(result.data.message, {
+                position: "top-center",
+                autoClose: 1500,
+                bodyClassName: "w-full text-xs",
+              });
+              navigate("/signup");
+              break;
+            case 404:
+              toast.info(result.data.message, {
+                position: "top-center",
+                autoClose: 1250,
+                bodyClassName: "w-full text-xs",
+              });
+              navigate("/");
+              break;
+            case 500:
+              toast.error("Internal Server Error", {
+                position: "top-center",
+                autoClose: 500,
+              });
+              navigate("/");
+              break;
+            default:
+              toast.info("Something really going wrong", {
+                position: "top-center",
+                autoClose: 500,
+              });
+              navigate("/");
+              break;
+          }
+        },
+      }),
+    );
   };
 
   return (

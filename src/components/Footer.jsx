@@ -26,7 +26,7 @@ const Footer = () => {
                   {footerLink.footerLinks.map((link, idx) => (
                     <li key={idx}>
                       <Link
-                        to={`/${link?.toLowerCase()}`}
+                        to={`/${link?.toLowerCase().replace(" ", "-")}`}
                         className="transition text-gray-700 hover:text-orange-400"
                       >
                         {link}

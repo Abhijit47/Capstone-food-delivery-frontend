@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 // import the restaurant action to create reducer for login a restaurent admin
-import restaurantSignIn from "../actions/restaurantAction";
+import { restaurantSignIn, restaurantSignUp } from "../actions/restaurantAction";
 
 let initialState = {
   isLoading: false,
   isError: false,
-  token: ""
+  token: "",
+  restaurant: {}
 };
 
 // create user slices
@@ -29,8 +30,20 @@ const restaurantSlices = createSlice({
       // state.initialState = Object.assign({}, action.payload);
       state.token = action.payload;
     });
+
+    // sign up reducer
+    builder.addCase(restaurantSignUp.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(restaurantSignUp.rejected, (state, action) => {
+      state.isError = true;
+    });
+    builder.addCase(restaurantSignUp.fulfilled, (state, action) => {
+      state.restaurant = Object.assign({}, action.payload);
+    });
   }
 });
 
-// We need export the user slice
+
+// We need export the restaurantSlices slice
 export default restaurantSlices.reducer;

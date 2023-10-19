@@ -19,6 +19,8 @@ export const orderFoodAndPayment = async (products) => {
       products,
       configs,
     );
+
+    // payment-session
     const session = sessionResponse.data.data.session;
 
     // Create booking for user orders
@@ -27,13 +29,15 @@ export const orderFoodAndPayment = async (products) => {
       products,
       configs,
     );
+
+    // check booking status
     if (bookingResponse.status === 201) {
       await stripe.redirectToCheckout({
         sessionId: session.id,
       });
       toast.success("Booking Successfully", {
         position: "top-right",
-        autoClose: 300,
+        autoClose: 500,
         hideProgressBar: true
       });
     }

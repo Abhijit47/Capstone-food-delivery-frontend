@@ -1,52 +1,42 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { toast } from "react-toastify";
 
-
-// create a restaurant action
-const restaurantSignIn = createAsyncThunk(
-  "restaurantSignIn",
-
-  // create payload Creator
-  async (payload) => {
-    // try to login here and send payload to userSlice for further use.
+const restaurantSignIn = createAsyncThunk("restaurantSignIn", async ({ restaurantFormData, cb }) => {
+  try {
+    // try to login here and send payload to restaurantSlice for further use.
     const API_URI = `${process.env.REACT_APP_BASE_URI}/restaurant/signin`;
 
-    try {
-      const res = await axios.post(API_URI, payload);
+    const res = await axios.post(API_URI, restaurantFormData);
 
-      // after successful login user token will be saved to local-storage
-      if (res.status === 200) {
-        localStorage.setItem("restaurant-token", res.data.data.token);
-      }
-
-      toast.success(res.data.message, {
-        position: "top-center",
-        autoClose: 1500,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true
-      });
-
-      // return this response payload
-      return res.data.data.token;
-
-    } catch (error) {
-      // if any error
-      return toast.error(error.message, {
-        position: "top-right",
-        autoClose: 5000,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true
-      });
-
-      // console.log(error.message);
-      // console.log(error.response.data.message);
+    // set the local storage
+    if (res.status === 200) {
+      localStorage.setItem("restaurant-token", res.data.data.token);
     }
+
+    cb?.(res);
+    return res.data.data.token;
+
+  } catch (err) {
+    cb?.(err.response);
+    console.error(err.code);
   }
-);
+});
 
+// create a restaurant signup action
+const restaurantSignUp = createAsyncThunk("restaurantSignUp", async ({ restaurantFormData, cb }) => {
+  try {
+    // try to sign up here and send payload to restaurantSlice for further use.
+    const API_URI = `${process.env.REACT_APP_BASE_URI}/restaurant/create-restaurant`;
 
+    const res = await axios.post(API_URI, restaurantFormData);
 
-export default restaurantSignIn;
+    cb?.(res);
+    return res.data.data.restaurant;
+
+  } catch (err) {
+    cb?.(err.response);
+    console.error(err.code);
+  }
+});
+
+export { restaurantSignUp, restaurantSignIn };

@@ -11,6 +11,7 @@ import {
   ClockIcon,
 } from "@heroicons/react/24/outline";
 import { handleLogout } from "../components/Navbar";
+import Loader from "../components/Loader";
 
 const RestaurantProfile = () => {
   const [restaurantProfile, setRestaurantProfile] = useState({});
@@ -61,9 +62,7 @@ const RestaurantProfile = () => {
   return (
     <section>
       {isLoading || _.isEmpty(restaurantProfile) ? (
-        <div className="flex h-[90vh] items-center justify-center">
-          <div className="h-16 w-16 animate-spin rounded-full border-4 border-dashed dark:border-purple-400"></div>
-        </div>
+        <Loader />
       ) : (
         <Fragment>
           <div className="relative block h-[500px]">
@@ -278,100 +277,108 @@ const RestaurantProfile = () => {
                   <h4 className="mb-8 mt-8 border-x-4 border-blue-500 text-center font-sans text-3xl font-semibold">
                     Order's List
                   </h4>
-                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    {restaurantOrders?.map((order, index) => (
-                      <article
-                        className="rounded-lg border-x-2 border-gray-600 bg-white p-4 shadow-sm transition-all hover:shadow-lg sm:p-6"
-                        key={index}
-                      >
-                        <span className="mx-auto flex w-6/12 rounded-md bg-gray-100 p-2 text-white">
-                          <img
-                            className="mx-auto h-32 w-32 cursor-pointer rounded-full transition-all delay-200 duration-200 hover:scale-95"
-                            src={order?.items[0]?.foodItem?.picture}
-                            alt={order?.items[0]?.foodItem?.itemName}
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 64 64"
-                            id="food-stand"
-                            className="h-8 w-8"
-                          >
-                            <circle
-                              cx="32"
-                              cy="32"
-                              r="32"
-                              fill="#4d94bc"
-                            ></circle>
-                            <path
-                              fill="#141414"
-                              d="M44.99 13.91c-.34 0-.62.28-.62.62v4.85c0 2.12-1.57 3.88-3.61 4.18v-9.03c0-.34-.28-.62-.62-.62-.34 0-.62.28-.62.62v9.03a4.232 4.232 0 0 1-3.61-4.18v-4.85c0-.34-.28-.62-.62-.62-.34 0-.62.28-.62.62v4.85c0 2.81 2.13 5.13 4.85 5.43v25.55c0 .34.28.62.62.62.34 0 .62-.28.62-.62V24.82a5.475 5.475 0 0 0 4.85-5.43v-4.85c0-.35-.28-.63-.62-.63zM25.11 33.66v-5c3.07-.44 5.48-4.11 5.48-8.56 0-4.74-2.74-8.6-6.1-8.6-3.36 0-6.1 3.86-6.1 8.6 0 4.45 2.4 8.12 5.48 8.56v5a3.73 3.73 0 0 0-3.11 3.67v11.44c0 2.06 1.68 3.73 3.73 3.73s3.73-1.67 3.73-3.73V37.33a3.71 3.71 0 0 0-3.11-3.67zM19.64 20.1c0-4.06 2.18-7.35 4.86-7.35s4.86 3.3 4.86 7.35c0 4.06-2.18 7.36-4.86 7.36s-4.86-3.3-4.86-7.36zm7.34 28.67a2.49 2.49 0 0 1-4.98 0V37.33c0-1.37 1.12-2.49 2.49-2.49a2.49 2.49 0 0 1 2.49 2.49v11.44z"
-                            ></path>
-                            <path
-                              fill="#98d3ba"
-                              d="M26.98 37.33v11.44a2.49 2.49 0 0 1-4.98 0V37.33c0-1.37 1.12-2.49 2.49-2.49s2.49 1.12 2.49 2.49zm2.37-17.23c0 4.06-2.18 7.36-4.86 7.36s-4.86-3.3-4.86-7.36c0-4.06 2.18-7.35 4.86-7.35s4.86 3.29 4.86 7.35z"
-                            ></path>
-                          </svg>
-                        </span>
-
-                        <Link to="#!">
-                          <h3 className="mt-1 text-center text-lg font-medium text-gray-900">
-                            {order?.items[0]?.foodItem?.itemName}
-                          </h3>
-                        </Link>
-
-                        <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
-                          {order?.items[0]?.foodItem?.description.length > 50
-                            ? `${order?.items[0]?.foodItem?.description.substr(
-                                0,
-                                50,
-                              )} ...`
-                            : order?.items[0]?.foodItem?.description}
-                        </p>
-
-                        <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-600">
-                          Quantity:&nbsp;
-                          {order?.items[0]?.quantity}&nbsp;Pcs.
-                        </p>
-                        <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-600">
-                          Price:&nbsp;₹
-                          {order?.items[0]?.quantity * order?.price}
-                          <span className="text-xs">
-                            &nbsp;(Each:&nbsp;₹
-                            {order?.price})
-                          </span>
-                        </p>
-                        <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-600">
-                          Status:&nbsp;
-                          {order?.paid ? (
-                            <span className="rounded-full bg-green-500 px-3 text-sm text-gray-100">
-                              Paid
-                            </span>
-                          ) : (
-                            <apan>Unpaid</apan>
-                          )}
-                        </p>
-                        <p className="mt-2 line-clamp-3 text-sm/relaxed capitalize text-gray-600">
-                          {order?.user?.name}
-                        </p>
-                        <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-600">
-                          {order?.user?.email}
-                        </p>
-
-                        <Link
-                          to="#!"
-                          className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
+                  {restaurantOrders.length <= 0 ? (
+                    <div className="flex min-h-screen items-center justify-center">
+                      <h4 className="text-center font-sans text-4xl font-semibold">
+                        There is no orders to show
+                      </h4>
+                    </div>
+                  ) : (
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                      {restaurantOrders?.map((order, index) => (
+                        <article
+                          className="rounded-lg border-x-2 border-gray-600 bg-white p-4 shadow-sm transition-all hover:shadow-lg sm:p-6"
+                          key={index}
                         >
-                          Find out more
-                          <span
-                            aria-hidden="true"
-                            className="group-hover:ms-0.5 block transition-all rtl:rotate-180"
-                          >
-                            &rarr;
+                          <span className="mx-auto flex w-6/12 rounded-md bg-gray-100 p-2 text-white">
+                            <img
+                              className="mx-auto h-32 w-32 cursor-pointer rounded-full transition-all delay-200 duration-200 hover:scale-95"
+                              src={order?.items[0]?.foodItem?.picture}
+                              alt={order?.items[0]?.foodItem?.itemName}
+                            />
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 64 64"
+                              id="food-stand"
+                              className="h-8 w-8"
+                            >
+                              <circle
+                                cx="32"
+                                cy="32"
+                                r="32"
+                                fill="#4d94bc"
+                              ></circle>
+                              <path
+                                fill="#141414"
+                                d="M44.99 13.91c-.34 0-.62.28-.62.62v4.85c0 2.12-1.57 3.88-3.61 4.18v-9.03c0-.34-.28-.62-.62-.62-.34 0-.62.28-.62.62v9.03a4.232 4.232 0 0 1-3.61-4.18v-4.85c0-.34-.28-.62-.62-.62-.34 0-.62.28-.62.62v4.85c0 2.81 2.13 5.13 4.85 5.43v25.55c0 .34.28.62.62.62.34 0 .62-.28.62-.62V24.82a5.475 5.475 0 0 0 4.85-5.43v-4.85c0-.35-.28-.63-.62-.63zM25.11 33.66v-5c3.07-.44 5.48-4.11 5.48-8.56 0-4.74-2.74-8.6-6.1-8.6-3.36 0-6.1 3.86-6.1 8.6 0 4.45 2.4 8.12 5.48 8.56v5a3.73 3.73 0 0 0-3.11 3.67v11.44c0 2.06 1.68 3.73 3.73 3.73s3.73-1.67 3.73-3.73V37.33a3.71 3.71 0 0 0-3.11-3.67zM19.64 20.1c0-4.06 2.18-7.35 4.86-7.35s4.86 3.3 4.86 7.35c0 4.06-2.18 7.36-4.86 7.36s-4.86-3.3-4.86-7.36zm7.34 28.67a2.49 2.49 0 0 1-4.98 0V37.33c0-1.37 1.12-2.49 2.49-2.49a2.49 2.49 0 0 1 2.49 2.49v11.44z"
+                              ></path>
+                              <path
+                                fill="#98d3ba"
+                                d="M26.98 37.33v11.44a2.49 2.49 0 0 1-4.98 0V37.33c0-1.37 1.12-2.49 2.49-2.49s2.49 1.12 2.49 2.49zm2.37-17.23c0 4.06-2.18 7.36-4.86 7.36s-4.86-3.3-4.86-7.36c0-4.06 2.18-7.35 4.86-7.35s4.86 3.29 4.86 7.35z"
+                              ></path>
+                            </svg>
                           </span>
-                        </Link>
-                      </article>
-                    ))}
-                  </div>
+
+                          <Link to="#!">
+                            <h3 className="mt-1 text-center text-lg font-medium text-gray-900">
+                              {order?.items[0]?.foodItem?.itemName}
+                            </h3>
+                          </Link>
+
+                          <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
+                            {order?.items[0]?.foodItem?.description.length > 50
+                              ? `${order?.items[0]?.foodItem?.description.substr(
+                                  0,
+                                  50,
+                                )} ...`
+                              : order?.items[0]?.foodItem?.description}
+                          </p>
+
+                          <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-600">
+                            Quantity:&nbsp;
+                            {order?.items[0]?.quantity}&nbsp;Pcs.
+                          </p>
+                          <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-600">
+                            Price:&nbsp;₹
+                            {order?.items[0]?.quantity * order?.price}
+                            <span className="text-xs">
+                              &nbsp;(Each:&nbsp;₹
+                              {order?.price})
+                            </span>
+                          </p>
+                          <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-600">
+                            Status:&nbsp;
+                            {order?.paid ? (
+                              <span className="rounded-full bg-green-500 px-3 text-sm text-gray-100">
+                                Paid
+                              </span>
+                            ) : (
+                              <apan>Unpaid</apan>
+                            )}
+                          </p>
+                          <p className="mt-2 line-clamp-3 text-sm/relaxed capitalize text-gray-600">
+                            {order?.user?.name}
+                          </p>
+                          <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-600">
+                            {order?.user?.email}
+                          </p>
+
+                          <Link
+                            to="#!"
+                            className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
+                          >
+                            Find out more
+                            <span
+                              aria-hidden="true"
+                              className="group-hover:ms-0.5 block transition-all rtl:rotate-180"
+                            >
+                              &rarr;
+                            </span>
+                          </Link>
+                        </article>
+                      ))}
+                    </div>
+                  )}
                   {/* restaurant order end */}
                 </div>
               </div>
